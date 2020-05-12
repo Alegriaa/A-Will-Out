@@ -5,12 +5,15 @@ class Menu extends Phaser.Scene {
 
     preload() {
 
+        this.load.image('player', './assets/PlayerTester.png');
+        this.load.image('background', './assets/TempBackground.png');
+
 
     }
 
     create() {
         let menuConfig = {
-            fontFamily: 'Impact', // changed the font
+            fontFamily: 'Impact',
             fontSize: '28px',
 
             color: '#ff9c97',
@@ -28,6 +31,13 @@ class Menu extends Phaser.Scene {
 
 
         this.add.text(centerX, centerY, 'Final Game Menu Scene', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY + 100, 'Press (R) to Start', menuConfig).setOrigin(0.5);
+
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
      
 
 
@@ -35,6 +45,12 @@ class Menu extends Phaser.Scene {
     }
 
     update() {
+
+        if (Phaser.Input.Keyboard.JustDown(keyR)) {
+            
+            this.scene.start('worldScene');  
+              
+            } 
 
             
         }
