@@ -5,7 +5,7 @@ let config = {
     height: 640,
     width: 960,
     scale: {
-        autoCenter: Phaser.Scale.CENTER_BOTH  
+        autoCenter: Phaser.Scale.CENTER_BOTH
     },
     physics: {
         default: 'arcade',
@@ -21,8 +21,10 @@ let config = {
 }
 
 let game = new Phaser.Game(config);
-let centerX = game.config.width/2;
-let centerY = game.config.height/2;
+let cursors;
+let playerSpeed;
+let centerX = game.config.width / 2;
+let centerY = game.config.height / 2;
 let keyW, keyA, keyS, keyD, keyR;
 
 
