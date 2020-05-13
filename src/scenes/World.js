@@ -15,7 +15,7 @@ class World extends Phaser.Scene {
 
     create() {
         // temporary background to test player movement
-        this.tempBackground = this.add.tileSprite(0, 0, 1940, 1280, 'background').setOrigin(0, 0);
+        this.tempBackground = this.add.tileSprite(centerX, centerY, game.config.width, game.config.height, 'background').setScale(1); //set scale for testing scaled background
         // instance of player within world scene
         this.player = new Player(this, centerX, centerY, 'player').setScale(0.4);
         // this allows us to quickly use up, left, down, right arroy keys
@@ -23,9 +23,16 @@ class World extends Phaser.Scene {
         // variable for player speed
         playerSpeed = 2.8;
 
+        //camera's boundaries
+        this.cameras.main.setBounds(-100, -100, 1500, 1000);
+        //camera follows player
+        this.cameras.main.startFollow(this.player);
+
     }
 
     update() {
+
+
         // player moves left
         if (cursors.left.isDown) {
             this.player.body.x -= playerSpeed;
@@ -43,5 +50,4 @@ class World extends Phaser.Scene {
             this.player.body.y += playerSpeed;
         }
     }
-
 }
