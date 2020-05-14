@@ -28,11 +28,28 @@ class World extends Phaser.Scene {
         //camera follows player
         this.cameras.main.startFollow(this.player);
 
+
+        this.spoonCount = this.game.settings.currentSpoons;//counter for array
+        this.starter = 1;//counter for array
+        this.spoonArray = ([]); // create spoon array
+        this.xValue = centerX-400; //x value for all of the spoon location spawns
+
+
+        //a while loop to create the necessary amount of spoons according to the current spoons game settings number
+        while(this.starter<= this.spoonCount){
+            this.spoon1 = new Spoon(this, this.xValue, centerY-300, 'TempSpoon').setScale(.5);
+            this.spoon1.setScrollFactor(0,0);
+            this.spoonArray.push(this.spoon1);
+            this.xValue += 100;
+            this.starter++;
+        }
+        this.boolVar = true;
+        this.boolVar2 = true;
     }
 
     update() {
-
-
+       
+    
         // player moves left
         if (cursors.left.isDown) {
             this.player.body.x -= playerSpeed;
@@ -50,4 +67,26 @@ class World extends Phaser.Scene {
             this.player.body.y += playerSpeed;
         }
     }
+
+    takeDamage(){
+        this.temp = this.game.settings.currentSpoons-1; //minus one bc stupid off by one error ew
+        this.spoonArray[this.temp].alpha=0; //alpha set to 0 is invis
+        game.settings.currentSpoons -= 1;
+
+    }
+
+    restoreDamage(){
+
+        this.temp = this.game.settings.currentSpoons; //no minus one, i dont understand math
+        this.spoonArray[this.temp].alpha=1; //alpha set to 1 is visible
+        game.settings.currentSpoons += 1;
+
+    }
+
+
+
+
+
+
+
 }
