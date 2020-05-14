@@ -8,6 +8,7 @@ class Menu extends Phaser.Scene {
         // getting these ready for the world scene
         this.load.image('player', './assets/PlayerTester.png');
         this.load.image('background', './assets/TempBackground.png');
+        this.load.image('TempSpoon', './assets/TempSpoon.png');
 
 
     }
@@ -24,7 +25,7 @@ class Menu extends Phaser.Scene {
                 bottom: 5,
             },
             fixedWidth: 0
-
+            
         }
 
 
