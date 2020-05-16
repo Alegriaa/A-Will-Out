@@ -66,19 +66,25 @@ class World extends Phaser.Scene {
         if (cursors.down.isDown) {
             this.player.body.y += playerSpeed;
         }
+
+        if (Phaser.Input.Keyboard.JustDown(keyR)) {
+
+            this.scene.start('firstBattleScene');
+
+        }
     }
 
-    takeDamage(){
-        this.temp = this.game.settings.currentSpoons-1; //minus one bc stupid off by one error ew
-        this.spoonArray[this.temp].alpha=0; //alpha set to 0 is invis
+    takeDamage() {
+        this.temp = this.game.settings.currentSpoons - 1; //minus one bc stupid off by one error ew
+        this.spoonArray[this.temp].alpha = 0; //alpha set to 0 is invis
         game.settings.currentSpoons -= 1;
 
     }
 
-    restoreDamage(){
+    restoreDamage() {
 
         this.temp = this.game.settings.currentSpoons; //no minus one, i dont understand math
-        this.spoonArray[this.temp].alpha=1; //alpha set to 1 is visible
+        this.spoonArray[this.temp].alpha = 1; //alpha set to 1 is visible
         game.settings.currentSpoons += 1;
 
     }
