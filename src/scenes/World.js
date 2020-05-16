@@ -14,14 +14,15 @@ class World extends Phaser.Scene {
 
 
     create() {
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         // temporary background to test player movement
-        this.tempBackground = this.add.tileSprite(centerX, centerY, game.config.width, game.config.height, 'background').setScale(1); //set scale for testing scaled background
+        this.tempBackground = this.add.tileSprite(centerX, centerY, game.config.width, game.config.height, 'worldBackground').setScale(1); //set scale for testing scaled background
         // instance of player within world scene
-        this.player = new Player(this, centerX, centerY, 'player').setScale(0.4);
+        this.player = new Player(this, centerX, centerY, 'player').setScale(0.1);
         // this allows us to quickly use up, left, down, right arroy keys
         cursors = this.input.keyboard.createCursorKeys();
         // variable for player speed
-        playerSpeed = 2.8;
+        playerSpeed = 2;
 
         //camera's boundaries
         this.cameras.main.setBounds(-100, -100, 1500, 1000);
@@ -48,6 +49,13 @@ class World extends Phaser.Scene {
     }
 
     update() {
+
+
+        if (Phaser.Input.Keyboard.JustDown(keyR)) {
+
+            this.scene.start('firstBattleScene');
+
+        }
        
     
         // player moves left
@@ -67,11 +75,7 @@ class World extends Phaser.Scene {
             this.player.body.y += playerSpeed;
         }
 
-        if (Phaser.Input.Keyboard.JustDown(keyR)) {
-
-            this.scene.start('firstBattleScene');
-
-        }
+       
     }
 
     takeDamage() {

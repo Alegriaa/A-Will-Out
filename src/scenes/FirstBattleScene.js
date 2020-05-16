@@ -5,10 +5,10 @@ class FirstBattleScene extends Phaser.Scene {
     }
 
     create(){
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.tempBackground = this.add.tileSprite(centerX, centerY, game.config.width, game.config.height, 'background').setScale(1);
         
 
-        this.building = new Building(this, centerX, centerY, 'tempCave').setScale(0.2);
         this.player = new Player(this, centerX - 200, centerY, 'player').setScale(0.4);
         cursors = this.input.keyboard.createCursorKeys();
 
