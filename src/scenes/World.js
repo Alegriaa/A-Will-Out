@@ -67,6 +67,10 @@ class World extends Phaser.Scene {
         }
         this.boolVar = true;
         this.boolVar2 = true;
+
+        this.sea = this.add.image(960, 640, 'blackout').setScale(2,2).setAlpha(0);
+
+
     }
 
 
@@ -96,6 +100,20 @@ class World extends Phaser.Scene {
         this.temp = this.game.settings.currentSpoons - 1; //minus one bc stupid off by one error ew
         this.spoonArray[this.temp].alpha = 0; //alpha set to 0 is invis
         game.settings.currentSpoons -= 1;
+
+
+        
+        this.tweens.add({ //!!!!!!!! -------> this will eventually need to be changed into a switch statement
+            targets: this.sea,
+            alphaTopLeft: { value: .5, duration: 500, ease: 'Power1' },
+            alphaTopRight: { value: .5, duration: 500, ease: 'Power1' },
+            alphaBottomRight: { value: .5, duration: 500, ease: 'Power1' },
+            alphaBottomLeft: { value: .5, duration: 500, ease: 'Power1'},//,delay: 5000 },
+ 
+            yoyo: true,
+            //loop: -1   
+        }); 
+
 
     }
 
