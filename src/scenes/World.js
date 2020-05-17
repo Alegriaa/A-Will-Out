@@ -10,15 +10,29 @@ class World extends Phaser.Scene {
 
     preload() {
 
+
     }
 
 
     create() {
-        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+
+        
         // temporary background to test player movement
         this.tempBackground = this.add.tileSprite(centerX, centerY, game.config.width, game.config.height, 'worldBackground').setScale(1); //set scale for testing scaled background
         // instance of player within world scene
         this.player = new Player(this, centerX, centerY, 'player').setScale(0.1);
+        // temp collision detection square
+        // i'm going to change the location of this to match the location of the cave in the background
+        this.cave = this.physics.add.sprite(centerX + 200, centerY + 200, 'TempSpoon').setScale(0.3);
+      
+
+        // this starts the battle scene once the player touches the cave
+        this.physics.add.collider(this.cave, this.player, (a, b) => {
+            this.scene.start('firstBattleScene');
+
+        }, null, this);
+
+
         // this allows us to quickly use up, left, down, right arroy keys
         cursors = this.input.keyboard.createCursorKeys();
         // variable for player speed
@@ -33,13 +47,13 @@ class World extends Phaser.Scene {
         this.spoonCount = this.game.settings.currentSpoons;//counter for array
         this.starter = 1;//counter for array
         this.spoonArray = ([]); // create spoon array
-        this.xValue = centerX-400; //x value for all of the spoon location spawns
+        this.xValue = centerX - 400; //x value for all of the spoon location spawns
 
 
         //a while loop to create the necessary amount of spoons according to the current spoons game settings number
-        while(this.starter<= this.spoonCount){
-            this.spoon1 = new Spoon(this, this.xValue, centerY-300, 'TempSpoon').setScale(.5);
-            this.spoon1.setScrollFactor(0,0);
+        while (this.starter <= this.spoonCount) {
+            this.spoon1 = new Spoon(this, this.xValue, centerY - 300, 'TempSpoon').setScale(.5);
+            this.spoon1.setScrollFactor(0, 0);
             this.spoonArray.push(this.spoon1);
             this.xValue += 100;
             this.starter++;
@@ -48,16 +62,9 @@ class World extends Phaser.Scene {
         this.boolVar2 = true;
     }
 
+
     update() {
 
-
-        if (Phaser.Input.Keyboard.JustDown(keyR)) {
-
-            this.scene.start('firstBattleScene');
-
-        }
-       
-    
         // player moves left
         if (cursors.left.isDown) {
             this.player.body.x -= playerSpeed;
@@ -74,9 +81,9 @@ class World extends Phaser.Scene {
         if (cursors.down.isDown) {
             this.player.body.y += playerSpeed;
         }
-
-       
     }
+
+
 
     takeDamage() {
         this.temp = this.game.settings.currentSpoons - 1; //minus one bc stupid off by one error ew
