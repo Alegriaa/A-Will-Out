@@ -11,6 +11,7 @@ class Menu extends Phaser.Scene {
         this.load.image('background', './assets/TempBackground.png');
         this.load.image('worldBackground', './assets/OverWorldSketch.png');
         this.load.image('TempSpoon', './assets/TempSpoon.png');
+        this.load.image('blackout', './assets/BlackBackground.png');
 
 
     }
@@ -34,7 +35,7 @@ class Menu extends Phaser.Scene {
 
 
 
-        this.add.text(centerX, centerY - 100, 'Final Game Menu Scene', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - 100, 'Final Game Menu Scenejjjjj', menuConfig).setOrigin(0.5);
         this.add.text(centerX, centerY + 100, 'Press (R) to Start', menuConfig).setOrigin(0.5);
 
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
