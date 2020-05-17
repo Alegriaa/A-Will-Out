@@ -16,6 +16,27 @@ class FirstBattleScene extends Phaser.Scene {
         // we can change the player speed in this scene here
         playerSpeed = 2;
 
+        this.spoonCount = this.game.settings.currentSpoons;//counter for array
+        this.starter = 1;//counter for array
+        this.spoonArray = ([]); // create spoon array
+        this.xValue = centerX - 220; //x value for all of the spoon location spawns
+        this.yValue = centerY - 150;
+
+
+        //a while loop to create the necessary amount of spoons according to the current spoons game settings number
+        while (this.starter <= this.spoonCount) {
+            this.spoon1 = new Spoon(this, this.xValue, this.yValue, 'TempSpoon').setScale(.5);
+            this.spoon1.setScrollFactor(0, 0);
+            this.spoonArray.push(this.spoon1);
+            this.xValue += 70;
+            this.starter++;
+        }
+        this.boolVar = true;
+        this.boolVar2 = true;
+
+        this.sea = this.add.image(960, 640, 'blackout').setScale(2,2).setAlpha(0);
+
+
     }
 
     update() {
@@ -28,6 +49,35 @@ class FirstBattleScene extends Phaser.Scene {
         if (cursors.right.isDown) {
             this.player.body.x += playerSpeed;
         }
+
+    }
+
+    takeDamage() {
+        this.temp = this.game.settings.currentSpoons - 1; //minus one bc stupid off by one error ew
+        this.spoonArray[this.temp].alpha = 0; //alpha set to 0 is invis
+        game.settings.currentSpoons -= 1;
+
+
+        
+        this.tweens.add({ //!!!!!!!! -------> this will eventually need to be changed into a switch statement
+            targets: this.sea,
+            alphaTopLeft: { value: .5, duration: 500, ease: 'Power1' },
+            alphaTopRight: { value: .5, duration: 500, ease: 'Power1' },
+            alphaBottomRight: { value: .5, duration: 500, ease: 'Power1' },
+            alphaBottomLeft: { value: .5, duration: 500, ease: 'Power1'},//,delay: 5000 },
+ 
+            yoyo: true,
+            //loop: -1   
+        }); 
+
+
+    }
+
+    restoreDamage() {
+
+        this.temp = this.game.settings.currentSpoons; //no minus one, i dont understand math
+        this.spoonArray[this.temp].alpha = 1; //alpha set to 1 is visible
+        game.settings.currentSpoons += 1;
 
     }
 

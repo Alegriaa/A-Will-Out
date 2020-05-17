@@ -70,6 +70,8 @@ class World extends Phaser.Scene {
 
         this.sea = this.add.image(960, 640, 'blackout').setScale(2,2).setAlpha(0);
 
+        this.takeDamage();
+
 
     }
 
