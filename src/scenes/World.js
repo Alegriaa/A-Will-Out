@@ -44,8 +44,10 @@ class World extends Phaser.Scene {
         //viewport of matching our canvas side.. (we can change this)
          this.cameras.main.setViewport(0, 0, 960, 640);
 
+         //this.cameras.main.setZoom(.6)
+
         //camera follows player & zooms in on the surrounding area. 
-        this.cameras.main.startFollow(this.player).setZoom(1.8);
+        this.cameras.main.startFollow(this.player).setZoom(1.45);
        // this.cameras.main.setZoom(0.25);
        // testing
 
