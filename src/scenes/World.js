@@ -39,7 +39,7 @@ class World extends Phaser.Scene {
         playerSpeed = 2;
 
         //camera's boundaries
-        this.cameras.main.setBounds(-100, -100, 1500, 1000);
+        this.cameras.main.setBounds(0, 0, 1200, 800);
         //camera follows player
         this.cameras.main.startFollow(this.player);
 
