@@ -49,6 +49,7 @@ class World extends Phaser.Scene {
         //camera follows player
         this.cameras.main.startFollow(this.player).setZoom(1.2);
        // this.cameras.main.setZoom(0.25);
+       // testing
 
 
         this.spoonCount = this.game.settings.currentSpoons;//counter for array
