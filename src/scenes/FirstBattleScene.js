@@ -14,7 +14,7 @@ class FirstBattleScene extends Phaser.Scene {
         // set of cursors to use
         cursors = this.input.keyboard.createCursorKeys();
         // we can change the player speed in this scene here
-        playerSpeed = 2.8;
+        playerSpeed = 2;
 
     }
 
