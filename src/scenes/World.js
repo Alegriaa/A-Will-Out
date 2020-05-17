@@ -38,10 +38,17 @@ class World extends Phaser.Scene {
         // variable for player speed
         playerSpeed = 2;
 
+        const viewportW = game.config.width/2;
+        const viewportH = game.config.height/2;
+
         //camera's boundaries
         this.cameras.main.setBounds(0, 0, 1200, 800);
+       // this.cameras.main.setViewport(viewportH - 500, viewportW - 350, 1200, 800);
+         this.cameras.main.setViewport(viewportH, viewportW - 300, 350, 350);
+
         //camera follows player
-        this.cameras.main.startFollow(this.player);
+        this.cameras.main.startFollow(this.player).setZoom(1.2);
+       // this.cameras.main.setZoom(0.25);
 
 
         this.spoonCount = this.game.settings.currentSpoons;//counter for array
