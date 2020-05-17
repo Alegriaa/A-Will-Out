@@ -18,12 +18,12 @@ class World extends Phaser.Scene {
 
         
         // temporary background to test player movement
-        this.tempBackground = this.add.tileSprite(centerX, centerY, game.config.width, game.config.height, 'worldBackground').setScale(1); //set scale for testing scaled background
+        this.tempBackground = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0,0);//set scale for testing scaled background
         // instance of player within world scene
         this.player = new Player(this, centerX, centerY, 'player').setScale(0.1);
         // temp collision detection square
         // i'm going to change the location of this to match the location of the cave in the background
-        this.cave = this.physics.add.sprite(centerX + 200, centerY + 200, 'TempSpoon').setScale(0.3);
+        this.cave = this.physics.add.sprite(centerX + 620, centerY + 340, 'TempSpoon').setScale(0.3);
       
 
         // this starts the battle scene once the player touches the cave
