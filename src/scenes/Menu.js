@@ -36,8 +36,13 @@ class Menu extends Phaser.Scene {
 
 
 
-        this.add.text(centerX, centerY - 100, 'Final Game Menu Scenejjjjj', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY + 100, 'Press (R) to Start', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - 300, 'Final Game Menu Scene', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - 200, 'UCSC Caps https://caps.ucsc.edu', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY -100, 'USA Suicide Prevention Hotline 1-800-273-8255', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY, 'Warning: This game deals with concepts surrounding mental health, if you', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY + 50, 'or someone you know is struggling, please use the links', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY + 100, 'above or talk to a professional.', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY + 200, 'Press (R) to Start', menuConfig).setOrigin(0.5);
 
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
