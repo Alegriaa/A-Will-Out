@@ -9,7 +9,8 @@ class FirstBattleScene extends Phaser.Scene {
         this.tempBackground = this.add.tileSprite(centerX, centerY, game.config.width, game.config.height, 'background').setScale(1);
 
         // instance of player in battle scene
-        this.player = new Player(this, centerX - 200, centerY, 'player').setScale(0.4);
+        this.player = new Player(this, centerX - 200, centerY + 90, 'player').setScale(0.2);
+        this.caveMonster = new CaveMonster(this, centerX + 250, centerY, 'monsterSketch');
         // set of cursors to use
         cursors = this.input.keyboard.createCursorKeys();
         // we can change the player speed in this scene here
