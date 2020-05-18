@@ -4,6 +4,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
         this.isAlive = true;
+        this.isWalking = false;
         scene.physics.add.existing(this);
         this.setImmovable(true);
 
