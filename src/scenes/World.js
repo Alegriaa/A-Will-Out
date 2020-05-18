@@ -73,6 +73,7 @@ class World extends Phaser.Scene {
         this.boolVar = true;
         this.boolVar2 = true;
 
+
         this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
 
         // adding walking in flowers sound to scene
@@ -85,6 +86,12 @@ class World extends Phaser.Scene {
             volume: 1,
             loop: false
         });
+
+        this.sea = this.add.image(960, 640, 'blackout').setScale(2,2).setAlpha(0);
+
+
+
+
     }
 
 
