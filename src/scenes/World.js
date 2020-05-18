@@ -9,6 +9,7 @@ class World extends Phaser.Scene {
 
 
     preload() {
+        this.load.image('statueText', './assets/StatueText.png');
 
 
     }
@@ -24,11 +25,17 @@ class World extends Phaser.Scene {
         // temp collision detection square
         // i'm going to change the location of this to match the location of the cave in the background
         this.cave = this.physics.add.sprite(centerX + 620, centerY + 340, 'TempSpoon').setScale(0.3);
-      
-
+        this.statue = this.physics.add.sprite(centerX - 250, centerY - 200, 'TempSpoon').setScale(0.3);
+        this.statueText = this.add.tileSprite(175, 150, 0, 0, 'statueText').setScale(.3,.3);//set scale for testing scaled background
+        this.statueText.alpha = 0;
         // this starts the battle scene once the player touches the cave
         this.physics.add.collider(this.cave, this.player, (a, b) => {
             this.scene.start('firstBattleScene');
+
+        }, null, this);
+
+        this.physics.add.overlap(this.statue, this.player, (a, b) => {
+            console.log('poop');
 
         }, null, this);
 
@@ -93,6 +100,14 @@ class World extends Phaser.Scene {
         if (cursors.down.isDown) {
             this.player.body.y += playerSpeed;
         }
+
+        if(this.checkOverlap(this.player, this.statue)){
+            this.statueText.alpha = 1;
+            
+        } else {
+            this.statueText.alpha = 0;
+        }
+
     }
 
 
@@ -124,6 +139,16 @@ class World extends Phaser.Scene {
         this.spoonArray[this.temp].alpha = 1; //alpha set to 1 is visible
         game.settings.currentSpoons += 1;
 
+    }
+
+    checkOverlap(spriteA, spriteB) {
+
+        var boundsA = spriteA.getBounds();
+        var boundsB = spriteB.getBounds();
+    
+        return Phaser.Geom.Intersects.RectangleToRectangle(boundsA, boundsB);
+
+    
     }
 
 
