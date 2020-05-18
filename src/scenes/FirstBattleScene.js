@@ -4,12 +4,17 @@ class FirstBattleScene extends Phaser.Scene {
 
     }
 
+    preload() {
+        this.load.image('caveBackground', './assets/CaveSketchOne.png');
+
+    }
+
     create() {
-        // temporary background
-        this.tempBackground = this.add.tileSprite(centerX, centerY, game.config.width, game.config.height, 'background').setScale(1);
+
+        this.caveBackground = this.add.tileSprite(0, 0, 940, 640, 'caveBackground').setOrigin(0, 0);
 
         // instance of player in battle scene
-        this.player = new Player(this, centerX - 200, centerY + 90, 'player').setScale(0.2);
+        this.player = new Player(this, centerX - 200, centerY + 90, 'player').setScale(0.5 * 10);
         this.caveMonster = new CaveMonster(this, centerX + 250, centerY, 'monsterSketch');
         // set of cursors to use
         cursors = this.input.keyboard.createCursorKeys();
@@ -34,7 +39,7 @@ class FirstBattleScene extends Phaser.Scene {
         this.boolVar = true;
         this.boolVar2 = true;
 
-        this.sea = this.add.image(960, 640, 'blackout').setScale(2,2).setAlpha(0);
+        this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
 
 
     }
@@ -58,17 +63,17 @@ class FirstBattleScene extends Phaser.Scene {
         game.settings.currentSpoons -= 1;
 
 
-        
+
         this.tweens.add({ //!!!!!!!! -------> this will eventually need to be changed into a switch statement
             targets: this.sea,
             alphaTopLeft: { value: .5, duration: 500, ease: 'Power1' },
             alphaTopRight: { value: .5, duration: 500, ease: 'Power1' },
             alphaBottomRight: { value: .5, duration: 500, ease: 'Power1' },
-            alphaBottomLeft: { value: .5, duration: 500, ease: 'Power1'},//,delay: 5000 },
- 
+            alphaBottomLeft: { value: .5, duration: 500, ease: 'Power1' },//,delay: 5000 },
+
             yoyo: true,
             //loop: -1   
-        }); 
+        });
 
 
     }
