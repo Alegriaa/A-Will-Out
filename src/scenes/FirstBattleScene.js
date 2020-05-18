@@ -5,7 +5,7 @@ class FirstBattleScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('caveBackground', './assets/CaveSketchOne.png');
+        this.load.image('caveBackground', './assets/CaveSketch.png');
         this.load.image('monsterSketch', './assets/Monster.png');
 
 
@@ -16,8 +16,8 @@ class FirstBattleScene extends Phaser.Scene {
         this.caveBackground = this.add.tileSprite(0, 0, 940, 640, 'caveBackground').setOrigin(0,0);
 
         // instance of player in battle scene
-        this.player = new Player(this, centerX - 200, centerY + 90, 'player').setScale(0.7);
-        this.caveMonster = new CaveMonster(this, centerX + 250, centerY, 'monsterSketch');
+        this.player = new Player(this, centerX - 200, centerY + 245, 'player').setScale(0.7);
+        this.caveMonster = new CaveMonster(this, centerX + 240, centerY + 200, 'monsterSketch');
         // set of cursors to use
         cursors = this.input.keyboard.createCursorKeys();
         // we can change the player speed in this scene here
