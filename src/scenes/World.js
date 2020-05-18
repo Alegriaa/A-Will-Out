@@ -155,7 +155,7 @@ class World extends Phaser.Scene {
             this.statueText.alpha = 0;
         }
 
-    }
+    
 
 
         // stops sounds if player is no longer moving
