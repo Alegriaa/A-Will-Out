@@ -22,16 +22,18 @@ class World extends Phaser.Scene {
         // temporary background to test player movement
         this.tempBackground = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0, 0);//set scale for testing scaled background
         // instance of player within world scene
-        this.player = new Player(this, centerX, centerY, 'player').setScale(0.1);
+        this.player = new Player(this, centerX - 300, centerY - 165, 'player').setScale(0.3);
         this.player.isWalking = false;
         // temp collision detection square
         // i'm going to change the location of this to match the location of the cave in the background
         this.cave = this.physics.add.sprite(centerX + 620, centerY + 340, 'TempSpoon').setScale(0.3);
+        this.cave.alpha = 0;
 
 
         // this starts the battle scene once the player touches the cave
         this.physics.add.collider(this.cave, this.player, (a, b) => {
             this.scene.start('firstBattleScene');
+            this.walkingInFlowers.stop();
 
         }, null, this);
 
@@ -59,15 +61,15 @@ class World extends Phaser.Scene {
         this.starter = 1;//counter for array
         this.spoonArray = ([]); // create spoon array
         this.xValue = centerX - 220; //x value for all of the spoon location spawns
-        this.yValue = centerY - 150;
+        this.yValue = centerY - 200;
 
 
         //a while loop to create the necessary amount of spoons according to the current spoons game settings number
         while (this.starter <= this.spoonCount) {
-            this.spoon1 = new Spoon(this, this.xValue, this.yValue, 'TempSpoon').setScale(.5);
+            this.spoon1 = new Spoon(this, this.xValue, this.yValue, 'TempSpoon').setScale(.2);
             this.spoon1.setScrollFactor(0, 0);
             this.spoonArray.push(this.spoon1);
-            this.xValue += 70;
+            this.xValue += 40;
             this.starter++;
         }
         this.boolVar = true;
