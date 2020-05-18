@@ -6,13 +6,15 @@ class Menu extends Phaser.Scene {
     preload() {
 
         // getting these ready for the world scene
-        this.load.image('player', './assets/PlayerTester.png');
+        this.load.image('player', './assets/PlayerSprite.png');
         this.load.image('TempCaveCirlce', './assets/TempCaveCircle.png');
-        this.load.image('monsterSketch', './assets/enemySketch.png');
-        this.load.image('background', './assets/TempBackground.png');
+        this.load.image('monsterSketch', './assets/EnemySketch.png');
+        
         this.load.image('worldBackground', './assets/OverWorldSketch.png');
         this.load.image('TempSpoon', './assets/TempSpoon.png');
         this.load.image('blackout', './assets/BlackBackground.png');
+        this.load.audio('WalkingInFlowers', './assets/WalkingInFlowers.wav');
+        this.load.audio('Crying', './assets/CryingNearCave.wav');
 
 
     }
@@ -100,7 +102,7 @@ class Menu extends Phaser.Scene {
 
     intro2(){
         this.tempBackground2 = this.add.tileSprite(centerX, centerY, game.config.width, game.config.height, 'blackout').setScale(1);
-        this.add.text(centerX, centerY - 100, 'Use WASD to move').setOrigin(0.5);
+        this.add.text(centerX, centerY - 100, 'Use Up, Down, Left, Right Arrows to move').setOrigin(0.5);
         this.add.text(centerX, centerY + 100, 'Press (R) to Start').setOrigin(0.5);
         this.endMenuFlag = true;
 
