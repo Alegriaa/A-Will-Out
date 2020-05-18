@@ -48,6 +48,10 @@ class Menu extends Phaser.Scene {
 
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
+        cursors = this.input.keyboard.createCursorKeys(); //arrow keys are now assigned and can be used
+       
+
         this.firstFlag = true;
         this.secondFlag = false;
         this.endMenuFlag = false;
@@ -80,6 +84,11 @@ class Menu extends Phaser.Scene {
         
         }}
 
+        if (cursors.left.isDown) // if the left arrow key is battlescene
+        {
+            this.scene.start('firstBattleScene');
+        }
+        
 
 
     }
