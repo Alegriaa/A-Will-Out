@@ -6,6 +6,8 @@ class FirstBattleScene extends Phaser.Scene {
 
     preload() {
         this.load.image('caveBackground', './assets/CaveSketchOne.png');
+        this.load.image('monsterSketch', './assets/EnemySketch.png');
+
 
     }
 
