@@ -44,6 +44,7 @@ class World extends Phaser.Scene {
         }, null, this);
 
         this.physics.add.overlap(this.statue, this.player, (a, b) => {
+            console.log('poop');
 
         }, null, this);
 
