@@ -43,10 +43,7 @@ class World extends Phaser.Scene {
 
         }, null, this);
 
-        this.physics.add.overlap(this.statue, this.player, (a, b) => {
-            console.log('poop');
-
-        }, null, this);
+    
 
 
         // this allows us to quickly use up, left, down, right arroy keys
