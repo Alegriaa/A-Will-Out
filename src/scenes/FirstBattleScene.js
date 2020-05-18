@@ -14,7 +14,7 @@ class FirstBattleScene extends Phaser.Scene {
         this.caveBackground = this.add.tileSprite(0, 0, 940, 640, 'caveBackground').setOrigin(0,0);
 
         // instance of player in battle scene
-        this.player = new Player(this, centerX - 200, centerY + 90, 'player');
+        this.player = new Player(this, centerX - 200, centerY + 90, 'player').setScale(0.7);
         this.caveMonster = new CaveMonster(this, centerX + 250, centerY, 'monsterSketch');
         // set of cursors to use
         cursors = this.input.keyboard.createCursorKeys();
