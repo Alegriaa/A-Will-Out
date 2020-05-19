@@ -4,6 +4,7 @@ let config = {
     type: Phaser.AUTO,
     height: 640,
     width: 960,
+    pixelArt: true,
     scale: {
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
@@ -17,7 +18,7 @@ let config = {
             }
         }
     },
-    scene: [Menu, World, FirstBattleScene]
+    scene: [Menu, World, CaveScene]
 }
 
 let game = new Phaser.Game(config);

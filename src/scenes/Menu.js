@@ -84,9 +84,9 @@ class Menu extends Phaser.Scene {
         
         }}
 
-        if (cursors.left.isDown) // if the left arrow key is battlescene
+        if (cursors.left.isDown) // if the left arrow key is cave scene
         {
-            this.scene.start('firstBattleScene');
+            this.scene.start('caveScene');
         }
         
 
