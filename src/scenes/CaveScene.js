@@ -1,6 +1,6 @@
-class FirstBattleScene extends Phaser.Scene {
+class CaveScene extends Phaser.Scene {
     constructor() {
-        super('firstBattleScene');
+        super('caveScene');
 
     }
 

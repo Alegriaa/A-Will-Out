@@ -10,7 +10,7 @@ class Menu extends Phaser.Scene {
         this.load.image('TempCaveCirlce', './assets/TempCaveCircle.png');
         this.load.image('monsterSketch', './assets/Monster.png');
         
-        this.load.image('worldBackground', './assets/OverWorldSketch.png');
+        this.load.image('worldBackground', './assets/OverWorld.png');
         this.load.image('TempSpoon', './assets/TempSpoon.png');
         this.load.image('blackout', './assets/BlackBackground.png');
         this.load.audio('WalkingInFlowers', './assets/WalkingInFlowers.wav');
@@ -84,9 +84,9 @@ class Menu extends Phaser.Scene {
         
         }}
 
-        if (cursors.left.isDown) // if the left arrow key is battlescene
+        if (cursors.left.isDown) // if the left arrow key is cave scene
         {
-            this.scene.start('firstBattleScene');
+            this.scene.start('caveScene');
         }
         
 
