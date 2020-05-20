@@ -38,7 +38,7 @@ class World extends Phaser.Scene {
 
         // this starts the battle scene once the player touches the cave
         this.physics.add.collider(this.cave, this.player, (a, b) => {
-            this.scene.start('caveSceen');
+            this.scene.start('caveScene');
             this.walkingInFlowers.stop();
 
         }, null, this);
