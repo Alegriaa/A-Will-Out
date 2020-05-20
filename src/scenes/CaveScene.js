@@ -18,6 +18,8 @@ class CaveScene extends Phaser.Scene {
         // instance of player in battle scene
         this.player = new Player(this, centerX - 200, centerY + 245, 'player').setScale(0.7);
         this.caveMonster = new CaveMonster(this, centerX + 240, centerY + 200, 'monsterSketch');
+        this.monsterDetection = this.physics.add.sprite(centerX + 100, centerY + 200, 'monsterSketch');
+        this.monsterDetection.alpha = 0;
         // set of cursors to use
         cursors = this.input.keyboard.createCursorKeys();
         // we can change the player speed in this scene here
@@ -43,18 +45,32 @@ class CaveScene extends Phaser.Scene {
 
         this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
 
+        this.physics.add.collider(this.monsterDetection, this.player, (a, b) => {
+            this.scene.start('caveBattleScene');
+        }, null, this);
+
 
     }
 
     update() {
 
+       
         // player moves left
         if (cursors.left.isDown) {
             this.player.body.x -= playerSpeed;
         }
         // player moves right 
         if (cursors.right.isDown) {
+
             this.player.body.x += playerSpeed;
+        }
+        // player moves up
+        if (cursors.up.isDown) {
+            this.player.body.y -= playerSpeed;
+        }
+        // player moves down
+        if (cursors.down.isDown) {
+            this.player.body.y += playerSpeed;
         }
 
     }
