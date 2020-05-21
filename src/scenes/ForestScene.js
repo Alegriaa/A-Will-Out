@@ -14,6 +14,12 @@ class ForestScene extends Phaser.Scene {
         // instance of player in battle scene
         this.player = new Player(this, centerX - 200, centerY + 245, 'player').setScale(0.4);
         this.caveMonster = new CaveMonster(this, centerX + 240, centerY + 200, 'monsterSketch');
+        playerSpeed = 2;
+
+
+         // this allows us to quickly use up, left, down, right arroy keys
+         cursors = this.input.keyboard.createCursorKeys();
+
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
       
     }
