@@ -5,7 +5,7 @@ class CaveScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('caveBackground', './assets/CaveSketch.png');
+        this.load.image('caveBackground', './assets/Level1Sketch.png');
         this.load.image('monsterSketch', './assets/Monster.png');
 
 
@@ -13,10 +13,10 @@ class CaveScene extends Phaser.Scene {
 
     create() {
 
-        this.caveBackground = this.add.tileSprite(0, 0, 940, 640, 'caveBackground').setOrigin(0,0);
+        this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
 
         // instance of player in battle scene
-        this.player = new Player(this, centerX - 200, centerY + 245, 'player').setScale(0.7);
+        this.player = new Player(this, centerX - 200, centerY + 245, 'player').setScale(0.4);
         this.caveMonster = new CaveMonster(this, centerX + 240, centerY + 200, 'monsterSketch');
         this.monsterDetection = this.physics.add.sprite(centerX + 100, centerY + 200, 'monsterSketch');
         this.monsterDetection.alpha = 0;
@@ -49,6 +49,13 @@ class CaveScene extends Phaser.Scene {
             this.scene.start('caveBattleScene');
         }, null, this);
 
+        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
+        this.cameras.main.setBounds(0, 0, 3760, 1280);
+        this.cameras.main.setViewport(0, 0, 960, 640);
+        this.cameras.main.startFollow(this.player).setZoom(1.45);
+
+
 
     }
 
@@ -71,6 +78,10 @@ class CaveScene extends Phaser.Scene {
         // player moves down
         if (cursors.down.isDown) {
             this.player.body.y += playerSpeed;
+        }
+
+        if(Phaser.Input.Keyboard.JustDown(keyD)){
+            this.scene.start('secondWorldScene');
         }
 
     }
