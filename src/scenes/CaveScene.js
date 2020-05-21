@@ -5,7 +5,7 @@ class CaveScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('caveBackground', './assets/CaveSketch.png');
+        this.load.image('caveBackground', './assets/Level1Sketch.png');
         this.load.image('monsterSketch', './assets/Monster.png');
 
 
@@ -13,7 +13,7 @@ class CaveScene extends Phaser.Scene {
 
     create() {
 
-        this.caveBackground = this.add.tileSprite(0, 0, 940, 640, 'caveBackground').setOrigin(0,0);
+        this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
 
         // instance of player in battle scene
         this.player = new Player(this, centerX - 200, centerY + 245, 'player').setScale(0.7);

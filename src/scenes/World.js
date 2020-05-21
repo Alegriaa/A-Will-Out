@@ -7,9 +7,6 @@ class World extends Phaser.Scene {
     // where the player walks around in the 'birds eye' view
 
 
-
-
-
     preload() {
         this.load.image('statueText', './assets/StatueText.png');
 
