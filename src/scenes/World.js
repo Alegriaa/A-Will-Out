@@ -13,7 +13,7 @@ class World extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16,
         });
-        this.load.tilemapTiledJSON("OverWorldMap", "OverWOrldTiled.json");
+        this.load.tilemapTiledJSON("OverWorlds", "OverWorldTiled..json");
 
 
     }
@@ -21,7 +21,7 @@ class World extends Phaser.Scene {
 
     create() {
 
-        const map = this.add.tilemap("OverWorldMap");
+        const map = this.add.tilemap("OverWorlds");
 
         const tileset = map.addTilesetImage("OverWorldMap")
 
