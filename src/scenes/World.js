@@ -9,6 +9,11 @@ class World extends Phaser.Scene {
 
     preload() {
         this.load.image('statueText', './assets/StatueText.png');
+        this.load.spritesheet("OverWorld.png", {
+            frameWidth: 16,
+            frameHeight: 16,
+        });
+        this.load.tilemapTiledJSON("OverWorldMap", "OverWOrldTiled.json");
 
 
     }
@@ -16,9 +21,20 @@ class World extends Phaser.Scene {
 
     create() {
 
+        const map = this.add.tilemap("OverWorldMap");
+
+        const tileset = map.addTilesetImage("OverWorldMap")
+
+        const backgroundLayer = map.createStaticLayer("Background", tileset, 0, 0);
+        const treeLayer = map.createStaticLayer("Tree", tileset, 0, 0);
+
+        backgroundLayer.setCollisionByProperty({collides: true});
+
+
+
 
         // temporary background to test player movement
-        this.tempBackground = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0, 0);//set scale for testing scaled background
+       // this.tempBackground = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0, 0);//set scale for testing scaled background
         // instance of player within world scene
         this.player = new Player(this, centerX - 300, centerY - 165, 'player').setScale(0.3);
         this.player.isWalking = false;
