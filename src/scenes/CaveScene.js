@@ -28,7 +28,7 @@ class CaveScene extends Phaser.Scene {
         this.spoonCount = this.game.settings.currentSpoons;//counter for array
         this.starter = 1;//counter for array
         this.spoonArray = ([]); // create spoon array
-        this.xValue = centerX - 350; //x value for all of the spoon location spawns
+        this.xValue = centerX - 400; //x value for all of the spoon location spawns
         this.yValue = 50;
 
 
@@ -80,6 +80,7 @@ class CaveScene extends Phaser.Scene {
         this.spoonArray[this.temp].alpha = 0; //alpha set to 0 is invis
         game.settings.currentSpoons -= 1;
 
+        
 
 
         this.tweens.add({ //!!!!!!!! -------> this will eventually need to be changed into a switch statement
