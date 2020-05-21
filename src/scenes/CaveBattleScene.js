@@ -77,14 +77,14 @@ class CaveBattleScene extends Phaser.Scene {
             console.log('A has been pressed');
             this.sea.alpha = 1;
         }else{
-            delay:500 //This doesn't work but I was trying to set up a small delay before the alpha is changed back to 0 so it's not just a millisecond of a flicker.
+            //delay:500 This doesn't work but I was trying to set up a small delay before the alpha is changed back to 0 so it's not just a millisecond of a flicker.
             this.sea.alpha = 0;
         }
         if(Phaser.Input.Keyboard.JustDown(keyS)){
             console.log('S has been pressed');
         }
         if(Phaser.Input.Keyboard.JustDown(keyD)){
-            console.log('D has been pressed');S
+            console.log('D has been pressed');
             this.scene.start('caveScene');
         }
 
