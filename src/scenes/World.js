@@ -12,19 +12,30 @@ class World extends Phaser.Scene {
 
     preload() {
         this.load.image('statueText', './assets/StatueText.png');
+        this.load.image('worldBackground', './assets/OverWorld.png');
+        this.load.tilemapTiledJSON('map', './assets/TiledWorldMap.json');
 
 
     }
 
 
     create() {
+        const map = this.make.tilemap({ key: "map" });
+        const tileset = map.addTilesetImage("OverWorld", "worldBackground");
+        const backgroundLayer = map.createStaticLayer("Background", tileset, 0, 0);
+        const treeLayer = map.createStaticLayer("Tree", tileset, 0, 0);
+        const colliderLayer = map.createStaticLayer("Collider", tileset, 0, 0);
+       treeLayer.setCollisionByProperty({ collides: true });
+        
+        
 
 
         // temporary background to test player movement
-        this.tempBackground = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0, 0);//set scale for testing scaled background
+       // this.tempBackground = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0, 0);//set scale for testing scaled background
         // instance of player within world scene
-        this.player = new Player(this, centerX - 300, centerY - 165, 'player').setScale(0.3);
+        this.player = this.physics.add.sprite( centerX - 300, centerY - 165, 'player').setScale(0.3);
         this.player.isWalking = false;
+        this.physics.add.collider(this.player, treeLayer);
         // temp collision detection square
         // i'm going to change the location of this to match the location of the cave in the background
         this.cave = this.physics.add.sprite(centerX + 620, centerY + 340, 'TempSpoon').setScale(0.3);
