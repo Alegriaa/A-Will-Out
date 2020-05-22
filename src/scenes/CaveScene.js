@@ -7,7 +7,7 @@ class CaveScene extends Phaser.Scene {
     preload() {
         this.load.image('caveBackground', './assets/Level1Sketch.png');
         this.load.image('monsterSketch', './assets/Monster.png');
-        this.load.tilemapTiledJSON('map','./assets/TiledCaveMap.json');
+        this.load.tilemapTiledJSON('map','./assets/TiledCave.json');
 
 
     }
