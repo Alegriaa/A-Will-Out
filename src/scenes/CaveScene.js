@@ -7,32 +7,32 @@ class CaveScene extends Phaser.Scene {
     preload() {
         this.load.image('caveBackground', './assets/Level1Sketch.png');
         this.load.image('monsterSketch', './assets/Monster.png');
-        this.load.tilemapTiledJSON('map','./assets/TiledCaveMap.json');
+        this.load.tilemapTiledJSON('caveMap','./assets/TiledCaveMap.json');
 
 
     }
 
     create() {
 
-        const map = this.make.tilemap({ key: "map"});
-        const tileset = map.addTilesetImage("Level1Sketch", "caveBackground");
-        const backgroundLayer = map.createStaticLayer("Background", tileset, 0, 0);
+        const caveMap = this.make.tilemap({ key: "caveMap"});
+        const tileset = caveMap.addTilesetImage("Level1Sketch", "caveBackground");
+        const backgroundLayer = caveMap.createStaticLayer("Background", tileset, 0, 0);
         
        backgroundLayer.setCollisionByProperty({ collides: true });
        //treeLayer.setCollisionBetween(0, 244);
 
 
-       const debugGraphics = this.add.graphics().setAlpha(0.75);
-       backgroundLayer.renderDebug(debugGraphics, {
-         tileColor: null, // Color of non-colliding tiles
-         collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-         faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-       });
+    //    const debugGraphics = this.add.graphics().setAlpha(0.75);
+    //    backgroundLayer.renderDebug(debugGraphics, {
+    //      tileColor: null, // Color of non-colliding tiles
+    //      collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+    //      faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+    //    });
 
        // this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
 
         // instance of player in battle scene
-        this.player = this.physics.add.sprite( centerX - 300, centerY - 165, 'player').setScale(0.4);
+        this.player = this.physics.add.sprite( centerX - 250, centerY + 550, 'player').setScale(0.4);
         this.caveMonster = new CaveMonster(this, centerX + 240, centerY + 200, 'monsterSketch');
         this.monsterDetection = this.physics.add.sprite(centerX + 100, centerY + 200, 'monsterSketch');
         this.monsterDetection.alpha = 0;
