@@ -9,7 +9,6 @@ class Menu extends Phaser.Scene {
         this.load.image('player', './assets/PlayerSprite.png');
         this.load.image('TempCaveCirlce', './assets/TempCaveCircle.png');
         this.load.image('monsterSketch', './assets/Monster.png');
-        
         this.load.image('TempSpoon', './assets/TempSpoon.png');
         this.load.image('blackout', './assets/BlackBackground.png');
         this.load.audio('WalkingInFlowers', './assets/WalkingInFlowers.wav');
