@@ -30,12 +30,12 @@ class World extends Phaser.Scene {
        //treeLayer.setCollisionBetween(0, 244);
 
 
-       const debugGraphics = this.add.graphics().setAlpha(0.75);
-       treeLayer.renderDebug(debugGraphics, {
-         tileColor: null, // Color of non-colliding tiles
-         collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-         faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-       });
+       //const debugGraphics = this.add.graphics().setAlpha(0.75);
+       //treeLayer.renderDebug(debugGraphics, {
+         //tileColor: null, // Color of non-colliding tiles
+        // collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+         //faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+      // });
 
 
         
@@ -53,10 +53,12 @@ class World extends Phaser.Scene {
         // i'm going to change the location of this to match the location of the cave in the background
         this.cave = this.physics.add.sprite(centerX + 620, centerY + 340, 'TempSpoon').setScale(0.3);
 
-        this.statue = this.physics.add.sprite(centerX - 250, centerY - 200, 'TempSpoon').setScale(0.3);
-        this.statueText = this.add.tileSprite(175, 150, 0, 0, 'statueText').setScale(.3,.3);//set scale for testing scaled background
+        this.statue = this.physics.add.sprite(centerX - 300, centerY - 250, 'TempSpoon').setScale(0.3);
+        this.statueText = this.add.tileSprite(175, 200, 0, 0, 'statueText').setScale(.3,.3);//set scale for testing scaled background
         this.statueText.alpha = 0;
-        this.physics.add.collider(this.player, this.statue);
+        this.statue.alpha = 0;
+
+        this.statue.setImmovable();
 
         this.cave.alpha = 0;
 
@@ -93,7 +95,7 @@ class World extends Phaser.Scene {
         this.spoonCount = this.game.settings.currentSpoons;//counter for array
         this.starter = 1;//counter for array
         this.spoonArray = ([]); // create spoon array
-        this.xValue = centerX - 220; //x value for all of the spoon location spawns
+        this.xValue = centerX - 280; //x value for all of the spoon location spawns
         this.yValue = centerY - 200;
 
 
