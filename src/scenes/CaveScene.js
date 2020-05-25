@@ -3,6 +3,7 @@ class CaveScene extends Phaser.Scene {
         super('caveScene');
 
     }
+    // check
 
     preload() {
         this.load.image('caveBackground', './assets/Level1Sketch.png');
