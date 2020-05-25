@@ -1,8 +1,9 @@
-class CaveScene extends Phaser.Scene {
+class LevelOneCave extends Phaser.Scene {
     constructor() {
-        super('caveScene');
+        super('levelOneCave');
 
     }
+    // check
 
     preload() {
         this.load.image('caveBackground', './assets/Level1Sketch.png');
@@ -97,7 +98,7 @@ class CaveScene extends Phaser.Scene {
         }
 
         if (Phaser.Input.Keyboard.JustDown(keyD)) {
-            this.scene.start('secondWorldScene');
+            this.scene.start('levelTwoCave');
         }
 
     }

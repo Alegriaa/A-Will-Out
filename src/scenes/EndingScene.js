@@ -6,9 +6,6 @@ class EndingScene extends Phaser.Scene {
     preload() {
 
         // getting these ready for the world scene
-        
-
-
     }
 
     create() {
