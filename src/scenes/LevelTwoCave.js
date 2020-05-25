@@ -1,6 +1,6 @@
-class ForestScene extends Phaser.Scene {
+class LevelTwoCave extends Phaser.Scene {
     constructor() {
-        super('forestScene');
+        super('levelTwoCave');
 
     }
     preload(){
@@ -44,7 +44,7 @@ class ForestScene extends Phaser.Scene {
         }
 
         if(Phaser.Input.Keyboard.JustDown(keyD)){
-            this.scene.start('endingScene');
+            this.scene.start('forestScene');
         }
 
     }

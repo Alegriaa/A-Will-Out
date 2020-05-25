@@ -85,7 +85,7 @@ class CaveBattleScene extends Phaser.Scene {
         }
         if(Phaser.Input.Keyboard.JustDown(keyD)){
             console.log('D has been pressed');
-            this.scene.start('caveScene');
+            this.scene.start('levelOneCave');
         }
 
     

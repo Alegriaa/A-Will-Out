@@ -1,6 +1,6 @@
-class SecondWorld extends Phaser.Scene {
+class Forest extends Phaser.Scene {
     constructor() {
-        super('secondWorldScene');
+        super('forestScene');
 
     }
 
@@ -33,7 +33,7 @@ class SecondWorld extends Phaser.Scene {
 
     update(){
         if(Phaser.Input.Keyboard.JustDown(keyD)){
-            this.scene.start('forestScene');
+            this.scene.start('meditationScene');
         }
 
              // player moves left
