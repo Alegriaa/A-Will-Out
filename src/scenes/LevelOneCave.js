@@ -3,22 +3,27 @@ class LevelOneCave extends Phaser.Scene {
         super('levelOneCave');
 
     }
-    // check
+  
 
     preload() {
         this.load.image('caveBackground', './assets/Level1Sketch.png');
         this.load.image('monsterSketch', './assets/Monster.png');
+        // name of the tiled project
         this.load.tilemapTiledJSON('caveMap','./assets/TiledCaveMap.json');
 
 
     }
 
     create() {
-
+        // we need to make a unique key for this scene to access
         const caveMap = this.make.tilemap({ key: "caveMap"});
+        // first name is the name of the tilesheet used is the first parameter,
+        // the name we gave the asset within our project is the second parameter
         const tileset = caveMap.addTilesetImage("Level1Sketch", "caveBackground");
+        // this is a layer within the tiled project
         const backgroundLayer = caveMap.createStaticLayer("Background", tileset, 0, 0);
-        
+        // this is required, to have the player collide with pixel tiles
+        // that have the collides property attached to them
        backgroundLayer.setCollisionByProperty({ collides: true });
        //treeLayer.setCollisionBetween(0, 244);
 
@@ -32,12 +37,14 @@ class LevelOneCave extends Phaser.Scene {
 
        // this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
 
-        // instance of player in battle scene
+        // instance of player in cave scene 1
         this.player = this.physics.add.sprite( centerX - 250, centerY + 550, 'player').setScale(0.4);
+
+        // instance of monster in cave scene 1 
         this.caveMonster = new CaveMonster(this, centerX + 240, centerY + 200, 'monsterSketch');
         this.monsterDetection = this.physics.add.sprite(centerX + 100, centerY + 200, 'monsterSketch');
         this.monsterDetection.alpha = 0;
-
+        // here we have collisions detection between the player & the later from tiled
         this.physics.add.collider(this.player, backgroundLayer);
         // set of cursors to use
         cursors = this.input.keyboard.createCursorKeys();
@@ -70,8 +77,11 @@ class LevelOneCave extends Phaser.Scene {
 
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
-        this.cameras.main.setBounds(0, 0, 3760, 1280);
+        // bounds of the background asset 
+        this.cameras.main.setBounds(0, 0, 3760, 1280); 
+        // bounds of the canvas 
         this.cameras.main.setViewport(0, 0, 960, 640);
+        // this follows the player & zoomed in 
         this.cameras.main.startFollow(this.player).setZoom(1.45);
 
 
@@ -79,9 +89,8 @@ class LevelOneCave extends Phaser.Scene {
     }
 
     update() {
-
-
         this.player.body.setVelocity(0);
+
         // player moves left
         if (cursors.left.isDown) {
             this.player.body.setVelocityX(-100);

@@ -18,7 +18,7 @@ class LevelTwoCave extends Phaser.Scene {
 
 
          // this allows us to quickly use up, left, down, right arroy keys
-         cursors = this.input.keyboard.createCursorKeys();
+        cursors = this.input.keyboard.createCursorKeys();
 
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
       
