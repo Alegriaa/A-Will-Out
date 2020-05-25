@@ -26,35 +26,35 @@ class World extends Phaser.Scene {
         const backgroundLayer = map.createStaticLayer("Background", tileset, 0, 0);
         const treeLayer = map.createStaticLayer("Tree", tileset, 0, 0);
         const colliderLayer = map.createStaticLayer("Collider", tileset, 0, 0);
-       treeLayer.setCollisionByProperty({ collides: true });
-       //treeLayer.setCollisionBetween(0, 244);
+        treeLayer.setCollisionByProperty({ collides: true });
+        //treeLayer.setCollisionBetween(0, 244);
 
 
-       //const debugGraphics = this.add.graphics().setAlpha(0.75);
-       //treeLayer.renderDebug(debugGraphics, {
-         //tileColor: null, // Color of non-colliding tiles
+        //const debugGraphics = this.add.graphics().setAlpha(0.75);
+        //treeLayer.renderDebug(debugGraphics, {
+        //tileColor: null, // Color of non-colliding tiles
         // collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-         //faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-      // });
+        //faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+        // });
 
 
-        
-        
+
+
 
 
         // temporary background to test player movement
-       // this.tempBackground = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0, 0);//set scale for testing scaled background
+        // this.tempBackground = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0, 0);//set scale for testing scaled background
         // instance of player within world scene
-        this.player = this.physics.add.sprite( centerX - 300, centerY - 165, 'player').setScale(0.3);
+        this.player = this.physics.add.sprite(centerX - 300, centerY - 165, 'player').setScale(0.3);
         this.player.isWalking = false;
         this.physics.add.collider(this.player, treeLayer);
-        
+
         // temp collision detection square
         // i'm going to change the location of this to match the location of the cave in the background
         this.cave = this.physics.add.sprite(centerX + 620, centerY + 340, 'TempSpoon').setScale(0.3);
 
         this.statue = this.physics.add.sprite(centerX - 300, centerY - 250, 'TempSpoon').setScale(0.3);
-        this.statueText = this.add.tileSprite(175, 200, 0, 0, 'statueText').setScale(.3,.3);//set scale for testing scaled background
+        this.statueText = this.add.tileSprite(175, 200, 0, 0, 'statueText').setScale(.3, .3);//set scale for testing scaled background
         this.statueText.alpha = 0;
         this.statue.alpha = 0;
 
@@ -70,7 +70,7 @@ class World extends Phaser.Scene {
 
         }, null, this);
 
-    
+
 
 
         // this allows us to quickly use up, left, down, right arroy keys
@@ -124,7 +124,7 @@ class World extends Phaser.Scene {
             loop: false
         });
 
-        this.sea = this.add.image(960, 640, 'blackout').setScale(2,2).setAlpha(0);
+        this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
 
 
 
@@ -136,24 +136,22 @@ class World extends Phaser.Scene {
 
         this.player.body.setVelocity(0);
 
-
         // player moves left
         if (cursors.left.isDown) {
-
             this.player.body.setVelocityX(-100);
 
-        }else if (cursors.right.isDown) {
+        } else if (cursors.right.isDown) {
             this.player.body.setVelocityX(100);
-          }
+        }
 
         // player moves right 
         if (cursors.up.isDown) {
             this.player.body.setVelocityY(-100);
-          } else if (cursors.down.isDown) {
+        } else if (cursors.down.isDown) {
             this.player.body.setVelocityY(100);
-          }
+        }
         // player moves down
-        
+
         // plays walking through flowers sounds if player is moving.
         if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
             this.walkingInFlowers.play();
@@ -167,14 +165,14 @@ class World extends Phaser.Scene {
         }
 
 
-        if(this.checkOverlap(this.player, this.statue)){
+        if (this.checkOverlap(this.player, this.statue)) {
             this.statueText.alpha = 1;
-            
+
         } else {
             this.statueText.alpha = 0;
         }
 
-    
+
 
 
         // stops sounds if player is no longer moving
@@ -224,17 +222,9 @@ class World extends Phaser.Scene {
 
         var boundsA = spriteA.getBounds();
         var boundsB = spriteB.getBounds();
-    
+
         return Phaser.Geom.Intersects.RectangleToRectangle(boundsA, boundsB);
 
-    
+
     }
-
-
-
-
-
-
-
-
 }
