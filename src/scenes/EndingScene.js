@@ -25,13 +25,16 @@ class EndingScene extends Phaser.Scene {
         
         this.add.text(centerX, centerY - 300, 'Final Game Ending Scene', menuConfig).setOrigin(0.5);
         var monsterText = this.add.text(100, 150, 'Inner Self:', { fontFamily: 'Arial', fontSize: 32, color: '#00ff00' });
+
         this.monsterDialogue = this.add.text(200, 200, 'You\'ve come a long way', { fontFamily: 'Arial', fontSize: 32, color: '#00ff00' });
+
         var continueText = this.add.text(550, 500, 'Press D to continue', { fontFamily: 'Arial', fontSize: 32, color: '#00ff00' });
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
         cursors = this.input.keyboard.createCursorKeys(); //arrow keys are now assigned and can be used
-       
+        keySpaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
 
 
 
@@ -42,7 +45,7 @@ class EndingScene extends Phaser.Scene {
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
         this.monsterArray = ([]);//array for monster
-      
+
 
         
         this.monsterNumber = 0;
@@ -60,20 +63,22 @@ class EndingScene extends Phaser.Scene {
         }
 
         if (Phaser.Input.Keyboard.JustDown(keyA)) {
+
+           
+        
+        
+
             if(this.monsterNumber<this.monsterArray.length){
                 this.monsterNumber++;
+
 
             }
             this.groundClock = this.time.delayedCall(2500, () => { //delay call to spawn extra ground
             }, null, this);
-        
-        }
+        }   
 
-       
         
         
-        
-    }
 
 }
 
