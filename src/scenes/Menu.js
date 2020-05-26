@@ -13,6 +13,7 @@ class Menu extends Phaser.Scene {
         this.load.image('blackout', './assets/BlackBackground.png');
         this.load.audio('WalkingInFlowers', './assets/WalkingInFlowers.wav');
         this.load.audio('Crying', './assets/CryingNearCave.wav');
+        this.load.image('MeditationBackground', './assets/FinalOverWorld.png');
 
     }
 

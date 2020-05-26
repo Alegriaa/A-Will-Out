@@ -4,11 +4,11 @@ class Meditation extends Phaser.Scene {
 
     }
     preload(){
-        this.load.image('MeditationBackground', './assets/MeditationBackground.png');
+   
     }
 
     create(){
-        this.tempBackground = this.add.tileSprite(0, 0, 600, 600, 'MeditationBackground').setOrigin(0, 0);
+        this.background = this.add.tileSprite(0, 0, 960, 640, 'MeditationBackground').setOrigin(0, 0);
 
         this.player = new Player(this, centerX - 300, centerY - 165, 'player').setScale(0.3);
 
