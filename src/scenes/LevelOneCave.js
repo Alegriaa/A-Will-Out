@@ -6,7 +6,7 @@ class LevelOneCave extends Phaser.Scene {
   
 
     preload() {
-        this.load.image('caveBackground', './assets/Level1Sketch.png');
+        this.load.image('caveBackground', './assets/LevelOne.png');
         this.load.image('monsterSketch', './assets/Monster.png');
         // name of the tiled project
         this.load.tilemapTiledJSON('caveMap','./assets/TiledCaveMap.json');
@@ -41,11 +41,43 @@ class LevelOneCave extends Phaser.Scene {
         this.player = this.physics.add.sprite( centerX - 250, centerY + 550, 'player').setScale(0.4);
 
         // instance of monster in cave scene 1 
-        this.caveMonster = new CaveMonster(this, centerX + 240, centerY + 200, 'monsterSketch');
+        //this.caveMonster = new CaveMonster(this, centerX + 240, centerY + 200, 'monsterSketch');
         this.monsterDetection = this.physics.add.sprite(centerX + 100, centerY + 200, 'monsterSketch');
         this.monsterDetection.alpha = 0;
         // here we have collisions detection between the player & the later from tiled
         this.physics.add.collider(this.player, backgroundLayer);
+
+        let graphics = this.add.graphics();
+        graphics.lineStyle(2, 0xFFFFFF, 0.75);
+
+
+        this.monsterPath = this.add.path(centerX + 240, centerY + 200); // start of path
+        this.monsterPath.lineTo(centerX - 240, centerY + 200);         // next path point
+        this.monsterPath.lineTo(100, 400);          // next
+        this.monsterPath.lineTo(100, 100);
+        this.monsterPath.lineTo(900, 100);   
+        this.monsterPath.lineTo(centerX + 240, centerY + 200);   
+        this.monsterPath.draw(graphics);            // draw path
+        let s = this.monsterPath.getStartPoint();   // get start point of path
+        // add path follower: follower(path, x, y, texture [, frame])
+        this.monster = this.add.follower(this.monsterPath, s.x, s.y, 'monsterSketch').setScale(0.7);
+        // start path follow with config
+        // note: you can mix properties from both types of config objects
+        // https://photonstorm.github.io/phaser3-docs/Phaser.Types.Tweens.html#.NumberTweenBuilderConfig
+        // https://photonstorm.github.io/phaser3-docs/Phaser.Types.GameObjects.PathFollower.html#.PathConfig
+        this.monster.startFollow({
+            from: 0,            // points allow a path are values 0–1
+            to: 1,
+            delay: 0,
+            duration: 10000,
+            ease: 'Power0',
+            hold: 0,
+            repeat: -1,
+            yoyo: false,
+           // rotateToPath: true
+        });
+
+
         // set of cursors to use
         cursors = this.input.keyboard.createCursorKeys();
         // we can change the player speed in this scene here
