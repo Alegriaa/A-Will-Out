@@ -6,9 +6,6 @@ class EndingScene extends Phaser.Scene {
     preload() {
 
         // getting these ready for the world scene
-        
-
-
     }
 
     create() {
@@ -28,13 +25,16 @@ class EndingScene extends Phaser.Scene {
         
         this.add.text(centerX, centerY - 300, 'Final Game Ending Scene', menuConfig).setOrigin(0.5);
         var monsterText = this.add.text(100, 150, 'Inner Self:', { fontFamily: 'Arial', fontSize: 32, color: '#00ff00' });
-        var monsterDialogue = this.add.text(200, 200, 'You\'ve come a long way', { fontFamily: 'Arial', fontSize: 32, color: '#00ff00' });
+
+        this.monsterDialogue = this.add.text(200, 200, 'You\'ve come a long way', { fontFamily: 'Arial', fontSize: 32, color: '#00ff00' });
+
         var continueText = this.add.text(550, 500, 'Press D to continue', { fontFamily: 'Arial', fontSize: 32, color: '#00ff00' });
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
         cursors = this.input.keyboard.createCursorKeys(); //arrow keys are now assigned and can be used
         keySpaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
 
 
 
@@ -47,11 +47,14 @@ class EndingScene extends Phaser.Scene {
         this.monsterArray = ([]);//array for monster
 
 
+        
+        this.monsterNumber = 0;
     
        
     }
 
     update() {
+        this.monsterDialogue.text = this.monsterArray[this.monsterNumber];
 
         if (Phaser.Input.Keyboard.JustDown(keyW)) {
 
@@ -60,22 +63,22 @@ class EndingScene extends Phaser.Scene {
         }
 
         if (Phaser.Input.Keyboard.JustDown(keyA)) {
+
            
         
-        }
+        
 
-        if (cursors.left.isDown) // if the left arrow key is cave scene
-        {
-            this.scene.start('caveScene');
-        }
+            if(this.monsterNumber<this.monsterArray.length){
+                this.monsterNumber++;
+
+
+            }
+            this.groundClock = this.time.delayedCall(2500, () => { //delay call to spawn extra ground
+            }, null, this);
+        }   
+
         
         
-        if (Phaser.Input.Keyboard.JustDown(keySpaceBar)) {
-           
-        this.monsterDialogue.setText('poop');
-        }
-
-    }
 
 }
 

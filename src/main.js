@@ -18,7 +18,7 @@ let config = {
             }
         }
     },
-    scene: [Menu, World, CaveScene, CaveBattleScene, EndingScene]
+    scene: [Menu, World, LevelOneCave, CaveBattleScene, LevelTwoCave, Forest, Meditation, EndingScene]
 }
 
 let game = new Phaser.Game(config);

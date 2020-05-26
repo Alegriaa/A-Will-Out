@@ -9,13 +9,10 @@ class Menu extends Phaser.Scene {
         this.load.image('player', './assets/PlayerSprite.png');
         this.load.image('TempCaveCirlce', './assets/TempCaveCircle.png');
         this.load.image('monsterSketch', './assets/Monster.png');
-        
-        this.load.image('worldBackground', './assets/OverWorld.png');
         this.load.image('TempSpoon', './assets/TempSpoon.png');
         this.load.image('blackout', './assets/BlackBackground.png');
         this.load.audio('WalkingInFlowers', './assets/WalkingInFlowers.wav');
         this.load.audio('Crying', './assets/CryingNearCave.wav');
-
 
     }
 
@@ -87,12 +84,17 @@ class Menu extends Phaser.Scene {
 
         if (cursors.left.isDown) // if the left arrow key is cave scene
         {
-            this.scene.start('caveScene');
+            this.scene.start('levelOneCave');
         }
 
         if (cursors.right.isDown) // if the left arrow key is cave scene
         {
             this.scene.start('endingScene');
+        }
+
+        if (cursors.up.isDown) // up arrow key takes you to meditation scene
+        {
+            this.scene.start('meditationScene');
         }
         
 
