@@ -4,13 +4,27 @@ class Meditation extends Phaser.Scene {
 
     }
     preload(){
-   
+        this.load.image('Meditation', './assets/Meditation.png');
+        this.load.image('MeditationTree', './assets/MeditationTree.png');
+        this.load.tilemapTiledJSON('meditationMap','./assets/TiledMeditation.json');
     }
 
     create(){
-        this.background = this.add.tileSprite(0, 0, 960, 640, 'MeditationBackground').setOrigin(0, 0);
+        const meditationMap = this.make.tilemap({ key: "meditationMap"});
+        const tileset = meditationMap.addTilesetImage("Meditation", "Meditation");
+        const backgroundLayer = meditationMap.createStaticLayer("Background", tileset, 0, 0);
+        backgroundLayer.setCollisionByProperty({ collides: true });
 
-        this.player = new Player(this, centerX - 300, centerY - 165, 'player').setScale(0.3);
+
+
+
+
+
+
+
+        this.player = this.physics.add.sprite( centerX - 450, centerY - 40, 'player').setScale(0.4);
+        this.tree = this.add.tileSprite(0, 0, 960, 640, 'MeditationTree').setOrigin(0,0);
+        this.physics.add.collider(this.player, backgroundLayer);
 
          // this allows us to quickly use up, left, down, right arroy keys
          cursors = this.input.keyboard.createCursorKeys();
@@ -26,7 +40,7 @@ class Meditation extends Phaser.Scene {
          //this.cameras.main.setZoom(.6)
  
          //camera follows player & zooms in on the surrounding area. 
-         this.cameras.main.startFollow(this.player).setZoom(1.45);
+         this.cameras.main.startFollow(this.player);
          // this.cameras.main.setZoom(0.25);
          // testing
  

@@ -3,9 +3,13 @@ class Forest extends Phaser.Scene {
         super('forestScene');
 
     }
+    preload(){
+        this.load.image('worldBackground', './assets/OverWorld.png');
+
+    }
 
     create(){
-        this.tempBackground = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0, 0);
+        this.background = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0,0);
 
         this.player = new Player(this, centerX - 300, centerY - 165, 'player').setScale(0.3);
 
