@@ -100,6 +100,8 @@ class CaveScene extends Phaser.Scene {
             this.scene.start('secondWorldScene');
         }
 
+        
+
     }
 
     takeDamage() {
