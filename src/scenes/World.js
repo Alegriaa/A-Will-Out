@@ -45,7 +45,7 @@ class World extends Phaser.Scene {
         // temporary background to test player movement
         // this.tempBackground = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0, 0);//set scale for testing scaled background
         // instance of player within world scene
-        this.player = this.physics.add.sprite(centerX - 300, centerY - 165, 'player').setScale(0.3);
+        this.player = new Player (this, centerX - 300, centerY - 165, 'player').setScale(0.3);
         this.player.isWalking = false;
         this.physics.add.collider(this.player, treeLayer);
 
@@ -87,7 +87,7 @@ class World extends Phaser.Scene {
         //this.cameras.main.setZoom(.6)
 
         //camera follows player & zooms in on the surrounding area. 
-        this.cameras.main.startFollow(this.player).setZoom(2.2);
+        this.cameras.main.startFollow(this.player).setZoom(1.45);
         // this.cameras.main.setZoom(0.25);
         // testing
 
@@ -134,22 +134,7 @@ class World extends Phaser.Scene {
 
     update() {
 
-        this.player.body.setVelocity(0);
-
-        // player moves left
-        if (cursors.left.isDown) {
-            this.player.body.setVelocityX(-100);
-
-        } else if (cursors.right.isDown) {
-            this.player.body.setVelocityX(100);
-        }
-
-        // player moves right 
-        if (cursors.up.isDown) {
-            this.player.body.setVelocityY(-100);
-        } else if (cursors.down.isDown) {
-            this.player.body.setVelocityY(100);
-        }
+       this.player.update();
         // player moves down
 
         // plays walking through flowers sounds if player is moving.
