@@ -22,7 +22,7 @@ class Meditation extends Phaser.Scene {
 
 
 
-        this.player = this.physics.add.sprite( centerX - 450, centerY - 40, 'player').setScale(0.4);
+        this.player = new Player(this, centerX - 450, centerY - 40, 'player').setScale(0.4);
         this.tree = this.add.tileSprite(0, 0, 960, 640, 'MeditationTree').setOrigin(0,0);
         this.physics.add.collider(this.player, backgroundLayer);
 
@@ -52,25 +52,7 @@ class Meditation extends Phaser.Scene {
         if(Phaser.Input.Keyboard.JustDown(keyD)){
             this.scene.start('endingScene');
         }
-
-        this.player.body.setVelocity(0);
-
-
-        // player moves left
-        if (cursors.left.isDown) {
-
-            this.player.body.setVelocityX(-100);
-
-        }else if (cursors.right.isDown) {
-            this.player.body.setVelocityX(100);
-          }
-
-        // player moves right 
-        if (cursors.up.isDown) {
-            this.player.body.setVelocityY(-100);
-          } else if (cursors.down.isDown) {
-            this.player.body.setVelocityY(100);
-          }
+        this.player.update();
         }
     }
         

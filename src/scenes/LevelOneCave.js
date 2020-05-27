@@ -38,7 +38,7 @@ class LevelOneCave extends Phaser.Scene {
        // this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
 
         // instance of player in cave scene 1
-        this.player = this.physics.add.sprite( centerX - 250, centerY + 550, 'player').setScale(0.4);
+        this.player = new Player(this, centerX - 250, centerY - 250, 'player').setScale(0.4);
 
         // instance of monster in cave scene 1 
         //this.caveMonster = new CaveMonster(this, centerX + 240, centerY + 200, 'monsterSketch');
@@ -51,16 +51,16 @@ class LevelOneCave extends Phaser.Scene {
         graphics.lineStyle(2, 0xFFFFFF, 0.75);
 
 
-        this.monsterPath = this.add.path(centerX + 240, centerY + 200); // start of path
-        this.monsterPath.lineTo(centerX - 240, centerY + 200);         // next path point
-        this.monsterPath.lineTo(100, 400);          // next
-        this.monsterPath.lineTo(100, 100);
-        this.monsterPath.lineTo(900, 100);   
-        this.monsterPath.lineTo(centerX + 240, centerY + 200);   
+        this.monsterPath = this.add.path(240,200); // start of path
+         // next path point
+        this.monsterPath.lineTo(400, 200);          // next
+         
+        this.monsterPath.lineTo(240, 200);  
+
         this.monsterPath.draw(graphics);            // draw path
         let s = this.monsterPath.getStartPoint();   // get start point of path
         // add path follower: follower(path, x, y, texture [, frame])
-        this.monster = this.add.follower(this.monsterPath, s.x, s.y, 'monsterSketch').setScale(0.7);
+        this.monster = this.add.follower(this.monsterPath, s.x, s.y, 'monsterSketch').setScale(0.6);
         // start path follow with config
         // note: you can mix properties from both types of config objects
         // https://photonstorm.github.io/phaser3-docs/Phaser.Types.Tweens.html#.NumberTweenBuilderConfig
@@ -69,12 +69,28 @@ class LevelOneCave extends Phaser.Scene {
             from: 0,            // points allow a path are values 0–1
             to: 1,
             delay: 0,
-            duration: 10000,
+            duration: 20000,
             ease: 'Power0',
             hold: 0,
-            repeat: -1,
-            yoyo: false,
+           // repeat: -1,
+            yoyo: true,
            // rotateToPath: true
+        });
+
+        this.checkPath = this.add.path(780, 330);  // start of path
+        this.checkPath.circleTo(300);                // radius of circle path
+        this.checkPath.draw(graphics);               // draw path
+        s = this.checkPath.getStartPoint();          // get start point
+        // add path follower
+        this.boat = this.add.follower(this.checkPath, s.x, s.y, 'monsterSketch').setScale(0.5);
+        // start path follow with config
+        this.boat.startFollow({
+            duration: 15000,
+            from: 0,
+            to: 1,
+            rotateToPath: true,
+            startAt: 0,
+            repeat: -1
         });
 
 
@@ -121,22 +137,7 @@ class LevelOneCave extends Phaser.Scene {
     }
 
     update() {
-        this.player.body.setVelocity(0);
-
-        // player moves left
-        if (cursors.left.isDown) {
-            this.player.body.setVelocityX(-100);
-
-        } else if (cursors.right.isDown) {
-            this.player.body.setVelocityX(100);
-        }
-
-        // player moves right 
-        if (cursors.up.isDown) {
-            this.player.body.setVelocityY(-100);
-        } else if (cursors.down.isDown) {
-            this.player.body.setVelocityY(100);
-        }
+        this.player.update();
 
         if (Phaser.Input.Keyboard.JustDown(keyD)) {
             this.scene.start('levelTwoCave');
