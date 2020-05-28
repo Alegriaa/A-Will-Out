@@ -38,12 +38,15 @@ class LevelOneCave extends Phaser.Scene {
        // this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
 
         // instance of player in cave scene 1
-        this.player = new Player(this, centerX - 250, centerY - 250, 'player').setScale(0.4);
+        this.player = new Player(this, centerX - 250, centerY + 550, 'player').setScale(0.4);
+        //this.player = new Player(this, 3500, 1100, 'player').setScale(0.4);
 
         // instance of monster in cave scene 1 
-        //this.caveMonster = new CaveMonster(this, centerX + 240, centerY + 200, 'monsterSketch');
+        this.caveMonster = new CaveMonster(this, centerX + 140, centerY + 160, 'monsterSketch').setScale(0.6);
         this.monsterDetection = this.physics.add.sprite(centerX + 100, centerY + 200, 'monsterSketch');
+        this.levelTwoDetection = this.physics.add.sprite(3603, 1260, 'TempSpoon').setDisplaySize(300, 30);
         this.monsterDetection.alpha = 0;
+        this.levelTwoDetection.alpha = 0;
         // here we have collisions detection between the player & the later from tiled
         this.physics.add.collider(this.player, backgroundLayer);
 
@@ -122,6 +125,9 @@ class LevelOneCave extends Phaser.Scene {
         this.physics.add.collider(this.monsterDetection, this.player, (a, b) => {
             this.scene.start('caveBattleScene');
         }, null, this);
+        this.physics.add.collider(this.levelTwoDetection, this.player, (a, b) => {
+            this.scene.start('levelTwoCave');
+        }, null, this);
 
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
@@ -138,6 +144,8 @@ class LevelOneCave extends Phaser.Scene {
 
     update() {
         this.player.update();
+        console.log(this.player.body.x);
+        console.log(this.player.body.y);
 
         if (Phaser.Input.Keyboard.JustDown(keyD)) {
             this.scene.start('levelTwoCave');

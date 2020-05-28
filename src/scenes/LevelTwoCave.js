@@ -12,7 +12,7 @@ class LevelTwoCave extends Phaser.Scene {
         this.forestBackground = this.add.tileSprite(0, 0, 3760, 1280, 'forestBackground').setOrigin(0, 0);
 
         // instance of player in battle scene
-        this.player = new Player(this, centerX - 200, centerY + 245, 'player').setScale(0.4);
+        this.player = new Player(this, centerX - 200, centerY + 245, 'player').setScale(0.5);
         this.caveMonster = new CaveMonster(this, centerX + 240, centerY + 200, 'monsterSketch');
         playerSpeed = 2;
 

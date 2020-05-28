@@ -1,10 +1,14 @@
 'use strict'
 
 let config = {
-    type: Phaser.AUTO,
+    type: Phaser.CANVAS,
+
+
+    render: {
+    pixelArt: true,
+    },
     height: 640,
     width: 960,
-    pixelArt: true,
   
     scale: {
         autoCenter: Phaser.Scale.CENTER_BOTH
