@@ -144,8 +144,8 @@ class LevelOneCave extends Phaser.Scene {
 
     update() {
         this.player.update();
-        console.log(this.player.body.x);
-        console.log(this.player.body.y);
+       // console.log(this.player.body.x);
+       // console.log(this.player.body.y);
 
         if (Phaser.Input.Keyboard.JustDown(keyD)) {
             this.scene.start('levelTwoCave');
