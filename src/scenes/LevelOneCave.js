@@ -1,4 +1,5 @@
 class LevelOneCave extends Phaser.Scene {
+    
     constructor() {
         super('levelOneCave');
 
@@ -6,15 +7,22 @@ class LevelOneCave extends Phaser.Scene {
   
 
     preload() {
+        var url;
+  
+        url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexmovetoplugin.min.js';
+        this.load.plugin('rexmovetoplugin', url, true);
+        
         this.load.image('caveBackground', './assets/LevelOne.png');
         this.load.image('monsterSketch', './assets/Monster.png');
         // name of the tiled project
         this.load.tilemapTiledJSON('caveMap','./assets/TiledCaveMap.json');
+        //this.load.plugin('rexmovetoplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexmovetoplugin.min.js', true);
 
 
     }
 
     create() {
+        
         // we need to make a unique key for this scene to access
         const caveMap = this.make.tilemap({ key: "caveMap"});
         // first name is the name of the tilesheet used is the first parameter,
@@ -38,15 +46,42 @@ class LevelOneCave extends Phaser.Scene {
        // this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
 
         // instance of player in cave scene 1
-        this.player = new Player(this, centerX - 250, centerY + 550, 'player').setScale(0.4);
+        this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
         //this.player = new Player(this, 3500, 1100, 'player').setScale(0.4);
 
         // instance of monster in cave scene 1 
-        this.caveMonster = new CaveMonster(this, centerX + 140, centerY + 160, 'monsterSketch').setScale(0.6);
+        this.caveMonster = new CaveMonster(this, 796, 452, 'monsterSketch').setScale(0.6);
+        this.caveMonster1 = new CaveMonster(this, 796, 452, 'monsterSketch').setScale(0.6);
         this.monsterDetection = this.physics.add.sprite(centerX + 100, centerY + 200, 'monsterSketch');
         this.levelTwoDetection = this.physics.add.sprite(3603, 1260, 'TempSpoon').setDisplaySize(300, 30);
         this.monsterDetection.alpha = 0;
         this.levelTwoDetection.alpha = 0;
+
+        
+        this.moveMonster1 = this.plugins.get('rexmovetoplugin').add(this.caveMonster1, {
+             speed: 100,
+            rotateToTarget: false
+         });//.on('complete', function(gameObject, moveMonster1){
+        //     moveMonster1.moveTo(700, 452);
+        // });
+        // this.moveMonster1.moveTo(100, 452);
+       
+        
+
+        var firstBlock = this.physics.add.image(400, 200);
+        var lastBlock = this.physics.add.image(200, 200);
+
+        this.physics.moveToObject(firstBlock, lastBlock, 200000);
+        var blockCollider = this.physics.add.overlap(firstBlock, lastBlock, function (firstBlockOnlastBlock)
+    {
+        firstBlockOnlastBlock.body.stop();
+
+        this.physics.world.removeCollider(blockCollider);
+    }, null, this);
+
+
+
+
         // here we have collisions detection between the player & the later from tiled
         this.physics.add.collider(this.player, backgroundLayer);
 
@@ -143,9 +178,17 @@ class LevelOneCave extends Phaser.Scene {
     }
 
     update() {
+        if(this.caveMonster1.body.x == 700 &&  this.caveMonster1.body.y == 452 ){
+        this.moveMonster1.moveTo(100, 452);
+        } else {
+            this.moveMonster1.moveTo(700, 452);
+        }
+        
         this.player.update();
-       // console.log(this.player.body.x);
-       // console.log(this.player.body.y);
+        console.log(this.player.body.x);
+        console.log(this.player.body.y);
+
+        this.caveMonster.update();
 
         if (Phaser.Input.Keyboard.JustDown(keyD)) {
             this.scene.start('levelTwoCave');
