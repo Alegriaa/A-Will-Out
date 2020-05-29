@@ -1,4 +1,5 @@
 class LevelOneCave extends Phaser.Scene {
+    
     constructor() {
         super('levelOneCave');
 
@@ -6,15 +7,22 @@ class LevelOneCave extends Phaser.Scene {
   
 
     preload() {
+        var url;
+  
+        url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexpathfollowerplugin.min.js';
+        this.load.plugin('rexpathfollowerplugin', url, true);
+        
         this.load.image('caveBackground', './assets/LevelOne.png');
         this.load.image('monsterSketch', './assets/Monster.png');
         // name of the tiled project
         this.load.tilemapTiledJSON('caveMap','./assets/TiledCaveMap.json');
+        //this.load.plugin('rexmovetoplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexmovetoplugin.min.js', true);
 
 
     }
 
     create() {
+        
         // we need to make a unique key for this scene to access
         const caveMap = this.make.tilemap({ key: "caveMap"});
         // first name is the name of the tilesheet used is the first parameter,
@@ -38,66 +46,48 @@ class LevelOneCave extends Phaser.Scene {
        // this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
 
         // instance of player in cave scene 1
-        this.player = new Player(this, centerX - 250, centerY + 550, 'player').setScale(0.4);
+        this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
         //this.player = new Player(this, 3500, 1100, 'player').setScale(0.4);
 
         // instance of monster in cave scene 1 
-        this.caveMonster = new CaveMonster(this, centerX + 140, centerY + 160, 'monsterSketch').setScale(0.6);
-        this.monsterDetection = this.physics.add.sprite(centerX + 100, centerY + 200, 'monsterSketch');
+        
         this.levelTwoDetection = this.physics.add.sprite(3603, 1260, 'TempSpoon').setDisplaySize(300, 30);
-        this.monsterDetection.alpha = 0;
+        
         this.levelTwoDetection.alpha = 0;
+        var path = this.add.path(800, 480)
+        .lineTo(100, 480)
+        .lineTo(800, 480)
+        .lineTo(100, 480)
+        .lineTo(800, 480);
+        this.monsterOne = new CaveMonster(this, 700, 452, 'monsterSketch').setScale(0.6);
+        this.monsterOne.pathFollower = 
+        this.plugins.get('rexpathfollowerplugin').add(this.monsterOne, {
+            path: path,
+            t: 0,
+            rotateToPath: false
+        });
+        this.tweens.add({
+            targets: this.monsterOne.pathFollower,
+            t: 1,
+            ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 50000,
+            repeat: -1,
+            yoyo: true
+        });
+
+
+
+
+       
+        
+
+
+
         // here we have collisions detection between the player & the later from tiled
         this.physics.add.collider(this.player, backgroundLayer);
 
-        let graphics = this.add.graphics();
-        graphics.lineStyle(2, 0xFFFFFF, 0.75);
-
-
-        this.monsterPath = this.add.path(240,200); // start of path
-         // next path point
-        this.monsterPath.lineTo(400, 200);          // next
-         
-        this.monsterPath.lineTo(240, 200);  
-
-        this.monsterPath.draw(graphics);            // draw path
-        let s = this.monsterPath.getStartPoint();   // get start point of path
-        // add path follower: follower(path, x, y, texture [, frame])
-        this.monster = this.add.follower(this.monsterPath, s.x, s.y, 'monsterSketch').setScale(0.6);
-        // start path follow with config
-        // note: you can mix properties from both types of config objects
-        // https://photonstorm.github.io/phaser3-docs/Phaser.Types.Tweens.html#.NumberTweenBuilderConfig
-        // https://photonstorm.github.io/phaser3-docs/Phaser.Types.GameObjects.PathFollower.html#.PathConfig
-        this.monster.startFollow({
-            from: 0,            // points allow a path are values 0–1
-            to: 1,
-            delay: 0,
-            duration: 20000,
-            ease: 'Power0',
-            hold: 0,
-           // repeat: -1,
-            yoyo: true,
-           // rotateToPath: true
-        });
-
-        this.checkPath = this.add.path(780, 330);  // start of path
-        this.checkPath.circleTo(300);                // radius of circle path
-        this.checkPath.draw(graphics);               // draw path
-        s = this.checkPath.getStartPoint();          // get start point
-        // add path follower
-        this.boat = this.add.follower(this.checkPath, s.x, s.y, 'monsterSketch').setScale(0.5);
-        // start path follow with config
-        this.boat.startFollow({
-            duration: 15000,
-            from: 0,
-            to: 1,
-            rotateToPath: true,
-            startAt: 0,
-            repeat: -1
-        });
-
-
-        // set of cursors to use
+      
+   
         cursors = this.input.keyboard.createCursorKeys();
         // we can change the player speed in this scene here
         playerSpeed = 2;
@@ -122,7 +112,7 @@ class LevelOneCave extends Phaser.Scene {
 
         this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
 
-        this.physics.add.collider(this.monsterDetection, this.player, (a, b) => {
+        this.physics.add.collider(this.monsterOne, this.player, (a, b) => {
             this.scene.start('caveBattleScene');
         }, null, this);
         this.physics.add.collider(this.levelTwoDetection, this.player, (a, b) => {
@@ -143,9 +133,12 @@ class LevelOneCave extends Phaser.Scene {
     }
 
     update() {
+       
+        
         this.player.update();
         console.log(this.player.body.x);
         console.log(this.player.body.y);
+
 
         if (Phaser.Input.Keyboard.JustDown(keyD)) {
             this.scene.start('levelTwoCave');

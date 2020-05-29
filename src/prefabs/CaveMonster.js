@@ -5,14 +5,17 @@ class CaveMonster extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         this.isAlive = true;
         scene.physics.add.existing(this);
-        this.setImmovable(true);
-
+       // this.setImmovable(true);
+       
     }
     create() {
+      
 
     }
 
     update() {
+       
+     
 
     }
 }
