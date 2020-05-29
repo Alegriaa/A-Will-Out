@@ -70,6 +70,7 @@ class CaveBattleScene extends Phaser.Scene {
     }
 
     update(){
+        this.player.update();
         if(Phaser.Input.Keyboard.JustDown(keyW)){
             console.log('W has been pressed');
         }
