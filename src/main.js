@@ -26,6 +26,8 @@ let config = {
     scene: [Menu, World, LevelOneCave, CaveBattleScene, LevelTwoCave, Forest, Meditation, EndingScene]
 }
 
+let player;
+
 let game = new Phaser.Game(config);
 let cursors;
 let playerSpeed;

@@ -23,6 +23,7 @@ class LevelOneCave extends Phaser.Scene {
 
     create() {
         
+        
         // we need to make a unique key for this scene to access
         const caveMap = this.make.tilemap({ key: "caveMap"});
         // first name is the name of the tilesheet used is the first parameter,
@@ -46,10 +47,13 @@ class LevelOneCave extends Phaser.Scene {
        // this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
 
         // instance of player in cave scene 1
-        this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
+        this.player = this.physics.add.sprite( centerX - 250, centerY + 50, 'player').setScale(0.4);
         //this.player = new Player(this, 3500, 1100, 'player').setScale(0.4);
 
         // instance of monster in cave scene 1 
+        //game.physics.arcade.enable(this.player);
+
+       // const body = this.player.body;
         
         this.levelTwoDetection = this.physics.add.sprite(3603, 1260, 'TempSpoon').setDisplaySize(300, 30);
         
@@ -81,7 +85,8 @@ class LevelOneCave extends Phaser.Scene {
        
         
 
-
+       
+       
 
         // here we have collisions detection between the player & the later from tiled
         this.physics.add.collider(this.player, backgroundLayer);
@@ -129,15 +134,30 @@ class LevelOneCave extends Phaser.Scene {
         this.cameras.main.startFollow(this.player).setZoom(1.45);
 
 
-
+       
     }
 
     update() {
        
-        
-        this.player.update();
-        console.log(this.player.body.x);
-        console.log(this.player.body.y);
+               
+  // player moves left
+  if (cursors.left.isDown) {
+    this.player.body.x -= playerSpeed;
+}
+// player moves right 
+if (cursors.right.isDown) {
+
+    this.player.body.x += playerSpeed;
+}
+// player moves up
+if (cursors.up.isDown) {
+    this.player.body.y -= playerSpeed;
+}
+// player moves down
+if (cursors.down.isDown) {
+    this.player.body.y += playerSpeed;
+}
+
 
 
         if (Phaser.Input.Keyboard.JustDown(keyD)) {

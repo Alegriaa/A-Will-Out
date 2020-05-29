@@ -5,6 +5,7 @@ class CaveBattleScene extends Phaser.Scene {
     }
 
     create(){
+       
         let menuConfig = {
             fontFamily: 'Impact',
             fontSize: '20px',
