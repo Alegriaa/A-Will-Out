@@ -1,0 +1,114 @@
+[
+	[
+		{
+			"speaker" : "you",
+			"dialog" : "Tell me, O muse, of that ingenious hero who travelled far and wide after he had sacked the famous town of Troy.",
+            "newSpeaker" : "true",
+            "choice" : "false"
+            
+		},
+		{
+			"speaker" : "you",
+			"dialog" : "Many cities did he visit, and many were the nations with whose manners and customs he was acquainted.",
+            "choice" : "false"
+		},
+		{	
+			"speaker" : "you",
+			"dialog" : "Moreover he suffered much by sea while trying to save his own life and bring his men safely home.",
+            "choice" : "false"
+		},
+		{	
+			"speaker" : "you",
+			"dialog" : "But do what he might he could not save his men, for they perished through their own sheer folly in eating the cattle of the Sun-god Hyperion.",
+            "choice" : "false"
+		},
+		{	
+			"speaker" : "you",
+			"dialog" : "So the gods prevented them from ever reaching home.",
+            "choice" : "false"
+		},
+		{	
+			"speaker" : "you",
+            "dialog" : "Press A to talk                                 press D to stay silent",
+            "choice" : "true",
+            "firstChoice": "dsda",
+            "secondChoice": "fdsf",
+            "firstPointer": "1",
+            "secondPointer": "2"
+            }
+	
+	],
+	[
+		{
+			"speaker" : "monster",
+			"dialog" : "See now, how men lay blame upon us gods for what is after all nothing but their own folly.",
+			"newSpeaker" : "true",
+            "choice" : "false"
+		},
+		{
+			"speaker" : "monster",
+			"dialog" : "Look at Aegisthus; he must needs make love to Agamemnon's wife unrighteously and then kill Agamemnon, though he knew it would be the death of him.",
+            "choice" : "false"
+		},
+		{	
+			"speaker" : "monster",
+			"dialog" : "Father, son of Saturn, King of kings, it served Aegisthus right, and so it would any one else who does as he did; but Aegisthus is neither here nor there.",
+			
+            "choice" : "false"
+		},
+		{	
+			"speaker" : "monster",
+			"dialog" : "It is for Ulysses that my heart bleeds, when I think of his sufferings in that lonely sea-girt island, far away, poor man, from all his friends.",
+            "choice" : "false"
+		},
+		{	
+			"speaker" : "monster",
+			"dialog" : "My child, what are you talking about? How can I forget Ulysses than whom there is no more capable man on earth, nor more liberal in his offerings to the immortal gods that live in heaven?",
+			
+            "choice" : "false"
+		},
+		{	
+			"speaker" : "monster",
+			"dialog" : "If, then, the gods now mean that Ulysses should get home, we should first send Mercury to the Ogygian island to tell Calypso that we have made up our minds and that he is to return.",
+		
+            "choice" : "true"
+		}
+    ],
+    [
+		{
+			"speaker" : "monster",
+			"dialog" : "111111111111111111111",
+			"newSpeaker" : "true",
+            "choice" : "false"
+		},
+		{
+			"speaker" : "monster",
+			"dialog" : "222222222222222222222222222222",
+            "choice" : "false"
+		},
+		{	
+			"speaker" : "monster",
+			"dialog" : "Father, son of Saturn, King of kings, it served Aegisthus right, and so it would any one else who does as he did; but Aegisthus is neither here nor there.",
+
+            "choice" : "false"
+		},
+		{	
+			"speaker" : "monster",
+			"dialog" : "It is for Ulysses that my heart bleeds, when I think of his sufferings in that lonely sea-girt island, far away, poor man, from all his friends.",
+            "choice" : "false"
+		},
+		{	
+			"speaker" : "monster",
+			"dialog" : "My child, what are you talking about? How can I forget Ulysses than whom there is no more capable man on earth, nor more liberal in his offerings to the immortal gods that live in heaven?",
+			"newSpeaker" : "true",
+            "choice" : "false"
+		},
+		{	
+			"speaker" : "monster",
+			"dialog" : "If, then, the gods now mean that Ulysses should get home, we should first send Mercury to the Ogygian island to tell Calypso that we have made up our minds and that he is to return.",
+			"newSpeaker" : "true",
+            "choice" : "true"
+		}
+    ]
+    
+]
