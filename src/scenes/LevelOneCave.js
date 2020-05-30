@@ -47,8 +47,8 @@ class LevelOneCave extends Phaser.Scene {
        // this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
 
         // instance of player in cave scene 1
-        this.player = this.physics.add.sprite( centerX - 250, centerY + 50, 'player').setScale(0.4);
-        //this.player = new Player(this, 3500, 1100, 'player').setScale(0.4);
+        //this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
+        this.player = new Player(this, 3672, 1039, 'player').setScale(0.4);
 
         // instance of monster in cave scene 1 
         //game.physics.arcade.enable(this.player);
@@ -63,7 +63,9 @@ class LevelOneCave extends Phaser.Scene {
         .lineTo(800, 480)
         .lineTo(100, 480)
         .lineTo(800, 480);
+
         this.monsterOne = new CaveMonster(this, 700, 452, 'monsterSketch').setScale(0.6);
+        
         this.monsterOne.pathFollower = 
         this.plugins.get('rexpathfollowerplugin').add(this.monsterOne, {
             path: path,
@@ -78,6 +80,208 @@ class LevelOneCave extends Phaser.Scene {
             repeat: -1,
             yoyo: true
         });
+
+        this.monsterTwo = new CaveMonster(this, 1724, 236, 'monsterSketch').setScale(0.6);
+
+        var pathTwo = this.add.path(1357, 247)
+        .lineTo(1077, 478)
+        .lineTo(1864, 478)
+        
+
+        this.monsterTwo.pathFollower = 
+        this.plugins.get('rexpathfollowerplugin').add(this.monsterTwo, {
+            path: pathTwo,
+            t: 0,
+            rotateToPath: false
+        });
+        this.tweens.add({
+            targets: this.monsterTwo.pathFollower,
+            t: 1,
+            ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 45000,
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.monsterThree = new CaveMonster(this, 1724, 236, 'monsterSketch').setScale(0.6);
+
+        var pathThree = this.add.path(2170, 304)
+        .lineTo(2050, 479)
+        .lineTo(2175, 479)
+        .lineTo(2033, 360)
+        .lineTo(2195, 309)
+        .lineTo(1848, 308)
+        
+
+        this.monsterThree.pathFollower = 
+        this.plugins.get('rexpathfollowerplugin').add(this.monsterThree, {
+            path: pathThree,
+            t: 0,
+            rotateToPath: false
+        });
+        this.tweens.add({
+            targets: this.monsterThree.pathFollower,
+            t: 1,
+            ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 40000,
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.monsterFour = new CaveMonster(this, 48, 48, 'monsterSketch').setScale(0.5);
+
+        var pathFour = this.add.path(48, 48)
+        .lineTo(236, 132)
+        .lineTo(356, 60)
+        .lineTo(480, 132)
+        .lineTo(608, 60)
+        .lineTo(756, 125)
+        .lineTo(854, 60)
+        
+
+        this.monsterFour.pathFollower = 
+        this.plugins.get('rexpathfollowerplugin').add(this.monsterFour, {
+            path: pathFour,
+            t: 0,
+            rotateToPath: false
+        });
+        this.tweens.add({
+            targets: this.monsterFour.pathFollower,
+            t: 1,
+            ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 25000,
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.monsterFive = new CaveMonster(this, 1848, 50, 'monsterSketch').setScale(0.5);
+
+        var pathFive = this.add.path(1848, 50)
+        .lineTo(1580, 111)
+        .lineTo(1863, 111)
+        .lineTo(1562, 247)
+        .lineTo(1058, 247)
+       
+        
+
+        this.monsterFive.pathFollower = 
+        this.plugins.get('rexpathfollowerplugin').add(this.monsterFive, {
+            path: pathFive,
+            t: 0,
+            rotateToPath: false
+        });
+        this.tweens.add({
+            targets: this.monsterFive.pathFollower,
+            t: 1,
+            ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 20000,
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.monsterSix = new CaveMonster(this, 2081, 50, 'monsterSketch').setScale(0.6);
+
+        var pathSix = this.add.path(2081, 50)
+        .lineTo(2326, 147)
+        .lineTo(2518, 50)
+        .lineTo(2666, 147)
+        .lineTo(2849, 52)
+       
+        
+
+        this.monsterSix.pathFollower = 
+        this.plugins.get('rexpathfollowerplugin').add(this.monsterSix, {
+            path: pathSix,
+            t: 0,
+            rotateToPath: false
+        });
+        this.tweens.add({
+            targets: this.monsterSix.pathFollower,
+            t: 1,
+            ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 20000,
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.monsterSeven = new CaveMonster(this, 1803, 976, 'monsterSketch').setScale(0.6);
+
+        var pathSeven = this.add.path(1803, 976)
+        .lineTo(1800, 976)
+  
+     
+       
+        
+
+        this.monsterSeven.pathFollower = 
+        this.plugins.get('rexpathfollowerplugin').add(this.monsterSeven, {
+            path: pathSeven,
+            t: 0,
+            rotateToPath: false
+        });
+        this.tweens.add({
+            targets: this.monsterSeven.pathFollower,
+            t: 1,
+            ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 10,
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.monsterEightFast = new CaveMonster(this, 2875, 740, 'monsterSketch').setScale(0.6);
+
+        var pathEight = this.add.path(2875, 740)
+        .lineTo(2597, 740)
+        .lineTo(2875, 740)
+        .lineTo(2571, 896)
+        .lineTo(2889, 953)
+        .lineTo(2579, 1016)
+        .lineTo(2857, 1016)
+  
+
+        this.monsterEightFast.pathFollower = 
+        this.plugins.get('rexpathfollowerplugin').add(this.monsterEightFast, {
+            path: pathEight,
+            t: 0,
+            rotateToPath: false
+        });
+        this.tweens.add({
+            targets: this.monsterEightFast.pathFollower,
+            t: 1,
+            ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 12000,
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.monsterNine = new CaveMonster(this, 3472, 1023, 'monsterSketch').setScale(0.6);
+
+        var pathNine = this.add.path(3472, 1023)
+        .lineTo(3322, 946)
+        .lineTo(3465, 946)
+        .lineTo(3314, 1023)
+        .lineTo(3472, 1023)
+       
+  
+
+        this.monsterNine.pathFollower = 
+        this.plugins.get('rexpathfollowerplugin').add(this.monsterNine, {
+            path: pathNine,
+            t: 0,
+            rotateToPath: false
+        });
+        this.tweens.add({
+            targets: this.monsterNine.pathFollower,
+            t: 1,
+            ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 8000,
+            repeat: -1,
+            yoyo: true
+        });
+
+
+
+        
 
 
 
@@ -118,8 +322,12 @@ class LevelOneCave extends Phaser.Scene {
         this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
 
         this.physics.add.collider(this.monsterOne, this.player, (a, b) => {
-            this.scene.start('caveBattleScene');
+            console.log('you have been hit');
         }, null, this);
+        this.physics.add.collider(this.monsterTwo, this.player, (a, b) => {
+            console.log('you have been hit');
+        }, null, this);
+
         this.physics.add.collider(this.levelTwoDetection, this.player, (a, b) => {
             this.scene.start('levelTwoCave');
         }, null, this);
@@ -127,7 +335,7 @@ class LevelOneCave extends Phaser.Scene {
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
         // bounds of the background asset 
-        this.cameras.main.setBounds(0, 0, 3760, 1280); 
+        this.cameras.main.setBounds(0, 0, 3790, 1280); 
         // bounds of the canvas 
         this.cameras.main.setViewport(0, 0, 960, 640);
         // this follows the player & zoomed in 
@@ -138,27 +346,12 @@ class LevelOneCave extends Phaser.Scene {
     }
 
     update() {
-       
-               
-  // player moves left
-  if (cursors.left.isDown) {
-    this.player.body.x -= playerSpeed;
-}
-// player moves right 
-if (cursors.right.isDown) {
 
-    this.player.body.x += playerSpeed;
-}
-// player moves up
-if (cursors.up.isDown) {
-    this.player.body.y -= playerSpeed;
-}
-// player moves down
-if (cursors.down.isDown) {
-    this.player.body.y += playerSpeed;
-}
+     
 
-
+        this.player.update();
+        console.log(this.player.body.x);
+        console.log(this.player.body.y);
 
         if (Phaser.Input.Keyboard.JustDown(keyD)) {
             this.scene.start('levelTwoCave');
