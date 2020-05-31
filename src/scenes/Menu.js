@@ -89,7 +89,7 @@ class Menu extends Phaser.Scene {
 
         if (cursors.right.isDown) // if the left arrow key is cave scene
         {
-            this.scene.start('endingScene');
+            this.scene.start('meditationScene');
         }
 
         if (cursors.up.isDown) // up arrow key takes you to meditation scene
