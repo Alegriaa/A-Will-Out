@@ -84,7 +84,7 @@ class Menu extends Phaser.Scene {
 
         if (cursors.left.isDown) // if the left arrow key is cave scene
         {
-            this.scene.start('levelOneCave');
+            this.scene.start('levelTwoCave');
         }
 
         if (cursors.right.isDown) // if the left arrow key is cave scene
