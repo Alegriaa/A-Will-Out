@@ -8,8 +8,9 @@ class LevelOneCave extends Phaser.Scene {
 
     preload() {
         var url;
-  
+        // importing the plugin used for the monster behavior. 
         url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexpathfollowerplugin.min.js';
+        // loading it into this scene
         this.load.plugin('rexpathfollowerplugin', url, true);
         
         this.load.image('caveBackground', './assets/LevelOne.png');
@@ -47,7 +48,7 @@ class LevelOneCave extends Phaser.Scene {
        // this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
 
         // instance of player in cave scene 1
-        //this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
+       // this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
         this.player = new Player(this, 3672, 1039, 'player').setScale(0.4);
 
         // instance of monster in cave scene 1 
@@ -58,14 +59,16 @@ class LevelOneCave extends Phaser.Scene {
         this.levelTwoDetection = this.physics.add.sprite(3603, 1260, 'TempSpoon').setDisplaySize(300, 30);
         
         this.levelTwoDetection.alpha = 0;
+
+        // each monster needs a path to follow that is saved in a variable
         var path = this.add.path(800, 480)
         .lineTo(100, 480)
         .lineTo(800, 480)
-        .lineTo(100, 480)
-        .lineTo(800, 480);
 
+        // this is the first monster the player will most likely see, 
+        // simple movement from left to right 
         this.monsterOne = new CaveMonster(this, 700, 452, 'monsterSketch').setScale(0.6);
-        
+        // we access the plugin here & attach the object we want to have follow the above path
         this.monsterOne.pathFollower = 
         this.plugins.get('rexpathfollowerplugin').add(this.monsterOne, {
             path: path,
@@ -81,13 +84,16 @@ class LevelOneCave extends Phaser.Scene {
             yoyo: true
         });
 
-        this.monsterTwo = new CaveMonster(this, 1724, 236, 'monsterSketch').setScale(0.6);
+        // this monster is the second to the right side of the first one
+        // following a larger path towards the middle
 
+        this.monsterTwo = new CaveMonster(this, 1724, 236, 'monsterSketch').setScale(0.6);
+        // each monster needs a path to follow that is saved in a variable
         var pathTwo = this.add.path(1357, 247)
         .lineTo(1077, 478)
         .lineTo(1864, 478)
         
-
+         // we access the plugin here & attach the object we want to have follow the above path
         this.monsterTwo.pathFollower = 
         this.plugins.get('rexpathfollowerplugin').add(this.monsterTwo, {
             path: pathTwo,
@@ -97,14 +103,17 @@ class LevelOneCave extends Phaser.Scene {
         this.tweens.add({
             targets: this.monsterTwo.pathFollower,
             t: 1,
-            ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            ease: 'Linear', 
             duration: 45000,
             repeat: -1,
             yoyo: true
         });
 
-        this.monsterThree = new CaveMonster(this, 1724, 236, 'monsterSketch').setScale(0.6);
 
+        // this monster next one on the right
+        // i will probably increase the speed for this after a play test
+        this.monsterThree = new CaveMonster(this, 1724, 236, 'monsterSketch').setScale(0.6);
+        // each monster needs a path to follow that is saved in a variable
         var pathThree = this.add.path(2170, 304)
         .lineTo(2050, 479)
         .lineTo(2175, 479)
@@ -112,7 +121,7 @@ class LevelOneCave extends Phaser.Scene {
         .lineTo(2195, 309)
         .lineTo(1848, 308)
         
-
+        // we access the plugin here & attach the object we want to have follow the above path
         this.monsterThree.pathFollower = 
         this.plugins.get('rexpathfollowerplugin').add(this.monsterThree, {
             path: pathThree,
@@ -128,8 +137,13 @@ class LevelOneCave extends Phaser.Scene {
             yoyo: true
         });
 
-        this.monsterFour = new CaveMonster(this, 48, 48, 'monsterSketch').setScale(0.5);
 
+        // this monster is at the top left of the map
+        // with our new feel of the game, i feel like most 
+        // areas should have a monster wandering around
+        // this one patrols this area up & down as it move left to right
+        this.monsterFour = new CaveMonster(this, 48, 48, 'monsterSketch').setScale(0.5);
+        // each monster needs a path to follow that is saved in a variable
         var pathFour = this.add.path(48, 48)
         .lineTo(236, 132)
         .lineTo(356, 60)
@@ -138,7 +152,7 @@ class LevelOneCave extends Phaser.Scene {
         .lineTo(756, 125)
         .lineTo(854, 60)
         
-
+        // we access the plugin here & attach the object we want to have follow the above path
         this.monsterFour.pathFollower = 
         this.plugins.get('rexpathfollowerplugin').add(this.monsterFour, {
             path: pathFour,
@@ -153,9 +167,10 @@ class LevelOneCave extends Phaser.Scene {
             repeat: -1,
             yoyo: true
         });
-
+        // this monster is at the higher area of the middle section of the map
+        // it patrols the area with a carefully designed path
         this.monsterFive = new CaveMonster(this, 1848, 50, 'monsterSketch').setScale(0.5);
-
+        // each monster needs a path to follow that is saved in a variable
         var pathFive = this.add.path(1848, 50)
         .lineTo(1580, 111)
         .lineTo(1863, 111)
@@ -163,7 +178,7 @@ class LevelOneCave extends Phaser.Scene {
         .lineTo(1058, 247)
        
         
-
+        // we access the plugin here & attach the object we want to have follow the above path
         this.monsterFive.pathFollower = 
         this.plugins.get('rexpathfollowerplugin').add(this.monsterFive, {
             path: pathFive,
@@ -178,9 +193,11 @@ class LevelOneCave extends Phaser.Scene {
             repeat: -1,
             yoyo: true
         });
-
+        // this monster is the next highest monster on the right of the monster five
+        // patrols the only direction that the player can travel
+        // moving up & down as it travels left to right
         this.monsterSix = new CaveMonster(this, 2081, 50, 'monsterSketch').setScale(0.6);
-
+        // each monster needs a path to follow that is saved in a variable
         var pathSix = this.add.path(2081, 50)
         .lineTo(2326, 147)
         .lineTo(2518, 50)
@@ -188,7 +205,7 @@ class LevelOneCave extends Phaser.Scene {
         .lineTo(2849, 52)
        
         
-
+        // we access the plugin here & attach the object we want to have follow the above path
         this.monsterSix.pathFollower = 
         this.plugins.get('rexpathfollowerplugin').add(this.monsterSix, {
             path: pathSix,
@@ -204,15 +221,14 @@ class LevelOneCave extends Phaser.Scene {
             yoyo: true
         });
 
-        this.monsterSeven = new CaveMonster(this, 1803, 976, 'monsterSketch').setScale(0.6);
-
+        // this monster just awaits the player at the end of a path 
+        // that is the wrong way
+        this.monsterSeven = new CaveMonster(this, 1803, 976, 'TempSpoon').setScale(0.6);
+        // each monster needs a path to follow that is saved in a variable
         var pathSeven = this.add.path(1803, 976)
         .lineTo(1800, 976)
   
-     
-       
-        
-
+        // we access the plugin here & attach the object we want to have follow the above path
         this.monsterSeven.pathFollower = 
         this.plugins.get('rexpathfollowerplugin').add(this.monsterSeven, {
             path: pathSeven,
@@ -228,8 +244,11 @@ class LevelOneCave extends Phaser.Scene {
             yoyo: true
         });
 
+        // this is a fast monster, that aims to
+        // scare the player but push the player to be extra careful
+        // as they cross it's path.
         this.monsterEightFast = new CaveMonster(this, 2875, 740, 'monsterSketch').setScale(0.6);
-
+        // each monster needs a path to follow that is saved in a variable
         var pathEight = this.add.path(2875, 740)
         .lineTo(2597, 740)
         .lineTo(2875, 740)
@@ -238,7 +257,7 @@ class LevelOneCave extends Phaser.Scene {
         .lineTo(2579, 1016)
         .lineTo(2857, 1016)
   
-
+        // we access the plugin here & attach the object we want to have follow the above path
         this.monsterEightFast.pathFollower = 
         this.plugins.get('rexpathfollowerplugin').add(this.monsterEightFast, {
             path: pathEight,
@@ -254,8 +273,10 @@ class LevelOneCave extends Phaser.Scene {
             yoyo: true
         });
 
+        // this monster is at the very end, bottom right
+        // patrol an area that the player might think is the only way out
         this.monsterNine = new CaveMonster(this, 3472, 1023, 'monsterSketch').setScale(0.6);
-
+        // each monster needs a path to follow that is saved in a variable
         var pathNine = this.add.path(3472, 1023)
         .lineTo(3322, 946)
         .lineTo(3465, 946)
@@ -263,7 +284,7 @@ class LevelOneCave extends Phaser.Scene {
         .lineTo(3472, 1023)
        
   
-
+        // we access the plugin here & attach the object we want to have follow the above path
         this.monsterNine.pathFollower = 
         this.plugins.get('rexpathfollowerplugin').add(this.monsterNine, {
             path: pathNine,
@@ -279,18 +300,9 @@ class LevelOneCave extends Phaser.Scene {
             yoyo: true
         });
 
+        // *** there may be a need for more monsters ***
 
 
-        
-
-
-
-
-       
-        
-
-       
-       
 
         // here we have collisions detection between the player & the later from tiled
         this.physics.add.collider(this.player, backgroundLayer);
