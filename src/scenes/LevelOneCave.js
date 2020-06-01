@@ -8,8 +8,9 @@ class LevelOneCave extends Phaser.Scene {
 
     preload() {
         var url;
-  
+        // importing the plugin used for the monster behavior. 
         url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexpathfollowerplugin.min.js';
+        // loading it into this scene
         this.load.plugin('rexpathfollowerplugin', url, true);
         
         this.load.image('caveBackground', './assets/LevelOne.png');
