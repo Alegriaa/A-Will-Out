@@ -15,7 +15,7 @@ class World extends Phaser.Scene {
         this.load.image('statueText', './assets/StatueText.png');
         this.load.image('worldBackground', './assets/OverWorld.png');
         this.load.tilemapTiledJSON('map', './assets/TiledWorldMap.json');
-
+        this.load.spritesheet('characterWalk','./assets/characterWalking.png',{frameWidth:50,frameHeight:150,startFrame:0,endFrame:31});
 
     }
 
@@ -45,8 +45,10 @@ class World extends Phaser.Scene {
         // temporary background to test player movement
         // this.tempBackground = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0, 0);//set scale for testing scaled background
         // instance of player within world scene
-        this.player = new Player (this, centerX - 300, centerY - 165, 'player').setScale(0.3);
+        this.player = new Player (this, centerX - 350, centerY - 170, 'characterWalk',0).setScale(0.3);
         this.player.isWalking = false;
+
+        
         this.physics.add.collider(this.player, treeLayer);
 
         // temp collision detection square

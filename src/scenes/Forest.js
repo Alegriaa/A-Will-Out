@@ -5,13 +5,15 @@ class Forest extends Phaser.Scene {
     }
     preload(){
         this.load.image('worldBackground', './assets/OverWorld.png');
+        this.load.spritesheet('characterWalk','./assets/characterWalking.png',{frameWidth:50,frameHeight:150,startFrame:0,endFrame:31})
 
     }
 
     create(){
         this.background = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0,0);
 
-        this.player = new Player(this, centerX - 300, centerY - 165, 'player').setScale(0.3);
+        this.player = new Player(this, centerX - 300, centerY - 165, 'characterWalk').setScale(1);
+
 
          // this allows us to quickly use up, left, down, right arroy keys
          cursors = this.input.keyboard.createCursorKeys();
