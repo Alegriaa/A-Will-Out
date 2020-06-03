@@ -46,7 +46,7 @@ class World extends Phaser.Scene {
         // this.tempBackground = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0, 0);//set scale for testing scaled background
         // instance of player within world scene
         this.player = new Player (this, centerX - 350, centerY - 170, 'characterWalk',0).setScale(0.3);
-        this.player.isWalking = false;
+        
 
         
         this.physics.add.collider(this.player, treeLayer);
