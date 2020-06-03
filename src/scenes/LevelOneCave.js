@@ -15,6 +15,7 @@ class LevelOneCave extends Phaser.Scene {
         
         this.load.image('caveBackground', './assets/LevelOne.png');
         this.load.image('monsterSketch', './assets/Monster.png');
+        this.load.image('smallCameraCircle', './assets/SmallCameraCircle.png');
         // name of the tiled project
         this.load.tilemapTiledJSON('caveMap','./assets/TiledCaveMap.json');
         //this.load.plugin('rexmovetoplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexmovetoplugin.min.js', true);
@@ -29,7 +30,7 @@ class LevelOneCave extends Phaser.Scene {
         const caveMap = this.make.tilemap({ key: "caveMap"});
         // first name is the name of the tilesheet used is the first parameter,
         // the name we gave the asset within our project is the second parameter
-        const tileset = caveMap.addTilesetImage("Level1Sketch", "caveBackground");
+        const tileset = caveMap.addTilesetImage("LevelOne", "caveBackground");
         // this is a layer within the tiled project
         const backgroundLayer = caveMap.createStaticLayer("Background", tileset, 0, 0);
         // this is required, to have the player collide with pixel tiles
@@ -38,18 +39,19 @@ class LevelOneCave extends Phaser.Scene {
        //treeLayer.setCollisionBetween(0, 244);
 
 
-    //    const debugGraphics = this.add.graphics().setAlpha(0.75);
-    //    backgroundLayer.renderDebug(debugGraphics, {
-    //      tileColor: null, // Color of non-colliding tiles
-    //      collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-    //      faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-    //    });
+        const debugGraphics = this.add.graphics().setAlpha(0.75);
+       backgroundLayer.renderDebug(debugGraphics, {
+         tileColor: null, // Color of non-colliding tiles
+         collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+         faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+       });
 
        // this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
 
         // instance of player in cave scene 1
-       // this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
-        this.player = new Player(this, 3672, 1039, 'player').setScale(0.4);
+        this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
+        //this.player = new Player(this, 3672, 1039, 'player').setScale(0.4);
+       
 
         // instance of monster in cave scene 1 
         //game.physics.arcade.enable(this.player);
@@ -301,6 +303,8 @@ class LevelOneCave extends Phaser.Scene {
         });
 
         // *** there may be a need for more monsters ***
+
+       // this.smallCamera = this.add.tileSprite(0,0, 1500, 600, 'smallCameraCircle').setOrigin(0,0);
 
 
 
