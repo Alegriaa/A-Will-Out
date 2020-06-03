@@ -64,7 +64,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.setVelocity(0);
 
+
         //Player moves left
+
         if (cursors.left.isDown) {
             this.setVelocityX(-100);
             
@@ -84,8 +86,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
         }
 
+
         // player moves up and down
         else if (cursors.up.isDown) {
+
+      
+        if (cursors.up.isDown) {
             this.setVelocityY(-100);
             if (this.check != 'walkUp') {
                 this.check = 'walkUp';
