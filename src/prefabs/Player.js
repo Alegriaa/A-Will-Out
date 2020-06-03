@@ -69,15 +69,15 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         if (cursors.left.isDown) {
             this.setVelocityX(-100);
-            
+
             //These check if you're pressing a button and if you are then that animation plays, can't have it as just if cursor.left.isDown since it resets the animation for as long as the player holds it
-          
+
             if (this.check != 'walkLeft') {
                 this.check = 'walkLeft';
                 this.anims.play('walkLeft');
             }
 
-        //Player moves right
+            //Player moves right
         } else if (cursors.right.isDown) {
             this.setVelocityX(100);
             if (this.check != 'walkRight') {
@@ -90,30 +90,31 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // player moves up and down
         else if (cursors.up.isDown) {
 
-      
-        if (cursors.up.isDown) {
-            this.setVelocityY(-100);
-            if (this.check != 'walkUp') {
-                this.check = 'walkUp';
-                this.anims.play('walkUp');
+
+            if (cursors.up.isDown) {
+                this.setVelocityY(-100);
+                if (this.check != 'walkUp') {
+                    this.check = 'walkUp';
+                    this.anims.play('walkUp');
+                }
+
+            } else if (cursors.down.isDown) {
+                this.setVelocityY(100);
+                if (this.check != 'walkDown') {
+                    this.check = 'walkDown';
+                    this.anims.play('walkDown');
+                }
+
+            } else {
+                //Idle animation used to replace moving animations when player is checked as not pressing a button
+                if (this.check != 'idle') {
+                    this.check = 'idle';
+                    this.anims.play('idle');
+                }
             }
 
-        } else if (cursors.down.isDown) {
-            this.setVelocityY(100);
-            if (this.check != 'walkDown') {
-                this.check = 'walkDown';
-                this.anims.play('walkDown');
-            }
-
-        } else {
-            //Idle animation used to replace moving animations when player is checked as not pressing a button
-            if (this.check != 'idle') {
-                this.check = 'idle';
-                this.anims.play('idle');
-            }
         }
-
-
     }
-
 }
+
+
