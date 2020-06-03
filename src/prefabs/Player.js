@@ -44,8 +44,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             frameRate: 8,
         });
 
-        this.scene.anims.create({
-            key: 'walkDown',
+       this.scene.anims.create({
+          key: 'walkDown',
             repeat: -1,
             frames: this.scene.anims.generateFrameNumbers('characterWalk', { start: 8, end: 11, first: 8 }),//8-11 is the down walking animation, you get the point lol
             frameRate: 8,
@@ -98,10 +98,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                     this.anims.play('walkUp');
                 }
 
-            } else if (cursors.down.isDown) {
+            }} else if (cursors.down.isDown) {
                 this.setVelocityY(100);
                 if (this.check != 'walkDown') {
-                    this.check = 'walkDown';
+                   this.check = 'walkDown';
                     this.anims.play('walkDown');
                 }
 
@@ -114,7 +114,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
 
         }
-    }
+    
 }
 
 
