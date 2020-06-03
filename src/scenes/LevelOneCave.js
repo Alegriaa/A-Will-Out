@@ -19,7 +19,7 @@ class LevelOneCave extends Phaser.Scene {
         // name of the tiled project
         this.load.tilemapTiledJSON('caveMap','./assets/TiledCaveMap.json');
         //this.load.plugin('rexmovetoplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexmovetoplugin.min.js', true);
-
+        this.load.spritesheet('characterWalk','./assets/characterWalking.png',{frameWidth:50,frameHeight:150,startFrame:0,endFrame:31});
 
     }
 
@@ -49,6 +49,10 @@ class LevelOneCave extends Phaser.Scene {
        // this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
 
         // instance of player in cave scene 1
+
+        this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
+       // this.player = new Player(this, 3672, 1039, 'characterWalk',0).setScale(0.4);
+
         this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
         //this.player = new Player(this, 3672, 1039, 'player').setScale(0.4);
        
@@ -277,7 +281,7 @@ class LevelOneCave extends Phaser.Scene {
 
         // this monster is at the very end, bottom right
         // patrol an area that the player might think is the only way out
-        this.monsterNine = new CaveMonster(this, 3472, 1023, 'monsterSketch').setScale(0.6);
+        this.monsterNine = new CaveMonster(this, 3472, 1023, 'monsterSketch',0).setScale(0.6);
         // each monster needs a path to follow that is saved in a variable
         var pathNine = this.add.path(3472, 1023)
         .lineTo(3322, 946)

@@ -22,7 +22,7 @@ class Meditation extends Phaser.Scene {
 
 
 
-        this.player = new Player(this, centerX - 450, centerY - 40, 'player').setScale(0.4);
+        this.player = new Player(this, centerX - 450, centerY - 40, 'characterWalk',0).setScale(0.4);
         this.tree = this.add.tileSprite(0, 0, 960, 640, 'MeditationTree').setOrigin(0,0);
         this.physics.add.collider(this.player, backgroundLayer);
 
