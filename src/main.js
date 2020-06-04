@@ -40,5 +40,6 @@ let circlePosition;
 
 game.settings = {
     startingSpoons: 5,
-    currentSpoons: 5   
+    currentSpoons: 5,   
+    shield: false,
 }
