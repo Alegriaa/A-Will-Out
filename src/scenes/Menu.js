@@ -120,9 +120,9 @@ class Menu extends Phaser.Scene {
         this.add.image(0,0,'directionsScreen').setOrigin(0);
         this.add.text(centerX, centerY - 300, 'Spoon Theory',directionConfig).setOrigin(0.5);
         this.add.text(centerX, centerY - 200, 'The spoon theory is a disability metaphor used to explain the reduced amount of mental ',directionConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY - 150, ' and physical energy available for day to day acitivies and tasks that may result from ',directionConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - 150, ' and physical energy available for day to day activities and tasks that may result from ',directionConfig).setOrigin(0.5);
         this.add.text(centerX, centerY - 100, 'disability or chronic illnesses. Spoons are a visual representation of how much energy ',directionConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY - 50, 'a person has on any given day.  Each acitivity requries a given number of spoons which ',directionConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - 50, 'a person has on any given day.  Each activity requries a given number of spoons which ',directionConfig).setOrigin(0.5);
         this.add.text(centerX, centerY, ' are only replace/recharged through rest. ',directionConfig).setOrigin(0.5);
         this.add.text(centerX, centerY + 100,'Press (D) to continue',directionConfig).setOrigin(0.5);
         this.secondFlag = true;
