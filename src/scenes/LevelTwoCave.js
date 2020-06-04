@@ -92,7 +92,7 @@ class LevelTwoCave extends Phaser.Scene {
         this.physics.add.collider(this.spoonItem, this.player, (a, b) => {
 
 
-            if(game.settings.currentSpoons < 6){
+            if(game.settings.currentSpoons < 5){
 
                 this.restoreDamage();
                 a.destroy();
