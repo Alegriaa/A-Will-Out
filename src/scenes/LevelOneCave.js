@@ -22,10 +22,12 @@ class LevelOneCave extends Phaser.Scene {
         this.load.tilemapTiledJSON('caveMap','./assets/TiledCaveMap.json');
         //this.load.plugin('rexmovetoplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexmovetoplugin.min.js', true);
         this.load.spritesheet('characterWalk','./assets/characterWalking.png',{frameWidth:50,frameHeight:150,startFrame:0,endFrame:31});
-
+         this.load.spritesheet('monster1Walk','./assets/enemy1WalkFull.png',{frameWidth:150, frameHeight: 200, startFrame: 0, endFrame: 7});
+         this.load.spritesheet('monster2Fly','./assets/enemy2WalkFull.png',{frameWidth:150,frameHeight: 200, startFrame: 0, endFrame: 7});
     }
 
     create() {
+        
         
         
         // we need to make a unique key for this scene to access
@@ -50,12 +52,24 @@ class LevelOneCave extends Phaser.Scene {
 
        // this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
 
-       
+
+        // instance of player in cave scene 1
+     // this.player = new Player(this, centerX - 250, centerY + 50, 'characterWalk',0).setScale(0.4);
+
 
         // this is the instance we will use for the game
         // feel free to make more for testing
         // but these coordinates must remain the same
         this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk',0).setScale(0.4);
+        //this.lampOne = new Lamp(this, centerX - 100, centerY + 550, 'lamp').setScale(0.35);
+        
+        
+        // this.physics.add.collider(this.lampOne, this.player, (a, b) => {
+        //     this.smallCaveCircle.alpha = 0.6
+        //     this.bigCaveCircle.alpha = 0.8
+        //     this.lampOne.alpha = 0;
+        //     console.log('you have been hit');
+        // }, null, this);
 
         // this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
         // this.player = new Player(this, 3672, 1039, 'player').setScale(0.4);
@@ -63,6 +77,54 @@ class LevelOneCave extends Phaser.Scene {
         this.levelTwoDetection = this.physics.add.sprite(3603, 1260, 'TempSpoon').setDisplaySize(300, 30);
         
         this.levelTwoDetection.alpha = 0;
+
+
+        //ANIMATION FOR MONSTER 1
+        this.anims.create({
+            key:'monsterWalkRight',
+            repeat:-1,
+            frames: this.anims.generateFrameNumbers('monster1Walk',{start:5,end:7,first:4}),
+            frameRate: 2.5,
+        });
+
+        this.anims.create({
+            key:'monsterWalkLeft',
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('monster1Walk',{start:0,end:3,first:0}),
+            frameRate: 2.5,
+
+        })
+
+        //FASTER WALKING ANIMATION FOR MONSTER 1
+        this.anims.create({
+            key:'fastMonsterWalkRight',
+            repeat:-1,
+            frames:this.anims.generateFrameNumbers('monster1Walk',{start:4,end:7,first:4}),
+            frameRate:6,
+        })
+        
+        this.anims.create({
+            key:'fastMonsterWalkLeft',
+            repeat:-1,
+            frames:this.anims.generateFrameNumbers('monster1Walk',{start:0,end:3,first:0}),
+            frameRate:6,
+        })
+
+        //ANIMATIONS FOR MONSTER 2
+        this.anims.create({
+            key:'monsterFlyRight',
+            repeat:-1,
+            frames:this.anims.generateFrameNumbers('monster2Fly',{start:4,end:7,first:4}),
+            frameRate:6,
+        })
+
+        this.anims.create({
+            key:'monsterFlyLeft',
+            repeat:-1,
+            frames:this.anims.generateFrameNumbers('monster2Fly',{start:0,end:3,first:0}),
+            frameRate:6,
+        })
+
 
         // each monster needs a path to follow that is saved in a variable
         var path = this.add.path(800, 480)
@@ -72,9 +134,13 @@ class LevelOneCave extends Phaser.Scene {
 
         .lineTo(800, 480)
 
+
         // this is the first monster the player will most likely see, 
         // simple movement from left to right 
-        this.monsterOne = new CaveMonster(this, 700, 452, 'monsterSketch').setScale(0.6);
+        this.monsterOne = new CaveMonster(this, 800, 452, 'monster1Walk').setScale(0.6);
+
+        this.tempM1x = this.monsterOne.x;
+
         // we access the plugin here & attach the object we want to have follow the above path
         this.monsterOne.pathFollower = this.plugins.get('rexpathfollowerplugin').add(this.monsterOne, {
             path: path,
@@ -89,11 +155,15 @@ class LevelOneCave extends Phaser.Scene {
             repeat: -1,
             yoyo: true
         });
+        
 
         // this monster is the second to the right side of the first one
         // following a larger path towards the middle
 
-        this.monsterTwo = new CaveMonster(this, 1724, 236, 'monsterSketch').setScale(0.6);
+        this.monsterTwo = new CaveMonster(this, 1724, 236, 'monster1Walk').setScale(0.6);
+
+        this.tempM2x = this.monsterTwo.x;
+
         // each monster needs a path to follow that is saved in a variable
         var pathTwo = this.add.path(1357, 247)
         .lineTo(1077, 478)
@@ -117,7 +187,10 @@ class LevelOneCave extends Phaser.Scene {
 
         // this monster next one on the right
         // i will probably increase the speed for this after a play test
-        this.monsterThree = new CaveMonster(this, 1724, 236, 'monsterSketch').setScale(0.6);
+        this.monsterThree = new CaveMonster(this, 1724, 236, 'monster1Walk').setScale(0.6);
+
+        this.tempM3x = this.monsterThree.x;
+
         // each monster needs a path to follow that is saved in a variable
         var pathThree = this.add.path(2170, 304)
         .lineTo(2050, 479)
@@ -146,7 +219,10 @@ class LevelOneCave extends Phaser.Scene {
         // with our new feel of the game, i feel like most 
         // areas should have a monster wandering around
         // this one patrols this area up & down as it move left to right
-        this.monsterFour = new CaveMonster(this, 48, 48, 'monsterSketch').setScale(0.5);
+        this.monsterFour = new CaveMonster(this, 48, 48, 'monster1Walk').setScale(0.5);
+
+        this.tempM4x = this.monsterFour.x;
+
         // each monster needs a path to follow that is saved in a variable
         var pathFour = this.add.path(48, 48)
         .lineTo(236, 132)
@@ -172,7 +248,10 @@ class LevelOneCave extends Phaser.Scene {
         });
         // this monster is at the higher area of the middle section of the map
         // it patrols the area with a carefully designed path
-        this.monsterFive = new CaveMonster(this, 1848, 50, 'monsterSketch').setScale(0.5);
+        this.monsterFive = new CaveMonster(this, 1848, 50, 'monster1Walk').setScale(0.5);
+
+        this.tempM5x = this.monsterFive.x;
+
         // each monster needs a path to follow that is saved in a variable
         var pathFive = this.add.path(1848, 50)
         .lineTo(1580, 111)
@@ -198,7 +277,10 @@ class LevelOneCave extends Phaser.Scene {
         // this monster is the next highest monster on the right of the monster five
         // patrols the only direction that the player can travel
         // moving up & down as it travels left to right
-        this.monsterSix = new CaveMonster(this, 2081, 50, 'monsterSketch').setScale(0.6);
+        this.monsterSix = new CaveMonster(this, 2081, 50, 'monster1Walk').setScale(0.6);
+       
+        this.tempM6x = this.monsterSix.x;
+
         // each monster needs a path to follow that is saved in a variable
         var pathSix = this.add.path(2081, 50)
         .lineTo(2326, 147)
@@ -224,30 +306,15 @@ class LevelOneCave extends Phaser.Scene {
 
         // this monster just awaits the player at the end of a path 
         // that is the wrong way
-        this.monsterSeven = new CaveMonster(this, 1803, 976, 'TempSpoon').setScale(0.6);
-        // each monster needs a path to follow that is saved in a variable
-        var pathSeven = this.add.path(1803, 976)
-        .lineTo(1800, 976)
-  
-        // we access the plugin here & attach the object we want to have follow the above path
-        this.monsterSeven.pathFollower = this.plugins.get('rexpathfollowerplugin').add(this.monsterSeven, {
-            path: pathSeven,
-            t: 0,
-            rotateToPath: false
-        });
-        this.tweens.add({
-            targets: this.monsterSeven.pathFollower,
-            t: 1,
-            ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
-            duration: 10,
-            repeat: -1,
-            yoyo: true
-        });
+        this.monsterSeven = new CaveMonster(this, 1803, 976, 'monsterSketch').setScale(0.6);
 
         // this is a fast monster, that aims to
         // scare the player but push the player to be extra careful
         // as they cross it's path.
-        this.monsterEightFast = new CaveMonster(this, 2875, 740, 'monsterSketch').setScale(0.6);
+        this.monsterEightFast = new CaveMonster(this, 2875, 740, 'monster1Walk').setScale(0.6);
+        
+        this.tempM8x = this.monsterEightFast.x;
+
         // each monster needs a path to follow that is saved in a variable
         var pathEight = this.add.path(2875, 740)
         .lineTo(2597, 740)
@@ -274,7 +341,10 @@ class LevelOneCave extends Phaser.Scene {
 
         // this monster is at the very end, bottom right
         // patrol an area that the player might think is the only way out
-        this.monsterNine = new CaveMonster(this, 3472, 1023, 'monsterSketch',0).setScale(0.6);
+        this.monsterNine = new CaveMonster(this, 3472, 1023, 'monster1Walk',0).setScale(0.6);
+
+        this.tempM9x = this.monsterNine.x;
+
         // each monster needs a path to follow that is saved in a variable
         var pathNine = this.add.path(3472, 1023)
         .lineTo(3322, 946)
@@ -364,6 +434,88 @@ class LevelOneCave extends Phaser.Scene {
     }
 
     update() {
+
+
+        //LARGE CHUNK OF CODE TO GET ALL THE ANIMATIONS WORKING FOR EACH DIFFERENT PATH AHHHHHHH
+
+        //Monster 1 Animation Pathing
+        if(this.tempM1x < this.monsterOne.x){
+            this.monsterOne.animate('monsterWalkRight');
+            this.tempM1x = this.monsterOne.x;
+        }else if(this.tempM1x > this.monsterOne.x){
+            this.monsterOne.animate('monsterWalkLeft');
+            this.tempM1x = this.monsterOne.x;
+        }
+
+        //Monster 2 Animation Pathing
+        if(this.tempM2x < this.monsterTwo.x){
+            this.monsterTwo.animate('monsterWalkRight');
+            this.tempM2x = this.monsterTwo.x;
+        }else if(this.tempM2x > this.monsterTwo.x){
+            this.monsterTwo.animate('monsterWalkLeft');
+            this.tempM2x = this.monsterTwo.x;
+        }
+
+        //Monster 3 Animation Pathing
+       
+        if(this.tempM3x < this.monsterThree.x){
+            this.monsterThree.animate('monsterWalkRight');
+            this.tempM3x = this.monsterThree.x;
+        }else if(this.tempM3x > this.monsterThree.x){
+            this.monsterThree.animate('monsterWalkLeft');
+            this.tempM3x = this.monsterThree.x;
+        }
+
+        //Monster 4 Animation Pathing
+        if(this.tempM4x < this.monsterFour.x){
+            this.monsterFour.animate('monsterWalkRight');
+            this.tempM4x = this.monsterFour.x;
+        }else if(this.tempM4x > this.monsterFour.x){
+            this.monsterFour.animate('monsterWalkLeft');
+            this.tempM4x = this.monsterFour.x;
+        }
+
+         //Monster 5 Animation Pathing
+         if(this.tempM5x < this.monsterFive.x){
+            this.monsterFive.animate('monsterFlyRight');
+            this.tempM5x = this.monsterFive.x;
+        }else if(this.tempM5x > this.monsterFive.x){
+            this.monsterFive.animate('monsterFlyLeft');
+            this.tempM5x = this.monsterFive.x;
+        }
+
+         //Monster 6 Animation Pathing
+         if(this.tempM6x < this.monsterSix.x){
+            this.monsterSix.animate('monsterWalkRight');
+            this.tempM6x = this.monsterSix.x;
+        }else if(this.tempM6x > this.monsterSix.x){
+            this.monsterSix.animate('monsterWalkLeft');
+            this.tempM6x = this.monsterSix.x;
+        }
+
+        //Monster 8 Animation Pathing
+        if(this.tempM8x < this.monsterEightFast.x){
+            this.monsterEightFast.animate('monsterFlyRight');
+            this.tempM8x = this.monsterEightFast.x;
+        }else if(this.tempM8x > this.monsterEightFast.x){
+            this.monsterEightFast.animate('monsterFlyLeft');
+            this.tempM8x = this.monsterEightFast.x;
+        }
+
+        // Monster 9 Animation Pathing
+        if(this.tempM9x < this.monsterNine.x){
+            this.monsterNine.animate('monsterWalkRight');
+            this.tempM9x = this.monsterNine.x;
+        }else if(this.tempM9x > this.monsterNine.x){
+            this.monsterNine.animate('monsterWalkLeft');
+            this.tempM9x = this.monsterNine.x;
+        }
+
+
+
+     
+      
+
        
         this.player.update();
         // we attach the first overlay to the player's position
@@ -378,8 +530,16 @@ class LevelOneCave extends Phaser.Scene {
         this.bigCaveCircle.x = this.player.body.x - 1885;
         this.bigCaveCircle.y = this.player.body.y - 610;
 
+
+        // console.log(this.player.body.x);
+        // console.log(this.player.body.y);
+
         console.log(this.player.body.x);
+
         console.log(this.player.body.y);
+
+
+    
 
         if (Phaser.Input.Keyboard.JustDown(keyD)) {
             this.scene.start('levelTwoCave');

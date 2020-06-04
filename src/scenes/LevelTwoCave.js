@@ -43,7 +43,7 @@ class LevelTwoCave extends Phaser.Scene {
     
 
         // instance of player in battle scene
-        this.player = new Player(this, centerX - 200, centerY + 245, 'player').setScale(0.5);
+        this.player = new Player(this, centerX - 200, centerY + 245, 'characterWalk').setScale(0.5);
         this.caveMonster = new CaveMonster(this, centerX + 240, centerY + 200, 'monsterSketch');
 
         //create the shield in the cave
