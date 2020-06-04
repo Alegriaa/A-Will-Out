@@ -6,6 +6,8 @@ class Menu extends Phaser.Scene {
     preload() {
 
         // getting these ready for the world scene
+        this.load.image('aWillOutTitle','./assets/aWillOutTitle.png');
+        this.load.image('yellowTitle','./assets/AWillOutTitleYellow.png');
         this.load.image('player', './assets/PlayerSprite.png');
         this.load.image('TempCaveCirlce', './assets/TempCaveCircle.png');
         this.load.image('monsterSketch', './assets/Monster.png');
@@ -33,14 +35,14 @@ class Menu extends Phaser.Scene {
 
 
 
-
+// -150 -100 ,y , +50, 100, 200
         this.add.image(0,0,'menuScreen').setOrigin(0);
-        this.add.text(centerX, centerY - 300, 'A Will Out', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY - 150, 'UCSC Caps https://caps.ucsc.edu', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY -100, 'USA Suicide Prevention Hotline 1-800-273-8255', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY, 'Warning: This game deals with concepts surrounding mental health, if you', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY + 50, 'or someone you know is struggling, please use the links', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY + 100, 'above or talk to a professional.', menuConfig).setOrigin(0.5);
+        this.add.image(centerX - 280, centerY - 250, 'aWillOutTitle').setOrigin(0.5);
+        this.add.text(centerX, centerY -150, 'Warning: This game deals with concepts surrounding mental health, if you', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - 100, 'or someone you know is struggling, please use the links', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY -50, 'below or talk to a professional.', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY +50 , 'UCSC Caps https://caps.ucsc.edu', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY + 100, 'USA Suicide Prevention Hotline 1-800-273-8255', menuConfig).setOrigin(0.5);
         this.add.text(centerX, centerY + 200, 'Press (D) to Continue', menuConfig).setOrigin(0.5); 
 
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
