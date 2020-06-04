@@ -15,6 +15,7 @@ class LevelTwoCave extends Phaser.Scene {
         this.load.spritesheet('characterWalk','./assets/characterWalking.png',{frameWidth:50,frameHeight:150,startFrame:0,endFrame:31});
         this.load.image('cave2SpikyOverlay', './assets/psCaveTwoOverlay.png')
         this.load.image('shield', './assets/Shield.png')
+        this.load.image('spoonItem', './assets/Spoon.png')
     }
 
     create() {
@@ -47,8 +48,11 @@ class LevelTwoCave extends Phaser.Scene {
 
         //create the shield in the cave
         this.shield = new Shield(this, centerX - 200, centerY + 100, 'shield').setScale(.5);
-        //non movable shield
+        //create spoon in cave
+        this.spoonItem = new Spoon(this, centerX - 150, centerY + 200, 'spoonItem').setScale(.5);
+        //non movable shield and spoon
         this.shield.setImmovable();
+        this.spoonItem.setImmovable();
         playerSpeed = 2;
         this.topLayer = this.add.tileSprite(0, 0, 3760, 1280, 'topLayer').setOrigin(0,0);
         this.spikes = this.add.tileSprite(0,0,3750,1280,'cave2SpikyOverlay').setOrigin(0,0);
@@ -67,20 +71,49 @@ class LevelTwoCave extends Phaser.Scene {
         this.physics.add.collider(this.player, backgroundLayer1);
         //collision between shield and the player
         this.physics.add.collider(this.player, this.shield);
+        this.physics.add.collider(this.player, this.spoonItem);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
-       //add a function call for the player 
+       //add a function call for the player when a shield is collected
         this.physics.add.collider(this.shield, this.player, (a, b) => {
             console.log("pp");
             if(game.settings.shield){
-
+                
 
             }else{
+            
                 this.addShield();
                 a.destroy();
             }
 
         }, null, this);
+
+        //function call for the player when a spoon is collected
+        this.physics.add.collider(this.spoonItem, this.player, (a, b) => {
+           
+            
+                this.restoreDamage();
+                a.destroy();
+           
+
+        }, null, this);
+
+        //create spoon UI
+        this.spoonCount = this.game.settings.currentSpoons;//counter for array
+        this.starter = 1;//counter for array
+        this.spoonArray = ([]); // create spoon array
+        this.xValue = centerX - 280; //x value for all of the spoon location spawns
+        this.yValue = centerY - 200;
+
+
+        //a while loop to create the necessary amount of spoons according to the current spoons game settings number
+        while (this.starter <= this.spoonCount) {
+            this.spoon1 = new Spoon(this, this.xValue, this.yValue, 'TempSpoon').setScale(.2);
+            this.spoon1.setScrollFactor(0, 0);
+            this.spoonArray.push(this.spoon1);
+            this.xValue += 40;
+            this.starter++;
+        }
 
 
     }
@@ -97,6 +130,37 @@ class LevelTwoCave extends Phaser.Scene {
 
         game.settings.shield = true;
         console.log(game.settings.shield);
+
+
+        
+    }
+
+    takeDamage() {
+        this.temp = this.game.settings.currentSpoons - 1; //minus one bc stupid off by one error ew
+        this.spoonArray[this.temp].alpha = 0; //alpha set to 0 is invis
+        game.settings.currentSpoons -= 1;
+
+
+
+        this.tweens.add({ //!!!!!!!! -------> this will eventually need to be changed into a switch statement
+            targets: this.sea,
+            alphaTopLeft: { value: .5, duration: 500, ease: 'Power1' },
+            alphaTopRight: { value: .5, duration: 500, ease: 'Power1' },
+            alphaBottomRight: { value: .5, duration: 500, ease: 'Power1' },
+            alphaBottomLeft: { value: .5, duration: 500, ease: 'Power1' },//,delay: 5000 },
+
+            yoyo: true,
+            //loop: -1   
+        });
+
+
+    }
+
+    restoreDamage() {
+
+        this.temp = this.game.settings.currentSpoons; //no minus one, i dont understand math
+        this.spoonArray[this.temp].alpha = 1; //alpha set to 1 is visible
+        game.settings.currentSpoons += 1;
 
     }
 
