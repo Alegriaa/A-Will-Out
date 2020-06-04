@@ -6,6 +6,8 @@ class Menu extends Phaser.Scene {
     preload() {
 
         // getting these ready for the world scene
+        this.load.image('aWillOutTitle','./assets/aWillOutTitle.png');
+        this.load.image('yellowTitle','./assets/AWillOutTitleYellow.png');
         this.load.image('player', './assets/PlayerSprite.png');
         this.load.image('TempCaveCirlce', './assets/TempCaveCircle.png');
         this.load.image('monsterSketch', './assets/Monster.png');
@@ -33,14 +35,14 @@ class Menu extends Phaser.Scene {
 
 
 
-
+// -150 -100 ,y , +50, 100, 200
         this.add.image(0,0,'menuScreen').setOrigin(0);
-        this.add.text(centerX, centerY - 300, 'A Will Out', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY - 150, 'UCSC Caps https://caps.ucsc.edu', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY -100, 'USA Suicide Prevention Hotline 1-800-273-8255', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY, 'Warning: This game deals with concepts surrounding mental health, if you', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY + 50, 'or someone you know is struggling, please use the links', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY + 100, 'above or talk to a professional.', menuConfig).setOrigin(0.5);
+        this.add.image(centerX - 280, centerY - 250, 'aWillOutTitle').setOrigin(0.5);
+        this.add.text(centerX, centerY -150, 'Warning: This game deals with concepts surrounding mental health, if you', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - 100, 'or someone you know is struggling, please use the links', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY -50, 'below or talk to a professional.', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY +50 , 'UCSC Caps https://caps.ucsc.edu', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY + 100, 'USA Suicide Prevention Hotline 1-800-273-8255', menuConfig).setOrigin(0.5);
         this.add.text(centerX, centerY + 200, 'Press (D) to Continue', menuConfig).setOrigin(0.5); 
 
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
@@ -89,7 +91,7 @@ class Menu extends Phaser.Scene {
 
         if (cursors.right.isDown) // if the left arrow key is cave scene
         {
-            this.scene.start('meditationScene');
+            this.scene.start('levelTwoCave');
         }
 
         if (cursors.up.isDown) // up arrow key takes you to meditation scene
@@ -118,9 +120,9 @@ class Menu extends Phaser.Scene {
         this.add.image(0,0,'directionsScreen').setOrigin(0);
         this.add.text(centerX, centerY - 300, 'Spoon Theory',directionConfig).setOrigin(0.5);
         this.add.text(centerX, centerY - 200, 'The spoon theory is a disability metaphor used to explain the reduced amount of mental ',directionConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY - 150, ' and physical energy available for day to day acitivies and tasks that may result from ',directionConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - 150, ' and physical energy available for day to day activities and tasks that may result from ',directionConfig).setOrigin(0.5);
         this.add.text(centerX, centerY - 100, 'disability or chronic illnesses. Spoons are a visual representation of how much energy ',directionConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY - 50, 'a person has on any given day.  Each acitivity requries a given number of spoons which ',directionConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - 50, 'a person has on any given day.  Each activity requries a given number of spoons which ',directionConfig).setOrigin(0.5);
         this.add.text(centerX, centerY, ' are only replace/recharged through rest. ',directionConfig).setOrigin(0.5);
         this.add.text(centerX, centerY + 100,'Press (D) to continue',directionConfig).setOrigin(0.5);
         this.secondFlag = true;
