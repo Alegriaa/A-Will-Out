@@ -4,35 +4,19 @@ class CaveMonster extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
         this.isAlive = true;
+
          scene.physics.add.existing(this);
+
+        this.currentAnimation = "";
+        // scene.physics.add.existing(this);
+
         // this.create();
        // this.setImmovable(true);
        
     }
 
-    preload(){
-        // this.load.spritesheet('walkLeft','./assets/enemy1WalkLeft.png',{frameWidth:150, frameHeight: 200, startFrame: 0, endFrame: 3})
-        // this.load.spritesheet('walkRight','./assets/enemy1WalkRight.png',{frameWidth:150,frameHeight:200,startFrame:0,endFrame:3})
-    }
-
     create() {
-        // this.scene.anims.create({
-        //     key: 'monsterWalkRight',
-        //     repeat: -1,
-        //     frames: this.scene.anims.generateFrameNumbers('walkRight', { start: 0, end: 3, first: 0 }),
-        //     frameRate: 10,
-        // })
-
-        // this.scene.anims.create({
-        //     key: 'monsterWalkLeft',
-        //     repeat: -1,
-        //     frames: this.scene.anims.generateFrameNumbers('walkLeft', { start: 0, end: 3, first: 0 }),
-        //     frameRate: 10,
-        // })
-
-
-
-        // this.anims.play('monsterWalkRight');
+       
 
     }
    
@@ -40,5 +24,42 @@ class CaveMonster extends Phaser.Physics.Arcade.Sprite {
        
      
 
+    }
+
+    //CHECKS IF ANIMATION IS ALREADY PLAYING SO IT DOESNT JUST PLAY FRAME 1 OVER AND OVER AGAINs
+    animate(animation) {
+        if (animation == 'fastMonsterWalkRight') {
+            if (this.currentAnimation != animation) {
+                this.anims.play('fastMonsterWalkRight');
+                this.currentAnimation = 'fastMonsterWalkRight';
+            }
+        } else if (animation == 'fastMonsterWalkLeft') {
+            if (this.currentAnimation != animation) {
+                this.anims.play('fastMonsterWalkLeft');
+                this.currentAnimation = 'fastMonsterWalkLeft';
+            }
+        }
+        else if (animation == 'monsterWalkRight'){
+            if (this.currentAnimation != animation) {
+                this.anims.play('monsterWalkRight');
+                this.currentAnimation = 'monsterWalkRight';
+            }
+        }else if (animation == 'monsterWalkLeft'){
+            if (this.currentAnimation != animation) {
+                this.anims.play('monsterWalkLeft');
+                this.currentAnimation = 'monsterWalkLeft';
+            }
+        }else if (animation == 'monsterFlyRight'){
+            if (this.currentAnimation != animation) {
+                this.anims.play('monsterFlyRight');
+                this.currentAnimation = 'monsterFlyRight';
+            }
+        }
+        else if (animation == 'monsterFlyLeft'){
+            if (this.currentAnimation != animation) {
+                this.anims.play('monsterFlyLeft');
+                this.currentAnimation = 'monsterFlyLeft';
+            }
+        }
     }
 }
