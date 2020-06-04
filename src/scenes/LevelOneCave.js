@@ -16,6 +16,7 @@ class LevelOneCave extends Phaser.Scene {
         this.load.image('caveBackground', './assets/LevelOne.png');
         this.load.image('monsterSketch', './assets/Monster.png');
         this.load.image('smallCameraCircle', './assets/SmallCameraCircle.png');
+        this.load.image('bigCameraCircle', './assets/BigCameraCircle.png');
         this.load.image('lamp', './assets/Lamp.png');
         // name of the tiled project
         this.load.tilemapTiledJSON('caveMap','./assets/TiledCaveMap.json');
@@ -49,19 +50,15 @@ class LevelOneCave extends Phaser.Scene {
 
        // this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
 
-        // instance of player in cave scene 1
-
-        //this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
-        this.player = new Player(this, centerX - 250, centerY + 50, 'characterWalk',0).setScale(0.4);
-
-       // this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
-        //this.player = new Player(this, 3672, 1039, 'player').setScale(0.4);
        
 
-        // instance of monster in cave scene 1 
-        //game.physics.arcade.enable(this.player);
+        // this is the instance we will use for the game
+        // feel free to make more for testing
+        // but these coordinates must remain the same
+        this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk',0).setScale(0.4);
 
-       // const body = this.player.body;
+        // this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
+        // this.player = new Player(this, 3672, 1039, 'player').setScale(0.4);
         
         this.levelTwoDetection = this.physics.add.sprite(3603, 1260, 'TempSpoon').setDisplaySize(300, 30);
         
@@ -69,7 +66,10 @@ class LevelOneCave extends Phaser.Scene {
 
         // each monster needs a path to follow that is saved in a variable
         var path = this.add.path(800, 480)
+        // here its moving left
         .lineTo(100, 480)
+        
+
         .lineTo(800, 480)
 
         // this is the first monster the player will most likely see, 
@@ -300,12 +300,16 @@ class LevelOneCave extends Phaser.Scene {
 
         // *** there may be a need for more monsters ***
 
-      // this.smallCaveCircle = new SmallCaveCircle(this,centerX - 1000, centerY - 400, 'smallCameraCircle').setOrigin(0,0).setScale(0.7);;
+        // the first circle overlay
+        this.smallCaveCircle = this.add.tileSprite(0, 0, 3760, 1280, 'smallCameraCircle').setOrigin(0,0);
+        this.smallCaveCircle.alpha = 0.9
+        // second circle overlay
+        this.bigCaveCircle = this.add.tileSprite(0, 0, 3760, 1280, 'bigCameraCircle').setOrigin(0,0);
+        
 
-
-
+    
         // here we have collisions detection between the player & the later from tiled
-        this.physics.add.collider(this.player, backgroundLayer);
+         this.physics.add.collider(this.player, backgroundLayer);
 
       
    
@@ -353,15 +357,27 @@ class LevelOneCave extends Phaser.Scene {
         // this follows the player & zoomed in 
         this.cameras.main.startFollow(this.player).setZoom(1.45);
 
+        
 
+   
        
     }
 
     update() {
-
-     
-
+       
         this.player.update();
+        // we attach the first overlay to the player's position
+        // i had to find the right values according to the spawn
+        // of the player on the map
+        this.smallCaveCircle.x = this.player.body.x - 1885;
+        this.smallCaveCircle.y = this.player.body.y - 610;
+
+        // we attach the second overlay to the player's position
+        // i had to find the right values according to the spawn
+        // of the player on the map
+        this.bigCaveCircle.x = this.player.body.x - 1885;
+        this.bigCaveCircle.y = this.player.body.y - 610;
+
         console.log(this.player.body.x);
         console.log(this.player.body.y);
 
@@ -370,6 +386,7 @@ class LevelOneCave extends Phaser.Scene {
         }
 
     }
+
 
     takeDamage() {
         this.temp = this.game.settings.currentSpoons - 1; //minus one bc stupid off by one error ew

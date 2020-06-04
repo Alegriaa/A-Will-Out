@@ -35,7 +35,8 @@ let centerX = game.config.width / 2;
 let centerY = game.config.height / 2;
 let keyW, keyA, keyS, keyD, keyR;
 let walkingInFlowers = null;
-let playerMovement;
+let circleMoving = false;
+let circlePosition;
 
 game.settings = {
     startingSpoons: 5,
