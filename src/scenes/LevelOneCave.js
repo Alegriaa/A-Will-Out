@@ -50,20 +50,15 @@ class LevelOneCave extends Phaser.Scene {
 
        // this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
 
-        // instance of player in cave scene 1
-
-        //this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
-       // this.player = new Player(this, centerX - 250, centerY + 50, 'characterWalk',0).setScale(0.4);
-        this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk',0).setScale(0.4);
-
-       // this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
-        //this.player = new Player(this, 3672, 1039, 'player').setScale(0.4);
        
 
-        // instance of monster in cave scene 1 
-        //game.physics.arcade.enable(this.player);
+        // this is the instance we will use for the game
+        // feel free to make more for testing
+        // but these coordinates must remain the same
+        this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk',0).setScale(0.4);
 
-       // const body = this.player.body;
+        // this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
+        // this.player = new Player(this, 3672, 1039, 'player').setScale(0.4);
         
         this.levelTwoDetection = this.physics.add.sprite(3603, 1260, 'TempSpoon').setDisplaySize(300, 30);
         
