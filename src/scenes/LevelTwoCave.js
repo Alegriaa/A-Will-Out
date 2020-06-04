@@ -76,7 +76,7 @@ class LevelTwoCave extends Phaser.Scene {
 
        //add a function call for the player when a shield is collected
         this.physics.add.collider(this.shield, this.player, (a, b) => {
-            console.log("pp");
+           
             if(game.settings.shield){
                 
 
@@ -90,10 +90,17 @@ class LevelTwoCave extends Phaser.Scene {
 
         //function call for the player when a spoon is collected
         this.physics.add.collider(this.spoonItem, this.player, (a, b) => {
-           
-            
+
+
+            if(game.settings.currentSpoons < 6){
+
                 this.restoreDamage();
                 a.destroy();
+
+            }
+           
+            
+                
            
 
         }, null, this);
