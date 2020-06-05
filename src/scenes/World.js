@@ -21,6 +21,22 @@ class World extends Phaser.Scene {
 
 
     create() {
+        let messageConfig = {
+            fontSize: '18px',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 0
+            
+        }
+
+
+        
+
+
+
         const map = this.make.tilemap({ key: "map" });
         const tileset = map.addTilesetImage("OverWorld", "worldBackground");
        // const backgroundLayer = map.createStaticLayer("Background", tileset, 0, 0);
