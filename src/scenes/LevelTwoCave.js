@@ -61,9 +61,14 @@ class LevelTwoCave extends Phaser.Scene {
         this.shield = new Shield(this, centerX - 200, centerY + 100, 'shield').setScale(.5);
         //create spoon in cave
         this.spoonItem = new Spoon(this, centerX - 150, centerY + 200, 'spoonItem').setScale(.5);
+        //create Message Item 
+
+        this.messageItem = new MessageItem(this, centerX - 150, centerY + 400, 'TempSpoon').setScale(.25);
         //non movable shield and spoon
         this.shield.setImmovable();
         this.spoonItem.setImmovable();
+        this.messageItem.setImmovable();
+
         playerSpeed = 2;
         this.topLayer = this.add.tileSprite(0, 0, 3760, 1280, 'topLayer').setOrigin(0, 0);
         this.spikes = this.add.tileSprite(0, 0, 3750, 1280, 'cave2SpikyOverlay').setOrigin(0, 0);
@@ -83,6 +88,7 @@ class LevelTwoCave extends Phaser.Scene {
         //collision between shield and the player
         this.physics.add.collider(this.player, this.shield);
         this.physics.add.collider(this.player, this.spoonItem);
+        this.physics.add.collider(this.player, this.mess);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
 
@@ -339,6 +345,20 @@ class LevelTwoCave extends Phaser.Scene {
 
 
         }, null, this);
+
+       
+    
+        
+        this.physics.add.collider(this.messageItem, this.player, (a, b) => {
+           
+           
+            
+                a.itemActivated(this.player.x,this.player.y);
+                a.destroy();
+           
+
+        }, null, this);
+
 
         //create spoon UI
         this.spoonCount = this.game.settings.currentSpoons;//counter for array
