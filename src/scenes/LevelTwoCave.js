@@ -1,26 +1,35 @@
+
 class LevelTwoCave extends Phaser.Scene {
     constructor() {
         super('levelTwoCave');
 
     }
     preload() {
+        var url;
+        // importing the plugin used for the monster behavior. 
+        url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexpathfollowerplugin.min.js';
+        // loading it into this scene
+        // plugin used is from:
+        // https://rexrainbow.github.io/phaser3-rex-notes/docs/site/board-pathfinder/#find-moveable-area
+        this.load.plugin('rexpathfollowerplugin', url, true);
+
         this.load.image('forestBackground', './assets/Level2Sketch.png');
         this.load.image('caveTwoBackground', './assets/CaveLevelTwo.png');
-        this.load.image('monsterSketch', './assets/Monster.png');
-        this.load.tilemapTiledJSON('caveTwoMap','./assets/TiledCaveTwo.json');
-        this.load.image('smallCircle', './assets/smallLightCircle.png');
-        this.load.image('bigCircle', './assets/bigLightCircle.png');
+        this.load.image('groundMonster', './assets/Monster.png');
+        this.load.image('flyingMonster', './assets/FlyingMonster.png');
+        this.load.tilemapTiledJSON('caveTwoMap', './assets/TiledCaveTwo.json');
+
         this.load.image('topLayer', './assets/caveTwoTopLayer.png');
         this.load.image('cave2Background', './assets/level2Graphics.png')
-        this.load.spritesheet('characterWalk','./assets/characterWalking.png',{frameWidth:50,frameHeight:150,startFrame:0,endFrame:31});
+        this.load.spritesheet('characterWalk', './assets/characterWalking.png', { frameWidth: 50, frameHeight: 150, startFrame: 0, endFrame: 31 });
         this.load.image('cave2SpikyOverlay', './assets/psCaveTwoOverlay.png')
         this.load.image('shield', './assets/Shield.png')
         this.load.image('spoonItem', './assets/Spoon.png')
     }
 
     create() {
-         // we need to make a unique key for this scene to access
-        const caveTwoMap = this.make.tilemap({ key: "caveTwoMap"});
+        // we need to make a unique key for this scene to access
+        const caveTwoMap = this.make.tilemap({ key: "caveTwoMap" });
 
         // first name is the name of the tilesheet used is the first parameter,
         // the name we gave the asset within our project is the second parameter
@@ -31,20 +40,22 @@ class LevelTwoCave extends Phaser.Scene {
         backgroundLayer1.setCollisionByProperty({ collision: true });
 
         //debug for testing purposese
-           const debugGraphics = this.add.graphics().setAlpha(0.75);
-     
-     
-               backgroundLayer1.renderDebug(debugGraphics, {
-               tileColor: null, // Color of non-colliding tiles
-                collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-            faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-       });
+        const debugGraphics = this.add.graphics().setAlpha(0.75);
 
-    
+
+        backgroundLayer1.renderDebug(debugGraphics, {
+            tileColor: null, // Color of non-colliding tiles
+            collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+            faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+        });
+
+
 
         // instance of player in battle scene
-        this.player = new Player(this, centerX - 200, centerY + 245, 'characterWalk').setScale(0.5);
-        this.caveMonster = new CaveMonster(this, centerX + 240, centerY + 200, 'monsterSketch');
+        // player located at the end
+        // this.player = new Player(this, 3329, 42, 'characterWalk').setScale(0.5);
+        this.player = new Player(this, centerX - 150, centerY + 550, 'characterWalk', 0).setScale(0.4);
+
 
         //create the shield in the cave
         this.shield = new Shield(this, centerX - 200, centerY + 100, 'shield').setScale(.5);
@@ -54,15 +65,15 @@ class LevelTwoCave extends Phaser.Scene {
         this.shield.setImmovable();
         this.spoonItem.setImmovable();
         playerSpeed = 2;
-        this.topLayer = this.add.tileSprite(0, 0, 3760, 1280, 'topLayer').setOrigin(0,0);
-        this.spikes = this.add.tileSprite(0,0,3750,1280,'cave2SpikyOverlay').setOrigin(0,0);
+        this.topLayer = this.add.tileSprite(0, 0, 3760, 1280, 'topLayer').setOrigin(0, 0);
+        this.spikes = this.add.tileSprite(0, 0, 3750, 1280, 'cave2SpikyOverlay').setOrigin(0, 0);
 
-           // bounds of the background asset 
-           this.cameras.main.setBounds(0, 0, 3760, 1280); 
-           // bounds of the canvas 
-           this.cameras.main.setViewport(0, 0, 960, 640);
-           // this follows the player & zoomed in 
-           this.cameras.main.startFollow(this.player).setZoom(1.45);
+        // bounds of the background asset 
+        this.cameras.main.setBounds(0, 0, 3760, 1280);
+        // bounds of the canvas 
+        this.cameras.main.setViewport(0, 0, 960, 640);
+        // this follows the player & zoomed in 
+        this.cameras.main.startFollow(this.player).setZoom(1.45);
 
 
         // this allows us to quickly use up, left, down, right arroy keys
@@ -74,14 +85,238 @@ class LevelTwoCave extends Phaser.Scene {
         this.physics.add.collider(this.player, this.spoonItem);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
-       //add a function call for the player when a shield is collected
-        this.physics.add.collider(this.shield, this.player, (a, b) => {
-           
-            if(game.settings.shield){
-                
 
-            }else{
-            
+
+        this.monsterOne = new CaveMonster(this, 927, 345, 'flyingMonster').setScale(0.7);
+
+        var path = this.add.path(927, 345)
+            .lineTo(645, 345)
+            .lineTo(367, 469)
+            .lineTo(100, 469)
+
+        // we access the plugin here & attach the object we want to have follow the above path
+        this.monsterOne.pathFollower = this.plugins.get('rexpathfollowerplugin').add(this.monsterOne, {
+            path: path,
+            t: 0,
+            rotateToPath: false
+        });
+        this.tweens.add({
+            targets: this.monsterOne.pathFollower,
+            t: 1,
+            ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 10000,
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.monsterTwo = new CaveMonster(this, 100, 74, 'flyingMonster').setScale(0.7);
+
+        var pathTwo = this.add.path(100, 74)
+            .lineTo(279, 269)
+            .lineTo(649, 80)
+
+        // we access the plugin here & attach the object we want to have follow the above path
+        this.monsterTwo.pathFollower = this.plugins.get('rexpathfollowerplugin').add(this.monsterTwo, {
+            path: pathTwo,
+            t: 0,
+            rotateToPath: false
+        });
+        this.tweens.add({
+            targets: this.monsterTwo.pathFollower,
+            t: 1,
+            ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 10000,
+            repeat: -1,
+            yoyo: true
+        });
+
+
+        this.monsterThree = new CaveMonster(this, 2042, 439, 'flyingMonster').setScale(0.7);
+
+        var pathThree = this.add.path(2042, 439)
+            .lineTo(1555, 439)
+            .lineTo(1947, 66)
+            .lineTo(904, 66)
+
+        // we access the plugin here & attach the object we want to have follow the above path
+        this.monsterThree.pathFollower = this.plugins.get('rexpathfollowerplugin').add(this.monsterThree, {
+            path: pathThree,
+            t: 0,
+            rotateToPath: false
+        });
+        this.tweens.add({
+            targets: this.monsterThree.pathFollower,
+            t: 1,
+            ease: 'Linear', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 15000,
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.monsterFour = new CaveMonster(this, 2464, 745, 'flyingMonster').setScale(0.6);
+
+        var pathFour = this.add.path(2464, 745)
+            .lineTo(2232, 850)
+            .lineTo(2032, 742)
+            .lineTo(1796, 843)
+            .lineTo(1682, 732)
+
+        // we access the plugin here & attach the object we want to have follow the above path
+        this.monsterFour.pathFollower = this.plugins.get('rexpathfollowerplugin').add(this.monsterFour, {
+            path: pathFour,
+            t: 0,
+            rotateToPath: false
+        });
+        this.tweens.add({
+            targets: this.monsterFour.pathFollower,
+            t: 1,
+            ease: 'Linear',
+            duration: 15000,
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.monsterFive = new CaveMonster(this, 2462, 1108, 'flyingMonster').setScale(0.6);
+
+        var pathFive = this.add.path(2462, 1108)
+            .lineTo(2231, 1191)
+            .lineTo(2048, 1108)
+            .lineTo(1876, 1191)
+            .lineTo(1697, 1126)
+
+        // we access the plugin here & attach the object we want to have follow the above path
+        this.monsterFive.pathFollower = this.plugins.get('rexpathfollowerplugin').add(this.monsterFive, {
+            path: pathFive,
+            t: 0,
+            rotateToPath: false
+        });
+        this.tweens.add({
+            targets: this.monsterFive.pathFollower,
+            t: 1,
+            ease: 'Linear',
+            duration: 15000,
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.monsterSix = new CaveMonster(this, 3696, 991, 'groundMonster').setScale(0.6);
+
+        var pathSix = this.add.path(3696, 991)
+            .lineTo(2697, 991)
+
+        // we access the plugin here & attach the object we want to have follow the above path
+        this.monsterSix.pathFollower = this.plugins.get('rexpathfollowerplugin').add(this.monsterSix, {
+            path: pathSix,
+            t: 0,
+            rotateToPath: false
+        });
+        this.tweens.add({
+            targets: this.monsterSix.pathFollower,
+            t: 1,
+            ease: 'Linear',
+            duration: 15000,
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.monsterSeven = new CaveMonster(this, 2681, 737, 'flyingMonster').setScale(0.6);
+
+        var pathSeven = this.add.path(2681, 737)
+            .lineTo(2681, 991)
+            .lineTo(2911, 1180)
+
+
+        // we access the plugin here & attach the object we want to have follow the above path
+        this.monsterSeven.pathFollower = this.plugins.get('rexpathfollowerplugin').add(this.monsterSeven, {
+            path: pathSeven,
+            t: 0,
+            rotateToPath: false
+        });
+        this.tweens.add({
+            targets: this.monsterSeven.pathFollower,
+            t: 1,
+            ease: 'Linear',
+            duration: 15000,
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.monsterEight = new CaveMonster(this, 3192, 58, 'flyingMonster').setScale(0.6);
+
+        var pathEight = this.add.path(3192, 58)
+            .lineTo(3672, 58)
+
+        // we access the plugin here & attach the object we want to have follow the above path
+        this.monsterEight.pathFollower = this.plugins.get('rexpathfollowerplugin').add(this.monsterEight, {
+            path: pathEight,
+            t: 0,
+            rotateToPath: false
+        });
+
+        this.tweens.add({
+            targets: this.monsterEight.pathFollower,
+            t: 1,
+            ease: 'Linear',
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.monsterNine = new CaveMonster(this, 2664, 462, 'flyingMonster').setScale(0.6);
+
+        var pathNine = this.add.path(2664, 462)
+            .lineTo(3252, 462)
+            .lineTo(3142, 242)
+            .lineTo(3329, 42)
+
+        // we access the plugin here & attach the object we want to have follow the above path
+        this.monsterNine.pathFollower = this.plugins.get('rexpathfollowerplugin').add(this.monsterNine, {
+            path: pathNine,
+            t: 0,
+            rotateToPath: false
+        });
+
+        this.tweens.add({
+            targets: this.monsterNine.pathFollower,
+            t: 1,
+            ease: 'Linear',
+            duration: 15000,
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.monsterTen = new CaveMonster(this, 2656, 83, 'flyingMonster').setScale(0.7);
+
+        var pathTen = this.add.path(2656, 83)
+            .lineTo(2926, 453)
+            .lineTo(2646, 453)
+            .lineTo(2909, 83)
+
+        // we access the plugin here & attach the object we want to have follow the above path
+        this.monsterTen.pathFollower = this.plugins.get('rexpathfollowerplugin').add(this.monsterTen, {
+            path: pathTen,
+            t: 0,
+            rotateToPath: false
+        });
+
+        this.tweens.add({
+            targets: this.monsterTen.pathFollower,
+            t: 1,
+            ease: 'Linear',
+            duration: 15000,
+            repeat: -1,
+            yoyo: true
+        });
+
+
+
+        //add a function call for the player when a shield is collected
+        this.physics.add.collider(this.shield, this.player, (a, b) => {
+
+            if (game.settings.shield) {
+
+
+            } else {
+
                 this.addShield();
                 a.destroy();
             }
@@ -92,16 +327,16 @@ class LevelTwoCave extends Phaser.Scene {
         this.physics.add.collider(this.spoonItem, this.player, (a, b) => {
 
 
-            if(game.settings.currentSpoons < 5){
+            if (game.settings.currentSpoons < 5) {
 
                 this.restoreDamage();
                 a.destroy();
 
             }
-           
-            
-                
-           
+
+
+
+
 
         }, null, this);
 
@@ -126,6 +361,9 @@ class LevelTwoCave extends Phaser.Scene {
     }
 
     update() {
+        console.log(this.player.body.x);
+        console.log(this.player.body.y);
+
         this.player.update();
         if (Phaser.Input.Keyboard.JustDown(keyD)) {
             this.scene.start('forestScene');
@@ -133,13 +371,13 @@ class LevelTwoCave extends Phaser.Scene {
 
     }
     //add the shield to the player options
-    addShield(){
+    addShield() {
 
         game.settings.shield = true;
         console.log(game.settings.shield);
 
 
-        
+
     }
 
     takeDamage() {

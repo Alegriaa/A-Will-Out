@@ -11,6 +11,8 @@ class LevelOneCave extends Phaser.Scene {
         // importing the plugin used for the monster behavior. 
         url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexpathfollowerplugin.min.js';
         // loading it into this scene
+        // plugin used is from:
+        // https://rexrainbow.github.io/phaser3-rex-notes/docs/site/board-pathfinder/#find-moveable-area
         this.load.plugin('rexpathfollowerplugin', url, true);
         
         this.load.image('caveBackground', './assets/LevelOne.png');
@@ -59,7 +61,7 @@ class LevelOneCave extends Phaser.Scene {
 
         // this is the instance we will use for the game
         // feel free to make more for testing
-        // but these coordinates must remain the same
+        // but these coordinates must remain the same for gameplay
         this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk',0).setScale(0.4);
         //this.lampOne = new Lamp(this, centerX - 100, centerY + 550, 'lamp').setScale(0.35);
         
