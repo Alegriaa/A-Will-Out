@@ -16,26 +16,26 @@ class World extends Phaser.Scene {
         this.load.image('worldBackground', './assets/OverWorld.png');
         this.load.tilemapTiledJSON('map', './assets/TiledWorldMap.json');
         this.load.spritesheet('characterWalk','./assets/characterWalking.png',{frameWidth:50,frameHeight:150,startFrame:0,endFrame:31});
-
+        this.load.image('treeOver', './assets/Canopy.png');
     }
 
 
     create() {
         const map = this.make.tilemap({ key: "map" });
         const tileset = map.addTilesetImage("OverWorld", "worldBackground");
-        const backgroundLayer = map.createStaticLayer("Background", tileset, 0, 0);
+       // const backgroundLayer = map.createStaticLayer("Background", tileset, 0, 0);
         const treeLayer = map.createStaticLayer("Tree", tileset, 0, 0);
-        const colliderLayer = map.createStaticLayer("Collider", tileset, 0, 0);
-        treeLayer.setCollisionByProperty({ collides: true });
+        //const colliderLayer = map.createStaticLayer("Collide", tileset, 0, 0);
+        treeLayer.setCollisionByProperty({ collide: true });
         //treeLayer.setCollisionBetween(0, 244);
 
 
-        //const debugGraphics = this.add.graphics().setAlpha(0.75);
-        //treeLayer.renderDebug(debugGraphics, {
-        //tileColor: null, // Color of non-colliding tiles
-        // collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-        //faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-        // });
+        const debugGraphics = this.add.graphics().setAlpha(0.75);
+        treeLayer.renderDebug(debugGraphics, {
+        tileColor: null, // Color of non-colliding tiles
+         collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+        faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+         });
 
 
 
@@ -92,6 +92,8 @@ class World extends Phaser.Scene {
         this.cameras.main.startFollow(this.player).setZoom(1.45);
         // this.cameras.main.setZoom(0.25);
         // testing
+
+        this.treeOverlay = this.add.tileSprite(0,0,3750,1280,'treeOver').setOrigin(0,0);
 
 
         this.spoonCount = this.game.settings.currentSpoons;//counter for array
