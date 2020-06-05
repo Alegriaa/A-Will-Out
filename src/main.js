@@ -37,6 +37,7 @@ let keyW, keyA, keyS, keyD, keyR;
 let walkingInFlowers = null;
 let circleMoving = false;
 let circlePosition;
+let lampOn = false;
 
 game.settings = {
     startingSpoons: 5,

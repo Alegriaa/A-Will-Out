@@ -63,15 +63,33 @@ class LevelOneCave extends Phaser.Scene {
         // feel free to make more for testing
         // but these coordinates must remain the same for gameplay
         this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk',0).setScale(0.4);
-        //this.lampOne = new Lamp(this, centerX - 100, centerY + 550, 'lamp').setScale(0.35);
+        this.lampOne = new Lamp(this, centerX - 100, centerY + 550, 'lamp').setScale(0.35);
+    
+
+        // this.lampClock = this.time.delayedCall(10000, () => { 
+        //     this.smallCaveCircle.alpha = 0.9
+        //     this.bigCaveCircle.alpha = 1
+        //  }, null, this);
         
-        
-        // this.physics.add.collider(this.lampOne, this.player, (a, b) => {
-        //     this.smallCaveCircle.alpha = 0.6
-        //     this.bigCaveCircle.alpha = 0.8
-        //     this.lampOne.alpha = 0;
-        //     console.log('you have been hit');
-        // }, null, this);
+        // detects the collision between the player and a lamp object
+        this.physics.add.collider(this.lampOne, this.player, (a, b) => {
+            this.smallCaveCircle.alpha = 0.5
+            this.bigCaveCircle.alpha = 0.7
+            this.lampOne.alpha = 0;
+          //  this.lampUI.alpha = 1;
+            lampOn = true;
+            console.log('you have been hit');
+            this.lampClock;
+        }, null, this);
+        // lamp timer to return to original settings
+        if(lampOn = true){
+            this.lampClock = this.time.delayedCall(10000, () => { 
+                this.smallCaveCircle.alpha = 0.9
+                this.bigCaveCircle.alpha = 1
+             //   this.lampUI.alpha = 0;
+                lampOn = false;
+             }, null, this);
+        }
 
         // this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
         // this.player = new Player(this, 3672, 1039, 'player').setScale(0.4);
@@ -377,6 +395,10 @@ class LevelOneCave extends Phaser.Scene {
         this.smallCaveCircle.alpha = 0.9
         // second circle overlay
         this.bigCaveCircle = this.add.tileSprite(0, 0, 3760, 1280, 'bigCameraCircle').setOrigin(0,0);
+
+        // *********** UI ****************
+        //this.lampUI = new Lamp(this, centerX - 420, 760, 'lamp').setScale(0.8);
+        //this.lampUI.alpha = 0;
         
 
     
@@ -531,6 +553,9 @@ class LevelOneCave extends Phaser.Scene {
         // of the player on the map
         this.bigCaveCircle.x = this.player.body.x - 1885;
         this.bigCaveCircle.y = this.player.body.y - 610;
+
+      //  this.lampUI.x = this.player.body.x - 260;
+        //this.lampUI.y = this.player.body.y - 145;
 
 
         // console.log(this.player.body.x);
