@@ -9,8 +9,7 @@ class LevelTwoCave extends Phaser.Scene {
         // importing the plugin used for the monster behavior. 
         url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexpathfollowerplugin.min.js';
         // loading it into this scene
-        // plugin used is from:
-        // https://rexrainbow.github.io/phaser3-rex-notes/docs/site/board-pathfinder/#find-moveable-area
+    1.45
         this.load.plugin('rexpathfollowerplugin', url, true);
 
         this.load.image('forestBackground', './assets/Level2Sketch.png');
@@ -61,7 +60,7 @@ class LevelTwoCave extends Phaser.Scene {
 
         // instance of player in battle scene
         // player located at the end
-        // this.player = new Player(this, 3329, 42, 'characterWalk').setScale(0.5);
+         //this.player = new Player(this, 3281, 60, 'characterWalk').setScale(0.5);
         this.player = new Player(this, centerX - 150, centerY + 550, 'characterWalk', 0).setScale(0.4);
 
 
@@ -91,7 +90,7 @@ class LevelTwoCave extends Phaser.Scene {
         // bounds of the canvas 
         this.cameras.main.setViewport(0, 0, 960, 640);
         // this follows the player & zoomed in 
-        this.cameras.main.startFollow(this.player).setZoom(.5);
+        this.cameras.main.startFollow(this.player).setZoom(1.45);
 
 
         // this allows us to quickly use up, left, down, right arroy keys
@@ -238,7 +237,7 @@ class LevelTwoCave extends Phaser.Scene {
             targets: this.monsterSix.pathFollower,
             t: 1,
             ease: 'Linear',
-            duration: 15000,
+            duration: 30000,
             repeat: -1,
             yoyo: true
         });
@@ -281,6 +280,7 @@ class LevelTwoCave extends Phaser.Scene {
             targets: this.monsterEight.pathFollower,
             t: 1,
             ease: 'Linear',
+            duration: 10000,
             repeat: -1,
             yoyo: true
         });
