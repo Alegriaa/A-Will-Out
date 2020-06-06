@@ -17,6 +17,12 @@ class Menu extends Phaser.Scene {
         this.load.audio('WalkingInFlowers', './assets/WalkingInFlowers.wav');
         this.load.audio('Crying', './assets/CryingNearCave.wav');
         this.load.audio('WorldMusic', './assets/WorldSceneMusic.wav');
+        this.load.image('blueDoor', './assets/BlueDoor.png');
+        this.load.image('blueSwitch', './assets/BlueSwitch.png');
+        this.load.image('greenDoor', './assets/GreenDoor.png');
+        this.load.image('greenSwitch', './assets/GreenSwitch.png');
+        this.load.image('pinkDoor', './assets/PinkDoor.png');
+        this.load.image('pinkSwitch', './assets/PinkSwitch.png');
 
     }
 

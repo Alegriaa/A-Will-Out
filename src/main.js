@@ -16,7 +16,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            //debug: true,
+            debug: true,
             gravity: {
                 x: 0,
                 y: 0
@@ -47,4 +47,6 @@ game.settings = {
     startingSpoons: 5,
     currentSpoons: 5,   
     shield: false,
+    gameOver: false,
+    canTakeDamage: true,
 }
