@@ -3,9 +3,24 @@ class MessageItem extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
         scene.physics.add.existing(this);
+        this.textArray = ([]); 
 
     }
     create() {
+        var txt = this.scene.make.text({
+            x: 500,
+            y: 500,
+            text: "",
+            origin: { x: 0.5, y: 0.5 },
+            style: {
+                font: '25px Arial',
+                fill: 'white',
+                wordWrap: { width: 600 }
+            }
+        });
+        
+        
+
 
     }
 
@@ -15,7 +30,7 @@ class MessageItem extends Phaser.Physics.Arcade.Sprite {
 
     itemActivated(xPos, yPos){
 
-
+       
        this.messageArray = ([]);
        this.messageArray.push("Keep going, you can do this.");
        this.messageArray.push("you have what it takes to keep pushing forward");
@@ -30,20 +45,15 @@ class MessageItem extends Phaser.Physics.Arcade.Sprite {
        
 
        this.randomNumber = Math.floor((Math.random() * 10) + 0);
-        var txt = this.scene.make.text({
-            x: 500,
-            y: 500,
-            text: this.messageArray[this.randomNumber],
-            origin: { x: 0.5, y: 0.5 },
-            style: {
-                font: '25px Arial',
-                fill: 'white',
-                wordWrap: { width: 600 }
-            }
-        });
-        txt.setScrollFactor(0,0);
-        //this.messageText.setScrollFactor(0,0);
+        return this.messageArray[this.randomNumber];
+        
 
+    
+
+    }
+
+    opacity(){
+       
     }
 
 

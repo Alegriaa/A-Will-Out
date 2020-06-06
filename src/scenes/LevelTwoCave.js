@@ -7,20 +7,21 @@ class LevelTwoCave extends Phaser.Scene {
         this.load.image('forestBackground', './assets/Level2Sketch.png');
         this.load.image('caveTwoBackground', './assets/CaveLevelTwo.png');
         this.load.image('monsterSketch', './assets/Monster.png');
-        this.load.tilemapTiledJSON('caveTwoMap','./assets/TiledCaveTwo.json');
+        this.load.tilemapTiledJSON('caveTwoMap', './assets/TiledCaveTwo.json');
         this.load.image('smallCircle', './assets/smallLightCircle.png');
         this.load.image('bigCircle', './assets/bigLightCircle.png');
         this.load.image('topLayer', './assets/caveTwoTopLayer.png');
         this.load.image('cave2Background', './assets/level2Graphics.png')
-        this.load.spritesheet('characterWalk','./assets/characterWalking.png',{frameWidth:50,frameHeight:150,startFrame:0,endFrame:31});
-        this.load.image('cave2SpikyOverlay', './assets/psCaveTwoOverlay.png')
-        this.load.image('shield', './assets/Shield.png')
-        this.load.image('spoonItem', './assets/Spoon.png')
+        this.load.spritesheet('characterWalk', './assets/characterWalking.png', { frameWidth: 50, frameHeight: 150, startFrame: 0, endFrame: 31 });
+        this.load.image('cave2SpikyOverlay', './assets/psCaveTwoOverlay.png');
+        this.load.image('shield', './assets/Shield.png');
+        this.load.image('spoonItem', './assets/Spoon.png');
+        this.load.image('hopeItem', './assets/Hope.png')
     }
 
     create() {
-         // we need to make a unique key for this scene to access
-        const caveTwoMap = this.make.tilemap({ key: "caveTwoMap"});
+        // we need to make a unique key for this scene to access
+        const caveTwoMap = this.make.tilemap({ key: "caveTwoMap" });
 
         // first name is the name of the tilesheet used is the first parameter,
         // the name we gave the asset within our project is the second parameter
@@ -31,16 +32,16 @@ class LevelTwoCave extends Phaser.Scene {
         backgroundLayer1.setCollisionByProperty({ collision: true });
 
         //debug for testing purposese
-           const debugGraphics = this.add.graphics().setAlpha(0.75);
-     
-     
-               backgroundLayer1.renderDebug(debugGraphics, {
-               tileColor: null, // Color of non-colliding tiles
-                collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-            faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-       });
+        const debugGraphics = this.add.graphics().setAlpha(0.75);
 
-    
+
+        backgroundLayer1.renderDebug(debugGraphics, {
+            tileColor: null, // Color of non-colliding tiles
+            collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+            faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+        });
+
+
 
         // instance of player in battle scene
         this.player = new Player(this, centerX - 200, centerY + 245, 'characterWalk').setScale(0.5);
@@ -52,22 +53,22 @@ class LevelTwoCave extends Phaser.Scene {
         this.spoonItem = new Spoon(this, centerX - 150, centerY + 200, 'spoonItem').setScale(.5);
         //create Message Item 
 
-        this.messageItem = new MessageItem(this, centerX - 150, centerY + 400, 'TempSpoon').setScale(.25);
+        this.messageItem = new MessageItem(this, centerX - 150, centerY + 400, 'hopeItem').setScale(.25);
         //non movable shield and spoon
         this.shield.setImmovable();
         this.spoonItem.setImmovable();
         this.messageItem.setImmovable();
 
         playerSpeed = 2;
-        this.topLayer = this.add.tileSprite(0, 0, 3760, 1280, 'topLayer').setOrigin(0,0);
-        this.spikes = this.add.tileSprite(0,0,3750,1280,'cave2SpikyOverlay').setOrigin(0,0);
+        this.topLayer = this.add.tileSprite(0, 0, 3760, 1280, 'topLayer').setOrigin(0, 0);
+        this.spikes = this.add.tileSprite(0, 0, 3750, 1280, 'cave2SpikyOverlay').setOrigin(0, 0);
 
-           // bounds of the background asset 
-           this.cameras.main.setBounds(0, 0, 3760, 1280); 
-           // bounds of the canvas 
-           this.cameras.main.setViewport(0, 0, 960, 640);
-           // this follows the player & zoomed in 
-           this.cameras.main.startFollow(this.player).setZoom(1.45);
+        // bounds of the background asset 
+        this.cameras.main.setBounds(0, 0, 3760, 1280);
+        // bounds of the canvas 
+        this.cameras.main.setViewport(0, 0, 960, 640);
+        // this follows the player & zoomed in 
+        this.cameras.main.startFollow(this.player).setZoom(1.45);
 
 
         // this allows us to quickly use up, left, down, right arroy keys
@@ -80,14 +81,14 @@ class LevelTwoCave extends Phaser.Scene {
         this.physics.add.collider(this.player, this.mess);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
-       //add a function call for the player when a shield is collected
+        //add a function call for the player when a shield is collected
         this.physics.add.collider(this.shield, this.player, (a, b) => {
-           
-            if(game.settings.shield){
-                
 
-            }else{
-            
+            if (game.settings.shield) {
+
+
+            } else {
+
                 this.addShield();
                 a.destroy();
             }
@@ -98,29 +99,37 @@ class LevelTwoCave extends Phaser.Scene {
         this.physics.add.collider(this.spoonItem, this.player, (a, b) => {
 
 
-            if(game.settings.currentSpoons < 5){
+            if (game.settings.currentSpoons < 5) {
 
                 this.restoreDamage();
                 a.destroy();
 
             }
-           
-            
-                
-           
+
+
+
+
 
         }, null, this);
 
-       
-    
-        
+        var messageConfig = {
+            font: "16px Arial", fill: "#fff",
+            align: "center", // the alignment of the text is independent of the bounds, try changing to 'center' or 'right'
+            boundsAlignH: "left",
+            boundsAlignV: "top",
+            wordWrap: true, wordWrapWidth: 300
+        };
+        this.title = this.add.text(centerX, 500, '', messageConfig);
+        this.title.setScrollFactor(0, 0);
+
+
+        //create message item collider and grab one of the messages from the prefab
         this.physics.add.collider(this.messageItem, this.player, (a, b) => {
-           
-           
-            
-                a.itemActivated(this.player.x,this.player.y);
-                a.destroy();
-           
+
+            this.title.setText(a.itemActivated());
+            this.changeMessageOpacity();
+            a.destroy();
+
 
         }, null, this);
 
@@ -153,13 +162,13 @@ class LevelTwoCave extends Phaser.Scene {
 
     }
     //add the shield to the player options
-    addShield(){
+    addShield() {
 
         game.settings.shield = true;
         console.log(game.settings.shield);
 
 
-        
+
     }
 
     takeDamage() {
@@ -189,6 +198,17 @@ class LevelTwoCave extends Phaser.Scene {
         this.spoonArray[this.temp].alpha = 1; //alpha set to 1 is visible
         game.settings.currentSpoons += 1;
 
+    }
+
+    changeMessageOpacity(){
+        if(this.title.alpha >= .1){
+
+            this.title.alpha = this.title.alpha - .1;
+            this.lampClock = this.time.delayedCall(1000, () => { 
+                this.changeMessageOpacity();
+             }, null, this);
+        }
+        
     }
 
 
