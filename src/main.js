@@ -47,4 +47,6 @@ game.settings = {
     startingSpoons: 5,
     currentSpoons: 5,   
     shield: false,
+    gameOver: false,
+    canTakeDamage: true,
 }

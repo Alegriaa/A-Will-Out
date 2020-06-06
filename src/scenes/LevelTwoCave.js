@@ -22,9 +22,9 @@ class LevelTwoCave extends Phaser.Scene {
         this.load.image('topLayer', './assets/caveTwoTopLayer.png');
         this.load.image('cave2Background', './assets/level2Graphics.png')
         this.load.spritesheet('characterWalk', './assets/characterWalking.png', { frameWidth: 50, frameHeight: 150, startFrame: 0, endFrame: 31 });
-        this.load.image('cave2SpikyOverlay', './assets/psCaveTwoOverlay.png')
-        this.load.image('shield', './assets/Shield.png')
-        this.load.image('spoonItem', './assets/Spoon.png')
+        this.load.image('cave2SpikyOverlay', './assets/psCaveTwoOverlay.png');
+        this.load.image('shield', './assets/Shield.png');
+        this.load.image('spoonItem', './assets/Spoon.png');
     }
 
     create() {
@@ -64,7 +64,7 @@ class LevelTwoCave extends Phaser.Scene {
         //create Message Item 
 
         this.messageItem = new MessageItem(this, centerX - 150, centerY + 400, 'TempSpoon').setScale(.25);
-        //non movable shield and spoon
+       // non movable shield and spoon
         this.shield.setImmovable();
         this.spoonItem.setImmovable();
         this.messageItem.setImmovable();
@@ -86,14 +86,18 @@ class LevelTwoCave extends Phaser.Scene {
         //collision for player and tiled background
         this.physics.add.collider(this.player, backgroundLayer1);
         //collision between shield and the player
-        this.physics.add.collider(this.player, this.shield);
-        this.physics.add.collider(this.player, this.spoonItem);
-        this.physics.add.collider(this.player, this.mess);
+        //this.physics.add.collider(this.player, this.shield);
+        //this.physics.add.collider(this.player, this.spoonItem);
+       //this.physics.add.collider(this.player, this.mess);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
 
+        this.monsterGroup = this.add.group({
+            runChildUpdate: true    // make sure update runs on group children
+        });
 
         this.monsterOne = new CaveMonster(this, 927, 345, 'flyingMonster').setScale(0.7);
+        this.monsterGroup.add(this.monsterOne);
 
         var path = this.add.path(927, 345)
             .lineTo(645, 345)
@@ -116,7 +120,7 @@ class LevelTwoCave extends Phaser.Scene {
         });
 
         this.monsterTwo = new CaveMonster(this, 100, 74, 'flyingMonster').setScale(0.7);
-
+        this.monsterGroup.add(this.monsterTwo);
         var pathTwo = this.add.path(100, 74)
             .lineTo(279, 269)
             .lineTo(649, 80)
@@ -138,7 +142,7 @@ class LevelTwoCave extends Phaser.Scene {
 
 
         this.monsterThree = new CaveMonster(this, 2042, 439, 'flyingMonster').setScale(0.7);
-
+        this.monsterGroup.add(this.monsterThree);
         var pathThree = this.add.path(2042, 439)
             .lineTo(1555, 439)
             .lineTo(1947, 66)
@@ -160,7 +164,7 @@ class LevelTwoCave extends Phaser.Scene {
         });
 
         this.monsterFour = new CaveMonster(this, 2464, 745, 'flyingMonster').setScale(0.6);
-
+        this.monsterGroup.add(this.monsterFour);
         var pathFour = this.add.path(2464, 745)
             .lineTo(2232, 850)
             .lineTo(2032, 742)
@@ -183,7 +187,7 @@ class LevelTwoCave extends Phaser.Scene {
         });
 
         this.monsterFive = new CaveMonster(this, 2462, 1108, 'flyingMonster').setScale(0.6);
-
+        this.monsterGroup.add(this.monsterFive);
         var pathFive = this.add.path(2462, 1108)
             .lineTo(2231, 1191)
             .lineTo(2048, 1108)
@@ -206,7 +210,7 @@ class LevelTwoCave extends Phaser.Scene {
         });
 
         this.monsterSix = new CaveMonster(this, 3696, 991, 'groundMonster').setScale(0.6);
-
+        this.monsterGroup.add(this.monsterSix);
         var pathSix = this.add.path(3696, 991)
             .lineTo(2697, 991)
 
@@ -226,7 +230,7 @@ class LevelTwoCave extends Phaser.Scene {
         });
 
         this.monsterSeven = new CaveMonster(this, 2681, 737, 'flyingMonster').setScale(0.6);
-
+        this.monsterGroup.add(this.monsterSeven);
         var pathSeven = this.add.path(2681, 737)
             .lineTo(2681, 991)
             .lineTo(2911, 1180)
@@ -248,7 +252,7 @@ class LevelTwoCave extends Phaser.Scene {
         });
 
         this.monsterEight = new CaveMonster(this, 3192, 58, 'flyingMonster').setScale(0.6);
-
+        this.monsterGroup.add(this.monsterEight);
         var pathEight = this.add.path(3192, 58)
             .lineTo(3672, 58)
 
@@ -268,7 +272,7 @@ class LevelTwoCave extends Phaser.Scene {
         });
 
         this.monsterNine = new CaveMonster(this, 2664, 462, 'flyingMonster').setScale(0.6);
-
+        this.monsterGroup.add(this.monsterNine);
         var pathNine = this.add.path(2664, 462)
             .lineTo(3252, 462)
             .lineTo(3142, 242)
@@ -291,7 +295,7 @@ class LevelTwoCave extends Phaser.Scene {
         });
 
         this.monsterTen = new CaveMonster(this, 2656, 83, 'flyingMonster').setScale(0.7);
-
+        this.monsterGroup.add(this.monsterTen);
         var pathTen = this.add.path(2656, 83)
             .lineTo(2926, 453)
             .lineTo(2646, 453)
@@ -385,16 +389,57 @@ class LevelTwoCave extends Phaser.Scene {
         }
 
 
+        this.pinkSwitch = this.physics.add.sprite(centerX +100, centerY +500, 'pinkSwitch');
+        this.pinkDoor = this.physics.add.sprite(centerX-100, centerY +340, 'pinkDoor');
+       
+        this.pinkSwitch.setImmovable();
+
+        
+
+        this.physics.add.collider(this.pinkSwitch, this.player, (a, b) => {
+            a.alpha = .5;
+            this.triggerPinkDoor();
+            this.pinkDoorClock = this.time.delayedCall(1500, () => { 
+                this.pinkDoor.destroy();
+             }, null, this);
+         
+
+        }, null, this);
+        
+        
+        this.physics.add.collider(this.player, this.pinkDoor);
+        this.pinkDoor.setImmovable();
+
+        this.physics.add.collider(this.monsterGroup, this.player, (a, b) => {
+            if(this.game.settings.canTakeDamage){
+                 this.takeDamage();
+            }
+           
+
+        }, null, this);
+
+       
+
+
     }
 
+    
+
     update() {
+
+      if(!this.game.settings.gameOver){
+
         console.log(this.player.body.x);
         console.log(this.player.body.y);
-
+        
         this.player.update();
         if (Phaser.Input.Keyboard.JustDown(keyD)) {
             this.scene.start('forestScene');
         }
+
+
+      }  
+       
 
     }
     //add the shield to the player options
@@ -408,9 +453,24 @@ class LevelTwoCave extends Phaser.Scene {
     }
 
     takeDamage() {
+
+        if(this.game.settings.currentSpoons == 0){
+
+            this.player.destroy();
+            this.game.settings.gameOver = true;
+        } else {
         this.temp = this.game.settings.currentSpoons - 1; //minus one bc stupid off by one error ew
         this.spoonArray[this.temp].alpha = 0; //alpha set to 0 is invis
         game.settings.currentSpoons -= 1;
+        this.game.settings.canTakeDamage = false;
+        this.pinkClock = this.time.delayedCall(2000, () => { 
+            this.game.settings.canTakeDamage = true;
+         }, null, this);
+
+        }
+       
+
+
 
 
 
@@ -444,6 +504,17 @@ class LevelTwoCave extends Phaser.Scene {
                 this.changeMessageOpacity();
              }, null, this);
         }
+    }
+
+    triggerPinkDoor(){
+
+        if(this.pinkDoor.alpha >= .1){
+        this.pinkDoor.alpha = this.pinkDoor.alpha - .1;
+        this.pinkClock = this.time.delayedCall(500, () => { 
+            this.triggerPinkDoor();
+         }, null, this);
+        }
+
     }
 
 

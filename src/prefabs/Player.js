@@ -6,7 +6,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.isAlive = true;
         this.isWalking = true;
         scene.physics.add.existing(this);
-        this.setImmovable(true);
+        this.setImmovable(false);
         this.create(); //You need this to make it accessible 
         this.check = 'idle';
     }
