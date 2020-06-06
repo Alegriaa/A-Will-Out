@@ -15,16 +15,24 @@ class LevelTwoCave extends Phaser.Scene {
 
         this.load.image('forestBackground', './assets/Level2Sketch.png');
         this.load.image('caveTwoBackground', './assets/CaveLevelTwo.png');
-        this.load.image('groundMonster', './assets/Monster.png');
-        this.load.image('flyingMonster', './assets/FlyingMonster.png');
+        this.load.image('monsterSketch', './assets/Monster.png');
         this.load.tilemapTiledJSON('caveTwoMap', './assets/TiledCaveTwo.json');
-
+        this.load.image('smallCircle', './assets/smallLightCircle.png');
+        this.load.image('bigCircle', './assets/bigLightCircle.png');
         this.load.image('topLayer', './assets/caveTwoTopLayer.png');
         this.load.image('cave2Background', './assets/level2Graphics.png')
         this.load.spritesheet('characterWalk', './assets/characterWalking.png', { frameWidth: 50, frameHeight: 150, startFrame: 0, endFrame: 31 });
         this.load.image('cave2SpikyOverlay', './assets/psCaveTwoOverlay.png');
         this.load.image('shield', './assets/Shield.png');
         this.load.image('spoonItem', './assets/Spoon.png');
+
+
+        this.load.image('hopeItem', './assets/Hope.png')
+
+        this.load.image('groundMonster', './assets/Monster.png');
+        this.load.image('flyingMonster', './assets/FlyingMonster.png');
+        this.load.tilemapTiledJSON('caveTwoMap', './assets/TiledCaveTwo.json');
+
     }
 
     create() {
@@ -63,8 +71,10 @@ class LevelTwoCave extends Phaser.Scene {
         this.spoonItem = new Spoon(this, centerX - 150, centerY + 200, 'spoonItem').setScale(.5);
         //create Message Item 
 
-        this.messageItem = new MessageItem(this, centerX - 150, centerY + 400, 'TempSpoon').setScale(.25);
-       //non movable shield and spoon
+
+        this.messageItem = new MessageItem(this, centerX - 150, centerY + 400, 'hopeItem').setScale(.25);
+        //non movable shield and spoon
+
         this.shield.setImmovable();
         this.spoonItem.setImmovable();
         this.messageItem.setImmovable();
@@ -98,6 +108,7 @@ class LevelTwoCave extends Phaser.Scene {
         this.monsterGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
         });
+
 
         this.monsterOne = new CaveMonster(this, 927, 345, 'flyingMonster').setScale(0.7);
         this.monsterGroup.add(this.monsterOne);
@@ -322,6 +333,7 @@ class LevelTwoCave extends Phaser.Scene {
 
 
 
+
         //add a function call for the player when a shield is collected
         this.physics.add.collider(this.shield, this.player, (a, b) => {
 
@@ -353,8 +365,7 @@ class LevelTwoCave extends Phaser.Scene {
 
         }, null, this);
 
-       
-    
+
         var messageConfig = {
             font: "16px Arial", fill: "#fff",
             align: "center", // the alignment of the text is independent of the bounds, try changing to 'center' or 'right'
@@ -364,6 +375,11 @@ class LevelTwoCave extends Phaser.Scene {
         };
         this.title = this.add.text(centerX, 500, '', messageConfig);
         this.title.setScrollFactor(0, 0);
+
+
+
+        //create message item collider and grab one of the messages from the prefab
+
         this.physics.add.collider(this.messageItem, this.player, (a, b) => {
 
             this.title.setText(a.itemActivated());
@@ -528,6 +544,7 @@ class LevelTwoCave extends Phaser.Scene {
                 this.changeMessageOpacity();
              }, null, this);
         }
+
     }
 
     triggerPinkDoor(){
