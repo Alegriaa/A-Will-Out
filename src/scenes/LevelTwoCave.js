@@ -64,7 +64,7 @@ class LevelTwoCave extends Phaser.Scene {
         //create Message Item 
 
         this.messageItem = new MessageItem(this, centerX - 150, centerY + 400, 'TempSpoon').setScale(.25);
-       // non movable shield and spoon
+       //non movable shield and spoon
         this.shield.setImmovable();
         this.spoonItem.setImmovable();
         this.messageItem.setImmovable();
