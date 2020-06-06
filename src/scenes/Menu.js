@@ -16,6 +16,7 @@ class Menu extends Phaser.Scene {
         this.load.image('directionsScreen','./assets/directionMenu.png');
         this.load.audio('WalkingInFlowers', './assets/WalkingInFlowers.wav');
         this.load.audio('Crying', './assets/CryingNearCave.wav');
+        this.load.audio('WorldMusic', './assets/WorldSceneMusic.wav');
 
     }
 

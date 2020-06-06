@@ -39,6 +39,10 @@ let circleMoving = false;
 let circlePosition;
 let lampOn = false;
 
+
+// music variables
+let worldMusic = null;
+
 game.settings = {
     startingSpoons: 5,
     currentSpoons: 5,   
