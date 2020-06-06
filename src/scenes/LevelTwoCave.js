@@ -348,14 +348,21 @@ class LevelTwoCave extends Phaser.Scene {
 
        
     
-        
+        var messageConfig = {
+            font: "16px Arial", fill: "#fff",
+            align: "center", // the alignment of the text is independent of the bounds, try changing to 'center' or 'right'
+            boundsAlignH: "left",
+            boundsAlignV: "top",
+            wordWrap: true, wordWrapWidth: 300
+        };
+        this.title = this.add.text(centerX, 500, '', messageConfig);
+        this.title.setScrollFactor(0, 0);
         this.physics.add.collider(this.messageItem, this.player, (a, b) => {
-           
-           
-            
-                a.itemActivated(this.player.x,this.player.y);
-                a.destroy();
-           
+
+            this.title.setText(a.itemActivated());
+            this.changeMessageOpacity();
+            a.destroy();
+
 
         }, null, this);
 
@@ -427,6 +434,16 @@ class LevelTwoCave extends Phaser.Scene {
         this.spoonArray[this.temp].alpha = 1; //alpha set to 1 is visible
         game.settings.currentSpoons += 1;
 
+    }
+
+    changeMessageOpacity(){
+        if(this.title.alpha >= .1){
+
+            this.title.alpha = this.title.alpha - .1;
+            this.lampClock = this.time.delayedCall(1000, () => { 
+                this.changeMessageOpacity();
+             }, null, this);
+        }
     }
 
 

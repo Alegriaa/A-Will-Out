@@ -13,7 +13,7 @@ class MessageItem extends Phaser.Physics.Arcade.Sprite {
 
     }
 
-    itemActivated(xPos, yPos){
+    itemActivated(){
 
 
        this.messageArray = ([]);
@@ -30,18 +30,7 @@ class MessageItem extends Phaser.Physics.Arcade.Sprite {
        
 
        this.randomNumber = Math.floor((Math.random() * 10) + 0);
-        var txt = this.scene.make.text({
-            x: 500,
-            y: 500,
-            text: this.messageArray[this.randomNumber],
-            origin: { x: 0.5, y: 0.5 },
-            style: {
-                font: '25px Arial',
-                fill: 'white',
-                wordWrap: { width: 600 }
-            }
-        });
-        txt.setScrollFactor(0,0);
+      return this.messageArray[this.randomNumber];
         //this.messageText.setScrollFactor(0,0);
 
     }
