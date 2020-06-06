@@ -71,6 +71,9 @@ class LevelTwoCave extends Phaser.Scene {
 
         playerSpeed = 2;
         this.topLayer = this.add.tileSprite(0, 0, 3760, 1280, 'topLayer').setOrigin(0, 0);
+        this.blueDoor = this.physics.add.sprite(1575, 975, 'blueDoor');
+        
+        
         this.spikes = this.add.tileSprite(0, 0, 3750, 1280, 'cave2SpikyOverlay').setOrigin(0, 0);
 
         // bounds of the background asset 
@@ -78,7 +81,7 @@ class LevelTwoCave extends Phaser.Scene {
         // bounds of the canvas 
         this.cameras.main.setViewport(0, 0, 960, 640);
         // this follows the player & zoomed in 
-        this.cameras.main.startFollow(this.player).setZoom(1.45);
+        this.cameras.main.startFollow(this.player).setZoom(.5);
 
 
         // this allows us to quickly use up, left, down, right arroy keys
@@ -410,6 +413,27 @@ class LevelTwoCave extends Phaser.Scene {
         this.physics.add.collider(this.player, this.pinkDoor);
         this.pinkDoor.setImmovable();
 
+
+       
+        this.blueDoor.setImmovable(); //blue door is declared near spiky overlay because of overlap reasons
+       this.blueSwitch = this.physics.add.sprite(2060, 470, 'blueSwitch');
+        
+        this.blueSwitch.setImmovable();
+        this.physics.add.collider(this.player, this.blueDoor);
+
+        this.physics.add.collider(this.blueSwitch, this.player, (a, b) => {
+            a.alpha = .5;
+            this.triggerBlueDoor();
+            this.blueClock = this.time.delayedCall(1500, () => { 
+                this.blueDoor.destroy();
+             }, null, this);
+         
+
+        }, null, this);
+
+
+
+
         this.physics.add.collider(this.monsterGroup, this.player, (a, b) => {
             if(this.game.settings.canTakeDamage){
                  this.takeDamage();
@@ -429,8 +453,8 @@ class LevelTwoCave extends Phaser.Scene {
 
       if(!this.game.settings.gameOver){
 
-        console.log(this.player.body.x);
-        console.log(this.player.body.y);
+        //console.log(this.player.body.x);
+        //console.log(this.player.body.y);
         
         this.player.update();
         if (Phaser.Input.Keyboard.JustDown(keyD)) {
@@ -517,5 +541,15 @@ class LevelTwoCave extends Phaser.Scene {
 
     }
 
+    triggerBlueDoor(){
+
+        if(this.blueDoor.alpha >= .1){
+        this.blueDoor.alpha = this.blueDoor.alpha - .1;
+        this.blueClock = this.time.delayedCall(500, () => { 
+            this.triggerBlueDoor();
+         }, null, this);
+        }
+
+    }
 
 }
