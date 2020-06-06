@@ -85,6 +85,7 @@ class World extends Phaser.Scene {
         this.physics.add.collider(this.cave, this.player, (a, b) => {
             this.scene.start('levelOneCave');
             this.walkingInFlowers.stop();
+            worldMusic.stop();
 
         }, null, this);
 
@@ -135,7 +136,7 @@ class World extends Phaser.Scene {
 
         // adding walking in flowers sound to scene
         this.walkingInFlowers = this.sound.add('WalkingInFlowers', {
-            volume: 1.1,
+            volume: 1.5,
             loop: true
         });
         // adding crying sound to scene
@@ -145,6 +146,12 @@ class World extends Phaser.Scene {
         });
 
         this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
+
+
+
+        // music 
+        worldMusic = this.sound.add('WorldMusic', { volume: 0.1, loop: true });
+        worldMusic.play();
 
 
 
