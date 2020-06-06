@@ -354,6 +354,7 @@ class LevelTwoCave extends Phaser.Scene {
 
         }, null, this);
 
+
         var messageConfig = {
             font: "16px Arial", fill: "#fff",
             align: "center", // the alignment of the text is independent of the bounds, try changing to 'center' or 'right'
@@ -365,7 +366,9 @@ class LevelTwoCave extends Phaser.Scene {
         this.title.setScrollFactor(0, 0);
 
 
+
         //create message item collider and grab one of the messages from the prefab
+
         this.physics.add.collider(this.messageItem, this.player, (a, b) => {
 
             this.title.setText(a.itemActivated());
@@ -453,7 +456,7 @@ class LevelTwoCave extends Phaser.Scene {
                 this.changeMessageOpacity();
              }, null, this);
         }
-        
+
     }
 
 

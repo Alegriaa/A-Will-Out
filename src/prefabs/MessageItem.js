@@ -28,7 +28,7 @@ class MessageItem extends Phaser.Physics.Arcade.Sprite {
 
     }
 
-    itemActivated(xPos, yPos){
+    itemActivated(){
 
        
        this.messageArray = ([]);
@@ -45,10 +45,10 @@ class MessageItem extends Phaser.Physics.Arcade.Sprite {
        
 
        this.randomNumber = Math.floor((Math.random() * 10) + 0);
-        return this.messageArray[this.randomNumber];
-        
 
-    
+      return this.messageArray[this.randomNumber];
+        //this.messageText.setScrollFactor(0,0);
+
 
     }
 
