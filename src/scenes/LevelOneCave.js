@@ -20,6 +20,7 @@ class LevelOneCave extends Phaser.Scene {
         this.load.image('smallCameraCircle', './assets/SmallCameraCircle.png');
         this.load.image('bigCameraCircle', './assets/BigCameraCircle.png');
         this.load.image('lamp', './assets/Lamp.png');
+        this.load.audio('CaveMusic', './assets/CaveMusic.wav');
         // name of the tiled project
         this.load.tilemapTiledJSON('caveMap','./assets/TiledCaveMap.json');
         //this.load.plugin('rexmovetoplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexmovetoplugin.min.js', true);
@@ -455,6 +456,7 @@ class LevelOneCave extends Phaser.Scene {
         // this follows the player & zoomed in 
         this.cameras.main.startFollow(this.player).setZoom(1.45);
 
+
         this.physics.add.collider(this.monsterGroup, this.player, (a, b) => {
             if(this.game.settings.canTakeDamage){
                  this.takeDamage();
@@ -463,7 +465,11 @@ class LevelOneCave extends Phaser.Scene {
 
         }, null, this);
 
-   
+
+        caveMusic = this.sound.add('CaveMusic', { volume: 1, loop: true });
+        caveMusic.play();
+
+    
        
     }
 

@@ -16,8 +16,6 @@ class LevelTwoCave extends Phaser.Scene {
         this.load.image('caveTwoBackground', './assets/CaveLevelTwo.png');
         this.load.image('monsterSketch', './assets/Monster.png');
         this.load.tilemapTiledJSON('caveTwoMap', './assets/TiledCaveTwo.json');
-        this.load.image('smallCircle', './assets/smallLightCircle.png');
-        this.load.image('bigCircle', './assets/bigLightCircle.png');
         this.load.image('topLayer', './assets/caveTwoTopLayer.png');
         this.load.image('cave2Background', './assets/level2Graphics.png')
         this.load.spritesheet('characterWalk', './assets/characterWalking.png', { frameWidth: 50, frameHeight: 150, startFrame: 0, endFrame: 31 });

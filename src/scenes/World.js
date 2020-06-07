@@ -16,7 +16,8 @@ class World extends Phaser.Scene {
         this.load.image('worldBackground', './assets/OverWorld.png');
         this.load.tilemapTiledJSON('map', './assets/TiledWorldMap.json');
         this.load.spritesheet('characterWalk','./assets/characterWalking.png',{frameWidth:50,frameHeight:150,startFrame:0,endFrame:31});
-        this.load.image('treeOver', './assets/Canopy.png');
+        this.load.image('treeOver', './assets/Canopy.png'); 
+        
     }
 
 
