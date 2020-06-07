@@ -68,7 +68,7 @@ class LevelTwoCave extends Phaser.Scene {
         // player located at the end
 
          //this.player = new Player(this, 3281, 60, 'characterWalk').setScale(0.5);
-        this.player = new Player(this, centerX - 150, centerY + 550, 'characterWalk', 0).setScale(0.4);
+        this.player = new Player(this, 3000, 300, 'characterWalk', 0).setScale(0.4);
 
 
         //create the shield in the cave
@@ -76,7 +76,6 @@ class LevelTwoCave extends Phaser.Scene {
         //create spoon in cave
         this.spoonItem = new Spoon(this, centerX - 150, centerY + 200, 'spoonItem').setScale(.5);
         //create Message Item 
-
 
         this.messageItem = new MessageItem(this, centerX - 150, centerY + 400, 'hopeItem').setScale(.25);
         //non movable shield and spoon
@@ -88,16 +87,22 @@ class LevelTwoCave extends Phaser.Scene {
         playerSpeed = 2;
         this.topLayer = this.add.tileSprite(0, 0, 3760, 1280, 'topLayer').setOrigin(0, 0);
         this.blueDoor = this.physics.add.sprite(1575, 975, 'blueDoor');
-        
+        this.caveExit = this.physics.add.sprite(2600, 5, 'TempSpoon').setScale(8, .5);
+        this.caveExit.alpha = .5;
         
         this.spikes = this.add.tileSprite(0, 0, 3750, 1280, 'cave2SpikyOverlay').setOrigin(0, 0);
+        this.physics.add.collider(this.player, this.caveExit, (a, b) => {
+            this.scene.start('forestScene');
+            
+
+        }, null, this);
 
         // bounds of the background asset 
         this.cameras.main.setBounds(0, 0, 3760, 1280);
         // bounds of the canvas 
         this.cameras.main.setViewport(0, 0, 960, 640);
         // this follows the player & zoomed in 
-        this.cameras.main.startFollow(this.player).setZoom(1.45);
+        this.cameras.main.startFollow(this.player).setZoom(.3);
 
 
         // this allows us to quickly use up, left, down, right arroy keys
@@ -523,6 +528,23 @@ class LevelTwoCave extends Phaser.Scene {
 
         }, null, this);
 
+        this.greenSwitch = this.physics.add.sprite(100, 100, 'greenSwitch');
+        this.greenDoor = this.physics.add.sprite(3660, 660, 'greenDoor');
+
+        this.physics.add.collider(this.player, this.greenDoor);
+        this.greenDoor.setImmovable();
+        this.greenSwitch.setImmovable();
+
+        this.physics.add.collider(this.greenSwitch, this.player, (a, b) => {
+            a.alpha = .5;
+            this.triggerGreenDoor();
+            this.blueClock = this.time.delayedCall(1500, () => { 
+                this.greenDoor.destroy();
+             }, null, this);
+         
+
+        }, null, this);
+
 
 
 
@@ -681,8 +703,12 @@ class LevelTwoCave extends Phaser.Scene {
     //add the shield to the player options
     addShield() {
 
-        game.settings.shield = true;
-        console.log(game.settings.shield);
+        this.game.settings.canTakeDamage = false;
+        
+
+        this.shieldClock = this.time.delayedCall(5000, () => { 
+            this.game.settings.canTakeDamage = true;
+         }, null, this);
 
 
 
@@ -699,7 +725,7 @@ class LevelTwoCave extends Phaser.Scene {
         this.spoonArray[this.temp].alpha = 0; //alpha set to 0 is invis
         game.settings.currentSpoons -= 1;
         this.game.settings.canTakeDamage = false;
-        this.pinkClock = this.time.delayedCall(2000, () => { 
+        this.damageClock = this.time.delayedCall(2000, () => { 
             this.game.settings.canTakeDamage = true;
          }, null, this);
 
@@ -752,6 +778,16 @@ class LevelTwoCave extends Phaser.Scene {
         this.blueDoor.alpha = this.blueDoor.alpha - .1;
         this.blueClock = this.time.delayedCall(500, () => { 
             this.triggerBlueDoor();
+         }, null, this);
+        }
+
+    }
+    triggerGreenDoor(){
+
+        if(this.greenDoor.alpha >= .1){
+        this.greenDoor.alpha = this.greenDoor.alpha - .1;
+        this.blueClock = this.time.delayedCall(500, () => { 
+            this.triggerGreenDoor();
          }, null, this);
         }
 
