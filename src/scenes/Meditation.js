@@ -46,6 +46,8 @@ class Meditation extends Phaser.Scene {
  
 
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
+        caveMusic.stop();
     }
 
     update(){
