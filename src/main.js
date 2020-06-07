@@ -44,6 +44,7 @@ let lampOn = false;
 let worldMusic = null;
 let caveMusic = null;
 let forestMeditationMusic = null;
+let monsterHitSound = null;
  
 game.settings = {
     startingSpoons: 5,

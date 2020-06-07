@@ -22,6 +22,7 @@ class LevelTwoCave extends Phaser.Scene {
         this.load.image('cave2SpikyOverlay', './assets/psCaveTwoOverlay.png');
         this.load.image('shield', './assets/Shield.png');
         this.load.image('spoonItem', './assets/Spoon.png');
+        this.load.audio('hitByMonster', './assets/MonsterHitSound.wav');
 
 
         this.load.image('hopeItem', './assets/Hope.png')
@@ -102,7 +103,7 @@ class LevelTwoCave extends Phaser.Scene {
         // bounds of the canvas 
         this.cameras.main.setViewport(0, 0, 960, 640);
         // this follows the player & zoomed in 
-        this.cameras.main.startFollow(this.player).setZoom(.3);
+        this.cameras.main.startFollow(this.player).setZoom(1.45);
 
 
         // this allows us to quickly use up, left, down, right arroy keys
@@ -561,6 +562,13 @@ class LevelTwoCave extends Phaser.Scene {
        
         this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
 
+
+        // sounds 
+        this.hitByMonster = this.sound.add('hitByMonster', {
+            volume: 1,
+            loop: false
+        });
+
     }
 
     
@@ -736,6 +744,7 @@ class LevelTwoCave extends Phaser.Scene {
 
          this.cameras.main.flash();
          this.cameras.main.shake(500);
+         this.hitByMonster.play();
 
        
     }
