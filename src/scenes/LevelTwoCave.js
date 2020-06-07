@@ -587,7 +587,7 @@ class LevelTwoCave extends Phaser.Scene {
 
       }}
 
-      }
+      
       
       
       //Monster 1 Animation Pathing
