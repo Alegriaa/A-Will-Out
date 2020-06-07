@@ -46,12 +46,12 @@ class LevelOneCave extends Phaser.Scene {
        //treeLayer.setCollisionBetween(0, 244);
 
 
-    //     const debugGraphics = this.add.graphics().setAlpha(0.75);
-    //    backgroundLayer.renderDebug(debugGraphics, {
-    //      tileColor: null, // Color of non-colliding tiles
-    //      collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-    //      faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-    //    });
+ //     const debugGraphics = this.add.graphics().setAlpha(0.75);
+ //    backgroundLayer.renderDebug(debugGraphics, {
+ //      tileColor: null, // Color of non-colliding tiles
+ //      collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+ //      faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+ //    });
 
        // this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
 
@@ -65,7 +65,10 @@ class LevelOneCave extends Phaser.Scene {
         // but these coordinates must remain the same for gameplay
         this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk',0).setScale(0.4);
         this.lampOne = new Lamp(this, centerX - 100, centerY + 550, 'lamp').setScale(0.35);
-    
+        this.monsterGroup = this.add.group({
+            runChildUpdate: true    // make sure update runs on group children
+        });
+       
 
         // this.lampClock = this.time.delayedCall(10000, () => { 
         //     this.smallCaveCircle.alpha = 0.9
@@ -159,7 +162,7 @@ class LevelOneCave extends Phaser.Scene {
         // this is the first monster the player will most likely see, 
         // simple movement from left to right 
         this.monsterOne = new CaveMonster(this, 800, 452, 'monster1Walk').setScale(0.6);
-
+        this.monsterGroup.add(this.monsterOne);
         this.tempM1x = this.monsterOne.x;
 
         // we access the plugin here & attach the object we want to have follow the above path
@@ -182,7 +185,7 @@ class LevelOneCave extends Phaser.Scene {
         // following a larger path towards the middle
 
         this.monsterTwo = new CaveMonster(this, 1724, 236, 'monster1Walk').setScale(0.6);
-
+        this.monsterGroup.add(this.monsterTwo);
         this.tempM2x = this.monsterTwo.x;
 
         // each monster needs a path to follow that is saved in a variable
@@ -209,7 +212,7 @@ class LevelOneCave extends Phaser.Scene {
         // this monster next one on the right
         // i will probably increase the speed for this after a play test
         this.monsterThree = new CaveMonster(this, 1724, 236, 'monster1Walk').setScale(0.6);
-
+        this.monsterGroup.add(this.monsterThree);
         this.tempM3x = this.monsterThree.x;
 
         // each monster needs a path to follow that is saved in a variable
@@ -241,7 +244,7 @@ class LevelOneCave extends Phaser.Scene {
         // areas should have a monster wandering around
         // this one patrols this area up & down as it move left to right
         this.monsterFour = new CaveMonster(this, 48, 48, 'monster1Walk').setScale(0.5);
-
+        this.monsterGroup.add(this.monsterFour);
         this.tempM4x = this.monsterFour.x;
 
         // each monster needs a path to follow that is saved in a variable
@@ -270,7 +273,7 @@ class LevelOneCave extends Phaser.Scene {
         // this monster is at the higher area of the middle section of the map
         // it patrols the area with a carefully designed path
         this.monsterFive = new CaveMonster(this, 1848, 50, 'monster1Walk').setScale(0.5);
-
+        this.monsterGroup.add(this.monsterFive);
         this.tempM5x = this.monsterFive.x;
 
         // each monster needs a path to follow that is saved in a variable
@@ -299,7 +302,7 @@ class LevelOneCave extends Phaser.Scene {
         // patrols the only direction that the player can travel
         // moving up & down as it travels left to right
         this.monsterSix = new CaveMonster(this, 2081, 50, 'monster1Walk').setScale(0.6);
-       
+        this.monsterGroup.add(this.monsterSix);
         this.tempM6x = this.monsterSix.x;
 
         // each monster needs a path to follow that is saved in a variable
@@ -328,12 +331,12 @@ class LevelOneCave extends Phaser.Scene {
         // this monster just awaits the player at the end of a path 
         // that is the wrong way
         this.monsterSeven = new CaveMonster(this, 1803, 976, 'monsterSketch').setScale(0.6);
-
+        this.monsterGroup.add(this.monsterSeven);
         // this is a fast monster, that aims to
         // scare the player but push the player to be extra careful
         // as they cross it's path.
         this.monsterEightFast = new CaveMonster(this, 2875, 740, 'monster1Walk').setScale(0.6);
-        
+        this.monsterGroup.add(this.monsterEightFast);
         this.tempM8x = this.monsterEightFast.x;
 
         // each monster needs a path to follow that is saved in a variable
@@ -363,7 +366,7 @@ class LevelOneCave extends Phaser.Scene {
         // this monster is at the very end, bottom right
         // patrol an area that the player might think is the only way out
         this.monsterNine = new CaveMonster(this, 3472, 1023, 'monster1Walk',0).setScale(0.6);
-
+        this.monsterGroup.add(this.monsterNine);
         this.tempM9x = this.monsterNine.x;
 
         // each monster needs a path to follow that is saved in a variable
@@ -415,17 +418,18 @@ class LevelOneCave extends Phaser.Scene {
         this.spoonCount = this.game.settings.currentSpoons;//counter for array
         this.starter = 1;//counter for array
         this.spoonArray = ([]); // create spoon array
-        this.xValue = centerX - 400; //x value for all of the spoon location spawns
-        this.yValue = 50;
+        this.xValue = this.player.x -100; //x value for all of the spoon location spawns
+        this.yValue = this.player.y +100;
 
 
         //a while loop to create the necessary amount of spoons according to the current spoons game settings number
         while (this.starter <= this.spoonCount) {
-            this.spoon1 = new Spoon(this, this.xValue, this.yValue, 'TempSpoon').setScale(.2);
+            this.spoon1 = new Spoon(this, this.xValue, this.yValue, 'TempSpoon').setScale(1);
             this.spoon1.setScrollFactor(0, 0);
             this.spoonArray.push(this.spoon1);
             this.xValue += 40;
             this.starter++;
+            
         }
         this.boolVar = true;
         this.boolVar2 = true;
@@ -451,6 +455,15 @@ class LevelOneCave extends Phaser.Scene {
         this.cameras.main.setViewport(0, 0, 960, 640);
         // this follows the player & zoomed in 
         this.cameras.main.startFollow(this.player).setZoom(1.45);
+
+
+        this.physics.add.collider(this.monsterGroup, this.player, (a, b) => {
+            if(this.game.settings.canTakeDamage){
+                 this.takeDamage();
+            }
+           
+
+        }, null, this);
 
 
         caveMusic = this.sound.add('CaveMusic', { volume: 1, loop: true });
@@ -579,24 +592,30 @@ class LevelOneCave extends Phaser.Scene {
 
 
     takeDamage() {
+
+        if(this.game.settings.currentSpoons == 0){
+
+            this.player.setVelocity(0);
+            this.game.settings.gameOver = true;
+        } else {
         this.temp = this.game.settings.currentSpoons - 1; //minus one bc stupid off by one error ew
         this.spoonArray[this.temp].alpha = 0; //alpha set to 0 is invis
         game.settings.currentSpoons -= 1;
+        this.game.settings.canTakeDamage = false;
+        this.damageClock = this.time.delayedCall(2000, () => { 
+            this.game.settings.canTakeDamage = true;
+         }, null, this);
 
         
+       
 
 
-        this.tweens.add({ //!!!!!!!! -------> this will eventually need to be changed into a switch statement
-            targets: this.sea,
-            alphaTopLeft: { value: .5, duration: 500, ease: 'Power1' },
-            alphaTopRight: { value: .5, duration: 500, ease: 'Power1' },
-            alphaBottomRight: { value: .5, duration: 500, ease: 'Power1' },
-            alphaBottomLeft: { value: .5, duration: 500, ease: 'Power1' },//,delay: 5000 },
 
-            yoyo: true,
-            //loop: -1   
-        });
+         this.cameras.main.flash();
+         this.cameras.main.shake(500);
 
+       
+    }
 
     }
 

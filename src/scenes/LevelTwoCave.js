@@ -534,13 +534,7 @@ class LevelTwoCave extends Phaser.Scene {
 
         }, null, this);
 
-        this.physics.add.collider(this.monsterGroup, this.player, (a, b) => {
-            if(this.game.settings.canTakeDamage){
-                 this.takeDamage();
-            }
-           
-
-        }, null, this);
+       
 
        
         this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
