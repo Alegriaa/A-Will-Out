@@ -42,6 +42,7 @@ let lampOn = false;
 
 // music variables
 let worldMusic = null;
+let caveMusic = null;
 
 game.settings = {
     startingSpoons: 5,
