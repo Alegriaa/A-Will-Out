@@ -32,6 +32,9 @@ class LevelTwoCave extends Phaser.Scene {
         this.load.image('flyingMonster', './assets/FlyingMonster.png');
         this.load.tilemapTiledJSON('caveTwoMap', './assets/TiledCaveTwo.json');
 
+        this.load.spritesheet('monster1Walk','./assets/enemy1WalkFull.png',{frameWidth:150, frameHeight: 200, startFrame: 0, endFrame: 7});
+        this.load.spritesheet('monster2Fly','./assets/enemy2WalkFull.png',{frameWidth:150,frameHeight: 200, startFrame: 0, endFrame: 7});
+
     }
 
     create() {
@@ -62,7 +65,6 @@ class LevelTwoCave extends Phaser.Scene {
         // player located at the end
          //this.player = new Player(this, 3281, 60, 'characterWalk').setScale(0.5);
         this.player = new Player(this, centerX - 150, centerY + 550, 'characterWalk', 0).setScale(0.4);
-
 
         //create the shield in the cave
         this.shield = new Shield(this, centerX - 200, centerY + 100, 'shield').setScale(.5);
@@ -109,7 +111,41 @@ class LevelTwoCave extends Phaser.Scene {
         });
 
 
-        this.monsterOne = new CaveMonster(this, 927, 345, 'flyingMonster').setScale(0.7);
+         //ANIMATION FOR MONSTER 1
+         this.anims.create({
+            key:'monsterWalkRight',
+            repeat:-1,
+            frames: this.anims.generateFrameNumbers('monster1Walk',{start:5,end:7,first:4}),
+            frameRate: 2.5,
+        });
+
+        this.anims.create({
+            key:'monsterWalkLeft',
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('monster1Walk',{start:0,end:3,first:0}),
+            frameRate: 2.5,
+
+        })
+
+        //ANIMATIONS FOR MONSTER 2
+        this.anims.create({
+            key:'monsterFlyRight',
+            repeat:-1,
+            frames:this.anims.generateFrameNumbers('monster2Fly',{start:4,end:7,first:4}),
+            frameRate:6,
+        })
+
+        this.anims.create({
+            key:'monsterFlyLeft',
+            repeat:-1,
+            frames:this.anims.generateFrameNumbers('monster2Fly',{start:0,end:3,first:0}),
+            frameRate:6,
+        })
+
+        this.monsterOne = new CaveMonster(this, 927, 345, 'monster2Fly').setScale(0.7);
+
+        this.tempM1x = this.monsterOne.x;
+
         this.monsterGroup.add(this.monsterOne);
 
         var path = this.add.path(927, 345)
@@ -132,7 +168,10 @@ class LevelTwoCave extends Phaser.Scene {
             yoyo: true
         });
 
-        this.monsterTwo = new CaveMonster(this, 100, 74, 'flyingMonster').setScale(0.7);
+        this.monsterTwo = new CaveMonster(this, 100, 74, 'monster2Fly').setScale(0.7);
+
+        this.tempM2x = this.monsterTwo.x;
+
         this.monsterGroup.add(this.monsterTwo);
         var pathTwo = this.add.path(100, 74)
             .lineTo(279, 269)
@@ -154,7 +193,10 @@ class LevelTwoCave extends Phaser.Scene {
         });
 
 
-        this.monsterThree = new CaveMonster(this, 2042, 439, 'flyingMonster').setScale(0.7);
+        this.monsterThree = new CaveMonster(this, 2042, 439, 'monster2Fly').setScale(0.7);
+
+        this.tempM3x = this.monsterThree.x;
+
         this.monsterGroup.add(this.monsterThree);
         var pathThree = this.add.path(2042, 439)
             .lineTo(1555, 439)
@@ -176,7 +218,10 @@ class LevelTwoCave extends Phaser.Scene {
             yoyo: true
         });
 
-        this.monsterFour = new CaveMonster(this, 2464, 745, 'flyingMonster').setScale(0.6);
+        this.monsterFour = new CaveMonster(this, 2464, 745, 'monster2Fly').setScale(0.6);
+
+        this.tempM4x = this.monsterThree.x;
+
         this.monsterGroup.add(this.monsterFour);
         var pathFour = this.add.path(2464, 745)
             .lineTo(2232, 850)
@@ -199,7 +244,10 @@ class LevelTwoCave extends Phaser.Scene {
             yoyo: true
         });
 
-        this.monsterFive = new CaveMonster(this, 2462, 1108, 'flyingMonster').setScale(0.6);
+        this.monsterFive = new CaveMonster(this, 2462, 1108, 'monster2Fly').setScale(0.6);
+
+        this.tempM5x = this.monsterFive.x;
+
         this.monsterGroup.add(this.monsterFive);
         var pathFive = this.add.path(2462, 1108)
             .lineTo(2231, 1191)
@@ -222,7 +270,10 @@ class LevelTwoCave extends Phaser.Scene {
             yoyo: true
         });
 
-        this.monsterSix = new CaveMonster(this, 3696, 991, 'groundMonster').setScale(0.6);
+        this.monsterSix = new CaveMonster(this, 3696, 991, 'monster1Walk').setScale(0.6);
+
+        this.tempM6x = this.monsterSix.x;
+
         this.monsterGroup.add(this.monsterSix);
         var pathSix = this.add.path(3696, 991)
             .lineTo(2697, 991)
@@ -242,7 +293,10 @@ class LevelTwoCave extends Phaser.Scene {
             yoyo: true
         });
 
-        this.monsterSeven = new CaveMonster(this, 2681, 737, 'flyingMonster').setScale(0.6);
+        this.monsterSeven = new CaveMonster(this, 2681, 737, 'monster2Fly').setScale(0.6);
+
+        this.tempM7x = this.monsterSeven.x;
+
         this.monsterGroup.add(this.monsterSeven);
         var pathSeven = this.add.path(2681, 737)
             .lineTo(2681, 991)
@@ -264,7 +318,10 @@ class LevelTwoCave extends Phaser.Scene {
             yoyo: true
         });
 
-        this.monsterEight = new CaveMonster(this, 3192, 58, 'flyingMonster').setScale(0.6);
+        this.monsterEight = new CaveMonster(this, 3192, 58, 'monster2Fly').setScale(0.6);
+
+        this.tempM8x = this.monsterEight.x;
+
         this.monsterGroup.add(this.monsterEight);
         var pathEight = this.add.path(3192, 58)
             .lineTo(3672, 58)
@@ -285,7 +342,10 @@ class LevelTwoCave extends Phaser.Scene {
             yoyo: true
         });
 
-        this.monsterNine = new CaveMonster(this, 2664, 462, 'flyingMonster').setScale(0.6);
+        this.monsterNine = new CaveMonster(this, 2664, 462, 'monster2Fly').setScale(0.6);
+
+        this.tempM9x = this.monsterNine.x;
+        
         this.monsterGroup.add(this.monsterNine);
         var pathNine = this.add.path(2664, 462)
             .lineTo(3252, 462)
@@ -308,7 +368,10 @@ class LevelTwoCave extends Phaser.Scene {
             yoyo: true
         });
 
-        this.monsterTen = new CaveMonster(this, 2656, 83, 'flyingMonster').setScale(0.7);
+        this.monsterTen = new CaveMonster(this, 2656, 83, 'monster2Fly').setScale(0.7);
+
+        this.tempM10x = this.monsterTen.x;
+
         this.monsterGroup.add(this.monsterTen);
         var pathTen = this.add.path(2656, 83)
             .lineTo(2926, 453)
@@ -478,7 +541,102 @@ class LevelTwoCave extends Phaser.Scene {
         }
 
 
-      }  
+      }
+      
+      
+      //Monster 1 Animation Pathing
+      if(this.tempM1x < this.monsterOne.x){
+        this.monsterOne.animate('monsterFlyRight');
+        this.tempM1x = this.monsterOne.x;
+    }else if(this.tempM1x > this.monsterOne.x){
+        this.monsterOne.animate('monsterFlyLeft');
+        this.tempM1x = this.monsterOne.x;
+    }
+
+    //Monster 2 Animation Pathing
+    if(this.tempM2x < this.monsterTwo.x){
+        this.monsterTwo.animate('monsterFlyRight');
+        this.tempM2x = this.monsterTwo.x;
+    }else if(this.tempM2x > this.monsterTwo.x){
+        this.monsterTwo.animate('monsterFlyLeft');
+        this.tempM2x = this.monsterTwo.x;
+    }
+
+     //Monster 3 Animation Pathing
+       
+     if(this.tempM3x < this.monsterThree.x){
+        this.monsterThree.animate('monsterFlyRight');
+        this.tempM3x = this.monsterThree.x;
+    }else if(this.tempM3x > this.monsterThree.x){
+        this.monsterThree.animate('monsterFlyLeft');
+        this.tempM3x = this.monsterThree.x;
+    }
+
+    //Monster 4 Animation Pathing
+    if(this.tempM4x < this.monsterFour.x){
+        this.monsterFour.animate('monsterFlyRight');
+        this.tempM4x = this.monsterFour.x;
+    }else if(this.tempM4x > this.monsterFour.x){
+        this.monsterFour.animate('monsterFlyLeft');
+        this.tempM4x = this.monsterFour.x;
+    }
+
+    //Monster 5 Animation Pathing
+    if(this.tempM5x < this.monsterFive.x){
+        this.monsterFive.animate('monsterFlyRight');
+        this.tempM5x = this.monsterFive.x;
+    }else if(this.tempM5x > this.monsterFive.x){
+        this.monsterFive.animate('monsterFlyLeft');
+        this.tempM5x = this.monsterFive.x;
+    }
+
+     //Monster 6 Animation Pathing
+     if(this.tempM6x < this.monsterSix.x){
+        this.monsterSix.animate('monsterWalkRight');
+        this.tempM6x = this.monsterSix.x;
+    }else if(this.tempM6x > this.monsterSix.x){
+        this.monsterSix.animate('monsterWalkLeft');
+        this.tempM6x = this.monsterSix.x;
+    }
+
+     //Monster 7 Animation Pathing
+     if(this.tempM7x < this.monsterSeven.x){
+        this.monsterSeven.animate('monsterFlyRight');
+        this.tempM7x = this.monsterSeven.x;
+    }else if(this.tempM7x > this.monsterSeven.x){
+        this.monsterSeven.animate('monsterFlyLeft');
+        this.tempM7x = this.monsterSeven.x;
+    }
+
+     //Monster 8 Animation Pathing
+     if(this.tempM8x < this.monsterEight.x){
+        this.monsterEight.animate('monsterFlyRight');
+        this.tempM8x = this.monsterEight.x;
+    }else if(this.tempM8x > this.monsterEight.x){
+        this.monsterEight.animate('monsterFlyLeft');
+        this.tempM8x = this.monsterEight.x;
+    }
+
+    // Monster 9 Animation Pathing
+    if(this.tempM9x < this.monsterNine.x){
+        this.monsterNine.animate('monsterFlyRight');
+        this.tempM9x = this.monsterNine.x;
+    }else if(this.tempM9x > this.monsterNine.x){
+        this.monsterNine.animate('monsterFlyLeft');
+        this.tempM9x = this.monsterNine.x;
+    }
+
+
+    // Monster 10 Animation Pathing
+    if(this.tempM10x < this.monsterTen.x){
+        this.monsterTen.animate('monsterFlyRight');
+        this.tempM10x = this.monsterTen.x;
+    }else if(this.tempM10x > this.monsterTen.x){
+        this.monsterTen.animate('monsterFlyLeft');
+        this.tempM10x = this.monsterTen.x;
+    }
+
+
        
 
     }
