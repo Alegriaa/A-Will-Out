@@ -22,7 +22,7 @@ class Forest extends Phaser.Scene {
 
 
         this.player = new Player(this, centerX - 300, centerY - 165, 'characterWalk').setScale(1);
-    this.physics.add.collider(this.player, backgroundLayer1);
+        this.physics.add.collider(this.player, backgroundLayer1);
 
          // this allows us to quickly use up, left, down, right arroy keys
          cursors = this.input.keyboard.createCursorKeys();
