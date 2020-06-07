@@ -4,16 +4,25 @@ class Forest extends Phaser.Scene {
 
     }
     preload(){
-        this.load.image('worldBackground', './assets/OverWorld.png');
+        this.load.image('longOverworld', './assets/LongOverworld.png');
         this.load.spritesheet('characterWalk','./assets/characterWalking.png',{frameWidth:50,frameHeight:150,startFrame:0,endFrame:31})
-
+        this.load.tilemapTiledJSON('longWorldMap', './assets/TiledLongOverWorld.json');
     }
 
     create(){
-        this.background = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0,0);
+        const forestMap = this.make.tilemap({ key: "longWorldMap" });
+
+        // first name is the name of the tilesheet used is the first parameter,
+        // the name we gave the asset within our project is the second parameter
+        const tileset = forestMap.addTilesetImage("LongOverworld", "longOverworld");
+        // this is a layer within the tiled project
+        const backgroundLayer1 = forestMap.createStaticLayer("Background", tileset, 0, 0);
+        //this.background = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0,0);
+        backgroundLayer1.setCollisionByProperty({ collide: true });
+
 
         this.player = new Player(this, centerX - 300, centerY - 165, 'characterWalk').setScale(1);
-
+    this.physics.add.collider(this.player, backgroundLayer1);
 
          // this allows us to quickly use up, left, down, right arroy keys
          cursors = this.input.keyboard.createCursorKeys();
