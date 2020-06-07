@@ -46,8 +46,12 @@ class LevelTwoCave extends Phaser.Scene {
         const tileset = caveTwoMap.addTilesetImage("CaveBackground", "cave2Background");
         // this is a layer within the tiled project
         const backgroundLayer1 = caveTwoMap.createStaticLayer("SecondCaveBackground", tileset, 0, 0);
+
+        const holeLayer = caveTwoMap.createStaticLayer("Holes", tileset, 0, 0);
+        //this.holeLayer = caveTwoMap.createDynamicLayer('Holes', tileset, 0, 0);
         //the set up for collision in tiled
         backgroundLayer1.setCollisionByProperty({ collision: true });
+        holeLayer.setCollisionByProperty({ hole: true });
 
         //debug for testing purposese
         const debugGraphics = this.add.graphics().setAlpha(0.75);
@@ -59,12 +63,15 @@ class LevelTwoCave extends Phaser.Scene {
             faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
         });
 
+         
 
 
         // instance of player in battle scene
         // player located at the end
+
          //this.player = new Player(this, 3281, 60, 'characterWalk').setScale(0.5);
         this.player = new Player(this, centerX - 150, centerY + 550, 'characterWalk', 0).setScale(0.4);
+
 
         //create the shield in the cave
         this.shield = new Shield(this, centerX - 200, centerY + 100, 'shield').setScale(.5);
@@ -98,13 +105,21 @@ class LevelTwoCave extends Phaser.Scene {
         // this allows us to quickly use up, left, down, right arroy keys
         cursors = this.input.keyboard.createCursorKeys();
         //collision for player and tiled background
+
         this.physics.add.collider(this.player, backgroundLayer1);
+
+        
+        this.physics.add.collider(this.player, holeLayer, (a, b) => {
+            this.scene.start('worldScene');
+            
+
+        }, null, this);
         //collision between shield and the player
         //this.physics.add.collider(this.player, this.shield);
         //this.physics.add.collider(this.player, this.spoonItem);
        //this.physics.add.collider(this.player, this.mess);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         this.monsterGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
@@ -521,15 +536,23 @@ class LevelTwoCave extends Phaser.Scene {
 
         }, null, this);
 
-       
+        this.physics.add.collider(this.monsterGroup, this.player, (a, b) => {
+            if(this.game.settings.canTakeDamage){
+                 this.takeDamage();
+            }
+           
 
+        }, null, this);
+
+       
+        this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
 
     }
 
     
 
     update() {
-
+       
       if(!this.game.settings.gameOver){
 
         //console.log(this.player.body.x);
@@ -540,6 +563,29 @@ class LevelTwoCave extends Phaser.Scene {
             this.scene.start('forestScene');
         }
 
+
+
+      } else {
+        var messageConfig = {
+            font: "16px Arial", fill: "#fff",
+            align: "center", // the alignment of the text is independent of the bounds, try changing to 'center' or 'right'
+            boundsAlignH: "left",
+            boundsAlignV: "top",
+            wordWrap: true, wordWrapWidth: 300
+        };
+        this.endMessage = this.add.text(centerX, centerY, 'You Died  Press R to start again', messageConfig);
+          
+        
+        
+        if(Phaser.Input.Keyboard.JustDown(keyR)){
+        this.game.settings.gameOver = false;
+        this.game.settings.currentSpoons = 5;
+        
+        
+        this.scene.start('worldScene');
+        
+
+      }}
 
       }
       
@@ -637,7 +683,7 @@ class LevelTwoCave extends Phaser.Scene {
     }
 
 
-       
+
 
     }
     //add the shield to the player options
@@ -654,7 +700,7 @@ class LevelTwoCave extends Phaser.Scene {
 
         if(this.game.settings.currentSpoons == 0){
 
-            this.player.destroy();
+            this.player.setVelocity(0);
             this.game.settings.gameOver = true;
         } else {
         this.temp = this.game.settings.currentSpoons - 1; //minus one bc stupid off by one error ew
@@ -665,24 +711,16 @@ class LevelTwoCave extends Phaser.Scene {
             this.game.settings.canTakeDamage = true;
          }, null, this);
 
-        }
+        
        
 
 
 
+         this.cameras.main.flash();
+         this.cameras.main.shake(500);
 
-
-        this.tweens.add({ //!!!!!!!! -------> this will eventually need to be changed into a switch statement
-            targets: this.sea,
-            alphaTopLeft: { value: .5, duration: 500, ease: 'Power1' },
-            alphaTopRight: { value: .5, duration: 500, ease: 'Power1' },
-            alphaBottomRight: { value: .5, duration: 500, ease: 'Power1' },
-            alphaBottomLeft: { value: .5, duration: 500, ease: 'Power1' },//,delay: 5000 },
-
-            yoyo: true,
-            //loop: -1   
-        });
-
+       
+    }
 
     }
 
@@ -726,5 +764,7 @@ class LevelTwoCave extends Phaser.Scene {
         }
 
     }
+
+    
 
 }

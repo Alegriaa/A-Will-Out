@@ -23,6 +23,7 @@ class Menu extends Phaser.Scene {
         this.load.image('greenSwitch', './assets/GreenSwitch.png');
         this.load.image('pinkDoor', './assets/PinkDoor.png');
         this.load.image('pinkSwitch', './assets/PinkSwitch.png');
+        this.load.image('blackout', './assets/BlackBackground.png');
 
     }
 
