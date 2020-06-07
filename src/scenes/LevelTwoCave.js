@@ -683,8 +683,12 @@ class LevelTwoCave extends Phaser.Scene {
     //add the shield to the player options
     addShield() {
 
-        game.settings.shield = true;
-        console.log(game.settings.shield);
+        this.game.settings.canTakeDamage = false;
+        
+
+        this.shieldClock = this.time.delayedCall(5000, () => { 
+            this.game.settings.canTakeDamage = true;
+         }, null, this);
 
 
 
@@ -701,7 +705,7 @@ class LevelTwoCave extends Phaser.Scene {
         this.spoonArray[this.temp].alpha = 0; //alpha set to 0 is invis
         game.settings.currentSpoons -= 1;
         this.game.settings.canTakeDamage = false;
-        this.pinkClock = this.time.delayedCall(2000, () => { 
+        this.damageClock = this.time.delayedCall(2000, () => { 
             this.game.settings.canTakeDamage = true;
          }, null, this);
 
