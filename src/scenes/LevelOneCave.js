@@ -40,6 +40,7 @@ class LevelOneCave extends Phaser.Scene {
          this.load.audio('shieldSound', './assets/ShieldSound.wav');
          this.load.audio('spoonSound', './assets/SpoonSound.wav');
          this.load.image('hopeItem', './assets/Hope.png')
+         this.load.image('spikyOverlayOne', './assets/LevelOneSpikes.png')
     }
 
     create() {
@@ -78,8 +79,15 @@ class LevelOneCave extends Phaser.Scene {
         // but these coordinates must remain the same for gameplay
         this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk',0).setScale(0.4);
         // player spawning close to exit for debugging
+
        // this.player = new Player(this, 3603, 300, 'characterWalk',0).setScale(0.4);
         this.lampOne = new Lamp(this, centerX - 100, centerY + 550, 'lamp').setScale(0.35);
+
+       // this.player = new Player(this, 260, 1100, 'characterWalk',0).setScale(0.4);
+        this.add.image(0,0,'spikyOverlayOne').setOrigin(0);
+        this.lampTwo = new Lamp(this, 1190, 1000, 'lamp').setScale(0.4);
+        this.lampThree = new Lamp(this, 2530, 290, 'lamp').setScale(0.4);
+        this.lampFour = new Lamp(this, 1350, 230, 'lamp').setScale(0.4);
         this.monsterGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
         });
@@ -91,16 +99,57 @@ class LevelOneCave extends Phaser.Scene {
         //  }, null, this);
         
         // detects the collision between the player and a lamp object
-        this.physics.add.collider(this.lampOne, this.player, (a, b) => {
+        this.physics.add.collider(this.lampTwo, this.player, (a, b) => {
             this.smallCaveCircle.alpha = 0.5
             this.bigCaveCircle.alpha = 0.7
-            this.lampOne.alpha = 0;
+            this.lampTwo.alpha = 0;
             this.lampSound.play();
             this.lampUI.alpha = 1;
             lampOn = true;
             console.log('you have been hit');
-            this.lampClock;
+            this.lampClock1 = this.time.delayedCall(10000, () => { 
+                this.smallCaveCircle.alpha = 0.9
+                this.bigCaveCircle.alpha = 1
+                this.lampSound.stop();
+                this.lampUI.alpha = 0;
+                lampOn = false;
+             }, null, this);
         }, null, this);
+
+        this.physics.add.collider(this.lampThree, this.player, (a, b) => {
+            this.smallCaveCircle.alpha = 0.5
+            this.bigCaveCircle.alpha = 0.7
+            this.lampThree.alpha = 0;
+            this.lampSound.play();
+            this.lampUI.alpha = 1;
+            lampOn = true;
+            console.log('you have been hit');
+            this.lampClock2 = this.time.delayedCall(10000, () => { 
+                this.smallCaveCircle.alpha = 0.9
+                this.bigCaveCircle.alpha = 1
+                this.lampSound.stop();
+                this.lampUI.alpha = 0;
+                lampOn = false;
+             }, null, this);
+        }, null, this);
+
+        this.physics.add.collider(this.lampFour, this.player, (a, b) => {
+            this.smallCaveCircle.alpha = 0.5
+            this.bigCaveCircle.alpha = 0.7
+            this.lampFour.alpha = 0;
+            this.lampSound.play();
+            this.lampUI.alpha = 1;
+            lampOn = true;
+            console.log('you have been hit');
+            this.lampClock = this.time.delayedCall(10000, () => { 
+                this.smallCaveCircle.alpha = 0.9
+                this.bigCaveCircle.alpha = 1
+                this.lampSound.stop();
+                this.lampUI.alpha = 0;
+                lampOn = false;
+             }, null, this);
+        }, null, this);
+
         // lamp timer to return to original settings
         if(lampOn = true){
             this.lampClock = this.time.delayedCall(10000, () => { 
@@ -474,23 +523,57 @@ class LevelOneCave extends Phaser.Scene {
             loop: false
         });
        
+        //create groups
+
+        this.messageGroup = this.add.group({
+            runChildUpdate: true    // make sure update runs on group children
+        });
+       
+
+
+
 
          //create the shield in the cave
-         this.shield = new Shield(this, centerX - 200, centerY + 100, 'shield').setScale(.5);
+         
+         this.shield1 = new Shield(this, 2630, 1000, 'shield').setScale(.5);
+         this.shield2 = new Shield(this, 1960, 320, 'shield').setScale(.5);
          //create spoon in cave
-         this.spoonItem = new Spoon(this, centerX - 150, centerY + 200, 'spoonItem').setScale(.5);
+        
          //create Message Item 
  
-         this.messageItem = new MessageItem(this, centerX - 150, centerY + 400, 'hopeItem').setScale(.25);
+         this.messageItem = new MessageItem(this, centerX -180, centerY + 400, 'hopeItem').setScale(.5);
+         this.messageGroup.add(this.messageItem);
+         this.messageItem1 = new MessageItem(this, 3670,663,'hopeItem').setScale(.5);
+         this.messageGroup.add(this.messageItem1);
+         this.messageItem2 = new MessageItem(this, 2970,1150,'hopeItem').setScale(.5);
+         this.messageItem3 = new MessageItem(this, 2075,180,'hopeItem').setScale(.5);
          //non movable shield and spoon
  
-         this.shield.setImmovable();
-         this.spoonItem.setImmovable();
+         
+         this.shield1.setImmovable();
+         
          this.messageItem.setImmovable();
+         this.messageItem1.setImmovable();
        //  this.lampOne.setImmovable();
 
          //add a function call for the player when a shield is collected
-        this.physics.add.collider(this.shield, this.player, (a, b) => {
+        
+
+        this.physics.add.collider(this.shield1, this.player, (a, b) => {
+
+            if (game.settings.shield) {
+
+
+            } else {
+
+                this.addShield();
+                this.shieldSound.play();
+                a.destroy();
+            }
+
+        }, null, this);
+
+        this.physics.add.collider(this.shield2, this.player, (a, b) => {
 
             if (game.settings.shield) {
 
@@ -505,18 +588,7 @@ class LevelOneCave extends Phaser.Scene {
         }, null, this);
 
         //collider for spoon item
-        this.physics.add.collider(this.spoonItem, this.player, (a, b) => {
-
-
-            if (game.settings.currentSpoons < 5) {
-
-                this.restoreDamage();
-                this.spoonSound.play();
-                a.destroy();
-
-            }
-
-        }, null, this);
+      
 
 
 
@@ -568,7 +640,7 @@ class LevelOneCave extends Phaser.Scene {
             boundsAlignV: "top",
             wordWrap: true, wordWrapWidth: 300
         };
-        this.title = this.add.text(centerX, 500, '', messageConfig);
+        this.title = this.add.text(centerX-100, 500, '', messageConfig);
         this.title.setScrollFactor(0, 0);
 
 
@@ -576,28 +648,40 @@ class LevelOneCave extends Phaser.Scene {
         //create message item collider and grab one of the messages from the prefab
 
         this.physics.add.collider(this.messageItem, this.player, (a, b) => {
-
+            this.title.alpha = 1;
             this.title.setText(a.itemActivated());
             this.changeMessageOpacity();
             a.destroy();
 
 
         }, null, this);
-
-       
-       
-        this.physics.add.collider(this.spoonItem, this.player, (a, b) => {
-
-
-            if (game.settings.currentSpoons < 5) {
-
-                this.restoreDamage();
-                this.spoonSound.play();
-                a.destroy();
-
-            }
+        this.physics.add.collider(this.messageItem1, this.player, (a, b) => {
+            this.title.alpha = 1;
+            this.title.setText(a.itemActivated());
+            this.changeMessageOpacity();
+            a.destroy();
 
         }, null, this);
+
+        this.physics.add.collider(this.messageItem2, this.player, (a, b) => {
+            this.title.alpha = 1;
+            this.title.setText(a.itemActivated());
+            this.changeMessageOpacity();
+            a.destroy();
+
+        }, null, this);
+
+        this.physics.add.collider(this.messageItem3, this.player, (a, b) => {
+            this.title.alpha = 1;
+            this.title.setText(a.itemActivated());
+            this.changeMessageOpacity();
+            a.destroy();
+
+        }, null, this);
+
+       
+       
+        
 
         this.physics.add.collider(this.monsterGroup, this.player, (a, b) => {
             if(this.game.settings.canTakeDamage){
