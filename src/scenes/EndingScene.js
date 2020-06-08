@@ -59,13 +59,14 @@ Important notes:
         this.load.json('dialog', './assets/JSON/dialogue.json');
         this.load.bitmapFont('gem_font', './assets/gem.png', './assets/gem.xml');
         this.load.image('dialogbox', './assets/dialogbox.png');
+        this.load.image('shadow', './assets/ShadowLeftSmallSprite.png');
 
     }
 
     create() {
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-
+        this.statue = this.physics.add.sprite(centerX+150, centerY , 'shadow').setScale(2);
         this.dialog = this.cache.json.get('dialogue');
         console.log(this.dialog);
         this.add.bitmapText(centerX, centerY - 32, 'gem_font', 'THE ODYSSEY', 32).setOrigin(0.5);
@@ -154,14 +155,7 @@ Important notes:
                 // but you could build other logic to change game states here
                 console.log('End of Conversations');
                 // tween out prior speaker's image
-                if(this.dialogLastSpeaker) {
-                    this.tweens.add({
-                        targets: this[this.dialogLastSpeaker],
-                        x: this.OFFSCREEN_X,
-                        duration: this.tweenDuration,
-                        ease: 'Linear'
-                    });
-                }
+               
                 // make text box invisible
                 this.dialogbox.visible = false;
     
@@ -179,25 +173,7 @@ Important notes:
 
                 }
                 
-                // check if there's a new speaker (for exit/enter animations)
-                if(this.dialog[this.dialogConvo][this.dialogLine]['newSpeaker']) {
-                    // tween out prior speaker's image
-                    if(this.dialogLastSpeaker) {
-                        this.tweens.add({
-                            targets: this[this.dialogLastSpeaker],
-                            x: this.OFFSCREEN_X,
-                            duration: this.tweenDuration,
-                            ease: 'Linear'
-                        });
-                    }
-                    // tween in new speaker's image
-                    this.tweens.add({
-                        targets: this[this.dialogSpeaker],
-                        x: this.DBOX_X + 50,
-                        duration: this.tweenDuration,
-                        ease: 'Linear'
-                    });
-                }
+              
     
                 // build dialog (concatenate speaker + line of text)
                 this.dialogLines = this.dialog[this.dialogConvo][this.dialogLine]['speaker'].toUpperCase() + ': ' + this.dialog[this.dialogConvo][this.dialogLine]['dialog'];
