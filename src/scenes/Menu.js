@@ -24,7 +24,12 @@ class Menu extends Phaser.Scene {
         this.load.image('pinkDoor', './assets/PinkDoor.png');
         this.load.image('pinkSwitch', './assets/PinkSwitch.png');
         this.load.image('blackout', './assets/BlackBackground.png');
-
+        this.load.image('hopeIcon','./assets/Hope.png');
+        this.load.image('lampIcon','./assets/Lamp.png');
+        this.load.image('shieldIcon','./assets/Shield.png');
+        this.load.image('spoonIcon','./assets/Spoon.png');
+        this.load.spritesheet('monster1Walk','./assets/enemy1WalkFull.png',{frameWidth:150, frameHeight: 200, startFrame: 0, endFrame: 7});
+        this.load.spritesheet('monster2Fly','./assets/enemy2WalkFull.png',{frameWidth:150,frameHeight: 200, startFrame: 0, endFrame: 7});
     }
 
     create() {
@@ -41,6 +46,21 @@ class Menu extends Phaser.Scene {
             
         }
 
+        //Monster 1 Animation
+        this.anims.create({
+            key:'monsterWalkRight',
+            repeat:-1,
+            frames: this.anims.generateFrameNumbers('monster1Walk',{start:5,end:7,first:4}),
+            frameRate: 2.5,
+        });
+
+        //Monster 2 Animation
+        this.anims.create({
+            key:'monsterFlyRight',
+            repeat:-1,
+            frames:this.anims.generateFrameNumbers('monster2Fly',{start:4,end:7,first:4}),
+            frameRate:6,
+        })
 
 
 // -150 -100 ,y , +50, 100, 200
@@ -73,6 +93,7 @@ class Menu extends Phaser.Scene {
     }
 
     update() {
+
 
         if (Phaser.Input.Keyboard.JustDown(keyR) && (this.endMenuFlag)) {
 
@@ -150,9 +171,57 @@ class Menu extends Phaser.Scene {
             
         }
 
+        let instructionConfig = {
+            fontSize: '22px',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 0
+            
+        }
+
+
         this.add.image(0,0,'directionsScreen').setOrigin(0);
-        this.add.text(centerX, centerY - 100, 'Use Up, Down, Left, Right Arrows to move',directionConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY + 100, 'Press (R) to Start',directionConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY-300,'Tutorial',directionConfig).setOrigin(0.5);
+
+        //Monster Tutorial
+        this.monsterOne = new CaveMonster(this, centerX - 410 , centerY-180, 'monster1Walk').setScale(1);
+        this.monsterOne.anims.play('monsterWalkRight');
+        this.monsterTwo = new CaveMonster(this, centerX - 280, centerY -180,'monster2Fly').setScale(1);
+        this.monsterTwo.anims.play('monsterFlyRight');
+        this.add.text(centerX + 100, centerY-200,'These monsters will hurt you, avoid them at all costs',directionConfig).setOrigin(0.5);
+        
+
+        this.add.image(centerX -450, centerY-10,'hopeIcon');
+        this.add.text(centerX - 180, centerY-10,'This is the hope powerup, idk what this one does').setOrigin(0.5);
+
+        this.add.image(centerX - 450, centerY+40,'lampIcon');
+        this.add.text(centerX -180, centerY+40, 'These lamps help light up your surroundings').setOrigin(0.5);
+
+        this.add.image(centerX -450, centerY + 100,'shieldIcon');
+        this.add.text(centerX - 220, centerY + 100,'Shields prevent damage being taken').setOrigin(0.5);
+
+        this.add.image(centerX - 450, centerY + 150,'spoonIcon');
+        this.add.text(centerX -240, centerY + 150, 'Spoons will heal damage taken.').setOrigin(0.5);
+
+        this.add.image(centerX + 300,centerY - 60,'blackout').setScale(0.1);
+        this.add.text(centerX+300,centerY -20,'Pits will send you back a scene').setOrigin(0.5);
+
+        this.add.image(centerX + 250,centerY + 100,'pinkDoor').setScale(1)
+        this.add.image(centerX + 400, centerY+100,'pinkSwitch').setScale(1)
+        this.add.text(centerX+325,centerY + 180,'Switches will open similarly').setOrigin(0.5);
+        this.add.text(centerX +325,centerY + 200, 'colored doors').setOrigin(0.5);
+
+        this.add.text(centerX, centerY  +250,'Use ↑   ↓   ←   →  to move.',instructionConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY + 280, 'Press (R) to Start',instructionConfig).setOrigin(0.5);
+
+
+
+
+        
+
         this.endMenuFlag = true;
 
     }

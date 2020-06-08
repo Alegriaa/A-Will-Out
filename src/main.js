@@ -42,7 +42,13 @@ let lampOn = false;
 
 // music variables
 let worldMusic = null;
+let caveMusic = null;
+let forestMeditationMusic = null;
+let monsterHitSound = null;
+let lambSound = null;
+let sheildSound = null;
 
+ 
 game.settings = {
     startingSpoons: 5,
     currentSpoons: 5,   
