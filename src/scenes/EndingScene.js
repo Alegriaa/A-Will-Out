@@ -60,17 +60,21 @@ Important notes:
         this.load.bitmapFont('gem_font', './assets/gem.png', './assets/gem.xml');
         this.load.image('dialogbox', './assets/dialogbox.png');
         this.load.image('shadow', './assets/ShadowLeftSmallSprite.png');
-
+        this.load.image('self', './assets/PlayerCharacterRight.png');
+        this.load.image('Meditation', './assets/Meditation.png');
     }
 
     create() {
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-        this.statue = this.physics.add.sprite(centerX+150, centerY , 'shadow').setScale(2);
+        this.background = this.add.tileSprite(960, 640, 1930, 1300, 'Meditation');
+
+        this.shadowSelf = this.physics.add.sprite(centerX+320, centerY-50 , 'shadow').setScale(2);
+        this.shadowSelf = this.physics.add.sprite(centerX-320, centerY-50 , 'self').setScale(2);
         this.dialog = this.cache.json.get('dialogue');
         console.log(this.dialog);
-        this.add.bitmapText(centerX, centerY - 32, 'gem_font', 'THE ODYSSEY', 32).setOrigin(0.5);
-        this.add.bitmapText(centerX, centerY, 'gem_font', 'Press SPACE to start', 16).setOrigin(0.5);
+        
+        
         this.dialogChoice = false;
             // parse dialog from JSON file
             this.dialog = this.cache.json.get('dialog');
@@ -104,16 +108,12 @@ Important notes:
             } 
 
             if(this.dialogChoice && Phaser.Input.Keyboard.JustDown(keyD)) {
-                this.dialogConvo = 2;
-                this.dialogLine = 0;
-                this.dialogChoice = false;
-                this.typeText();
-                
-            } else if (this.dialogChoice && Phaser.Input.Keyboard.JustDown(keyA)){
-                this.dialogConvo = 1;
-                this.dialogLine = 0;
-                this.dialogChoice = false;
-                this.typeText();
+               
+                this.scene.start('menuScene');
+            } 
+            
+            if (this.dialogChoice && Phaser.Input.Keyboard.JustDown(cursors.space)){
+                this.scene.start('menuScene');
             }
 
             if(this.currentDialogSpeaker = 'you'){

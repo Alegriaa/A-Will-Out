@@ -53,7 +53,7 @@
 
 		{	
 			"speaker" : "you",
-            "dialog" : "Press A to talk                                 press D to stay silent",
+            "dialog" : "Press D to Continue",
             "choice" : "true",
             "firstChoice": "dsda",
             "secondChoice": "fdsf",
