@@ -59,12 +59,15 @@ Important notes:
         this.load.json('dialog', './assets/JSON/dialogue.json');
         this.load.bitmapFont('gem_font', './assets/gem.png', './assets/gem.xml');
         this.load.image('dialogbox', './assets/dialogbox.png');
-        this.load.image('shadow','./assets/shadowLeftSmallSprite.png');
-        this.load.image('self','./assets/playerCharacterRight.png');
+
+        this.load.image('shadow', './assets/ShadowLeftSmallSprite.png');
+        this.load.image('self', './assets/PlayerCharacterRight.png');
+
         this.load.image('Meditation', './assets/Meditation.png');
     }
 
     create() {
+
 
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -72,7 +75,6 @@ Important notes:
 
         this.shadowSelf = this.physics.add.sprite(centerX+250, centerY-50 , 'shadow').setScale(2);
         this.shadowSelf = this.physics.add.sprite(centerX-250, centerY-50 , 'self').setScale(2);
-
 
         this.dialog = this.cache.json.get('dialogue');
         console.log(this.dialog);
@@ -209,4 +211,3 @@ Important notes:
             }
         }
     }
-

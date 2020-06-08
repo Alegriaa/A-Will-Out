@@ -23,11 +23,12 @@ Artist for Menus
 Artist for Player & Player Animations
 Animations Programmer
 
-BRIAN Alegria
+BRIAN ALEGRIA
 
 One of the Main Programmers
 Level Designer
 Sound Engineer
+Debugger
 
 *** All Assets Were Created By Our Team ***
 *** All Sounds & Music Created by Brian ***
