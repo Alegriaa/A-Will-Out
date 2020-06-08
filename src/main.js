@@ -1,11 +1,47 @@
 /* 
 
-A Will Out
+A WILL OUT
 
-Maria Fuedo 
-Clem Briat 
-Nicole Figg
-Brian Alegria
+Maria Fuedo:
+
+One of the Main Programmers,
+Level Designer
+
+Clem Briat:
+
+Artist for gameplay backgrounds,
+Artist for all gameplay items
+Artist for Monster Animations
+Artist for Credits Scene
+Level Designer
+
+
+Nicole Figg:
+
+Artist for Menus
+Artist for Player & Player Animations
+Animations Programmer
+
+Brian Alegria:
+
+One of the Main Programmers
+Level Designer
+Sound Engineer
+
+*** All Assets Were Created By Our Team ***
+*** All Sounds & Music Created by Brian ***
+
+
+Note for Graders:
+
+You can skip through all of our scenes using the numbers 1 - 6 within our Menu, we
+hope this helps with grader, but some things may behave strange if some scenes are skipped. For example, 
+at the end of a scene the current music would stop but this may not happen if a scene was skipped. But, the 
+player would not be able to do this and would have to follow the functional pattern of the scenes.
+
+Thank you for playing our game.
+
+
 
 */
 
@@ -36,7 +72,7 @@ let config = {
             }
         }
     },
-    scene: [Menu, World, LevelOneCave, CaveBattleScene, LevelTwoCave, Forest, Meditation, EndingScene, CreditScene]
+    scene: [Menu, World, LevelOneCave, LevelTwoCave, Forest, Meditation, EndingScene, CreditScene]
 }
 
 let player;
@@ -46,7 +82,7 @@ let cursors;
 let playerSpeed;
 let centerX = game.config.width / 2;
 let centerY = game.config.height / 2;
-let keyW, keyA, keyS, keyD, keyR;
+let keyW, keyA, keyS, keyD, keyR, key1, key2, key3, key4, key5, key6;
 let walkingInFlowers = null;
 let circleMoving = false;
 let circlePosition;
