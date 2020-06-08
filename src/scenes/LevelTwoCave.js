@@ -78,9 +78,11 @@ class LevelTwoCave extends Phaser.Scene {
         // instance of player in battle scene
         // player located at the end
 
-        this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk', 0).setScale(0.4);
+       //this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk', 0).setScale(0.4);
 
         //this.player = new Player(this, 3000, 300, 'characterWalk', 0).setScale(0.4);
+        // player close to exit
+        this.player = new Player(this, 2600, 50, 'characterWalk', 0).setScale(0.4);
 
 
         //create the shield in the cave
@@ -97,6 +99,7 @@ class LevelTwoCave extends Phaser.Scene {
         this.shield.setImmovable();
         this.spoonItem.setImmovable();
         this.messageItem.setImmovable();
+       
 
 
         this.topLayer = this.add.tileSprite(0, 0, 3760, 1280, 'topLayer').setOrigin(0, 0);
@@ -107,6 +110,7 @@ class LevelTwoCave extends Phaser.Scene {
         this.spikes = this.add.tileSprite(0, 0, 3750, 1280, 'cave2SpikyOverlay').setOrigin(0, 0);
         this.physics.add.collider(this.player, this.caveExit, (a, b) => {
             this.scene.start('forestScene');
+            caveMusic.stop();
 
 
         }, null, this);

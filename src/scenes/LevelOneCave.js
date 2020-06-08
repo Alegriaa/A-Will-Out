@@ -20,6 +20,8 @@ class LevelOneCave extends Phaser.Scene {
         this.load.image('smallCameraCircle', './assets/SmallCameraCircle.png');
         this.load.image('bigCameraCircle', './assets/BigCameraCircle.png');
         this.load.image('lamp', './assets/Lamp.png');
+        this.load.image('exit', './assets/YellowLight.png');
+        this.load.image('exitDown', './assets/YellowLightReversed.png');
         this.load.audio('CaveMusic', './assets/CaveMusic.wav');
         this.load.audio('LampSound', './assets/LampSound.wav');
         // name of the tiled project
@@ -74,7 +76,9 @@ class LevelOneCave extends Phaser.Scene {
         // this is the instance we will use for the game
         // feel free to make more for testing
         // but these coordinates must remain the same for gameplay
-        this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk',0).setScale(0.4);
+        //this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk',0).setScale(0.4);
+        // player spawning close to exit for debugging
+        this.player = new Player(this, 3603, 300, 'characterWalk',0).setScale(0.4);
         this.lampOne = new Lamp(this, centerX - 100, centerY + 550, 'lamp').setScale(0.35);
         this.monsterGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
@@ -111,9 +115,9 @@ class LevelOneCave extends Phaser.Scene {
         // this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
         // this.player = new Player(this, 3672, 1039, 'player').setScale(0.4);
         
-        this.levelTwoDetection = this.physics.add.sprite(3603, 1260, 'TempSpoon').setDisplaySize(300, 30);
-        
-        this.levelTwoDetection.alpha = 0;
+        this.levelTwoDetection = this.physics.add.sprite(3613, 1275, 'exitDown').setDisplaySize(230, 30);
+        this.levelTwoDetection.alpha = 1;
+        this.secondLevelTwoDetection = this.physics.add.sprite(3370, 5, 'exit').setDisplaySize(720, 30);
 
 
         //ANIMATION FOR MONSTER 1
@@ -167,8 +171,6 @@ class LevelOneCave extends Phaser.Scene {
         var path = this.add.path(800, 480)
         // here its moving left
         .lineTo(100, 480)
-        
-
         .lineTo(800, 480)
 
 
@@ -418,14 +420,17 @@ class LevelOneCave extends Phaser.Scene {
 
 
       
-        this.endingBool = false;
-        this.boolVar2 = true;
+      
 
         this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
 
     
 
         this.physics.add.collider(this.levelTwoDetection, this.player, (a, b) => {
+            this.scene.start('levelTwoCave');
+        }, null, this);
+
+        this.physics.add.collider(this.secondLevelTwoDetection, this.player, (a, b) => {
             this.scene.start('levelTwoCave');
         }, null, this);
 
@@ -482,6 +487,7 @@ class LevelOneCave extends Phaser.Scene {
          this.shield.setImmovable();
          this.spoonItem.setImmovable();
          this.messageItem.setImmovable();
+       //  this.lampOne.setImmovable();
 
          //add a function call for the player when a shield is collected
         this.physics.add.collider(this.shield, this.player, (a, b) => {
@@ -538,6 +544,9 @@ class LevelOneCave extends Phaser.Scene {
                this.xValue += 45;
                this.starter++;
            }
+           this.endingBool = false;
+           this.boolVar2 = true;
+
            // message item icon UI
            this.messageItemUI = new MessageItem(this, centerX, centerY - 190, 'hopeItem')
            this.messageItemUI.setScrollFactor(0, 0);
@@ -740,7 +749,7 @@ class LevelOneCave extends Phaser.Scene {
         // console.log(this.player.body.x);
         // console.log(this.player.body.y);
 
-        console.log(this.player.body.x);
+       console.log(this.player.body.x);
 
         console.log(this.player.body.y);
 

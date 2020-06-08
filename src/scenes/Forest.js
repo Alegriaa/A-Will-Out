@@ -25,7 +25,7 @@ class Forest extends Phaser.Scene {
         this.overlay = this.add.tileSprite(0, 0, 1200, 640, 'forestOverWorld').setOrigin(0,0);
 
 
-        this.player = new Player(this, 80, 210, 'characterWalk').setScale(0.4);
+        this.player = new Player(this, 80, 320, 'characterWalk').setScale(0.4);
         this.physics.add.collider(this.player, backgroundLayer1);
 
         // this allows us to quickly use up, left, down, right arroy keys
@@ -43,7 +43,7 @@ class Forest extends Phaser.Scene {
         this.cameras.main.startFollow(this.player).setZoom(1.45);
 
      
-        this.meditationSceneDetection = this.physics.add.sprite(1195, 200, 'TempSpoon').setDisplaySize(30, 100);
+        this.meditationSceneDetection = this.physics.add.sprite(1195, 300, 'TempSpoon').setDisplaySize(30, 100);
 
         this.meditationSceneDetection.alpha = 0;
 
