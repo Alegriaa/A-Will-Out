@@ -109,12 +109,10 @@ Important notes:
 
             if(this.dialogChoice && Phaser.Input.Keyboard.JustDown(keyD)) {
                
-                this.scene.start('menuScene');
+                this.scene.start('creditScene');
             } 
             
-            if (this.dialogChoice && Phaser.Input.Keyboard.JustDown(cursors.space)){
-                this.scene.start('menuScene');
-            }
+            
 
             
         }

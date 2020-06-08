@@ -52,87 +52,17 @@
 
 
 		{	
-			"speaker" : "you",
+			"speaker" : "",
             "dialog" : "Press D to Continue",
             "choice" : "true",
-            "firstChoice": "dsda",
-            "secondChoice": "fdsf",
+            "firstChoice": "",
+            "secondChoice": "",
             "firstPointer": "1",
             "secondPointer": "2"
             }
 	
-	],
-	[
-		{
-			"speaker" : "monster",
-			"dialog" : "See now, how men lay blame upon us gods for what is after all nothing but their own folly.",
-			"newSpeaker" : "true",
-            "choice" : "false"
-		},
-		{
-			"speaker" : "monster",
-			"dialog" : "Look at Aegisthus; he must needs make love to Agamemnon's wife unrighteously and then kill Agamemnon, though he knew it would be the death of him.",
-            "choice" : "false"
-		},
-		{	
-			"speaker" : "monster",
-			"dialog" : "Father, son of Saturn, King of kings, it served Aegisthus right, and so it would any one else who does as he did; but Aegisthus is neither here nor there.",
-			
-            "choice" : "false"
-		},
-		{	
-			"speaker" : "monster",
-			"dialog" : "It is for Ulysses that my heart bleeds, when I think of his sufferings in that lonely sea-girt island, far away, poor man, from all his friends.",
-            "choice" : "false"
-		},
-		{	
-			"speaker" : "monster",
-			"dialog" : "My child, what are you talking about? How can I forget Ulysses than whom there is no more capable man on earth, nor more liberal in his offerings to the immortal gods that live in heaven?",
-			
-            "choice" : "false"
-		},
-		{	
-			"speaker" : "monster",
-			"dialog" : "If, then, the gods now mean that Ulysses should get home, we should first send Mercury to the Ogygian island to tell Calypso that we have made up our minds and that he is to return.",
-		
-            "choice" : "true"
-		}
-    ],
-    [
-		{
-			"speaker" : "monster",
-			"dialog" : "111111111111111111111",
-			"newSpeaker" : "true",
-            "choice" : "false"
-		},
-		{
-			"speaker" : "monster",
-			"dialog" : "222222222222222222222222222222",
-            "choice" : "false"
-		},
-		{	
-			"speaker" : "monster",
-			"dialog" : "Father, son of Saturn, King of kings, it served Aegisthus right, and so it would any one else who does as he did; but Aegisthus is neither here nor there.",
-
-            "choice" : "false"
-		},
-		{	
-			"speaker" : "monster",
-			"dialog" : "It is for Ulysses that my heart bleeds, when I think of his sufferings in that lonely sea-girt island, far away, poor man, from all his friends.",
-            "choice" : "false"
-		},
-		{	
-			"speaker" : "monster",
-			"dialog" : "My child, what are you talking about? How can I forget Ulysses than whom there is no more capable man on earth, nor more liberal in his offerings to the immortal gods that live in heaven?",
-			"newSpeaker" : "true",
-            "choice" : "false"
-		},
-		{	
-			"speaker" : "monster",
-			"dialog" : "If, then, the gods now mean that Ulysses should get home, we should first send Mercury to the Ogygian island to tell Calypso that we have made up our minds and that he is to return.",
-			"newSpeaker" : "true",
-            "choice" : "true"
-		}
-    ]
+	]
+	
+    
     
 ]
