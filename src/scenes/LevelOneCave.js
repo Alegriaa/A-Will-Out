@@ -28,6 +28,16 @@ class LevelOneCave extends Phaser.Scene {
         this.load.spritesheet('characterWalk','./assets/characterWalking.png',{frameWidth:50,frameHeight:150,startFrame:0,endFrame:31});
          this.load.spritesheet('monster1Walk','./assets/enemy1WalkFull.png',{frameWidth:150, frameHeight: 200, startFrame: 0, endFrame: 7});
          this.load.spritesheet('monster2Fly','./assets/enemy2WalkFull.png',{frameWidth:150,frameHeight: 200, startFrame: 0, endFrame: 7});
+         this.load.image('shield', './assets/Shield.png');
+         this.load.image('spoonItem', './assets/Spoon.png');
+ 
+         this.load.image('exit', './assets/YellowLight.png');
+ 
+         this.load.audio('hitByMonster', './assets/MonsterHitSound.wav');
+         this.load.audio('doorSound', './assets/DoorSound.wav');
+         this.load.audio('shieldSound', './assets/ShieldSound.wav');
+         this.load.audio('spoonSound', './assets/SpoonSound.wav');
+         this.load.image('hopeItem', './assets/Hope.png')
     }
 
     create() {
@@ -398,10 +408,10 @@ class LevelOneCave extends Phaser.Scene {
         // *** there may be a need for more monsters ***
 
         // the first circle overlay
-     // this.smallCaveCircle = this.add.tileSprite(0, 0, 3760, 1280, 'smallCameraCircle').setOrigin(0,0);!!
-        //this.smallCaveCircle.alpha = 0.9!!
+        this.smallCaveCircle = this.add.tileSprite(0, 0, 3760, 1280, 'smallCameraCircle').setOrigin(0,0)
+        this.smallCaveCircle.alpha = 0.9
         // second circle overlay
-        //this.bigCaveCircle = this.add.tileSprite(0, 0, 3760, 1280, 'bigCameraCircle').setOrigin(0,0);!!
+        this.bigCaveCircle = this.add.tileSprite(0, 0, 3760, 1280, 'bigCameraCircle').setOrigin(0,0);
 
         // *********** UI ****************
         //this.lampUI = new Lamp(this, centerX - 420, 760, 'lamp').setScale(0.8);
@@ -433,17 +443,17 @@ class LevelOneCave extends Phaser.Scene {
             this.starter++;
             
         }
-        this.boolVar = true;
+        this.endingBool = false;
         this.boolVar2 = true;
 
         this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
 
-        this.physics.add.collider(this.monsterOne, this.player, (a, b) => {
-            console.log('you have been hit');
-        }, null, this);
-        this.physics.add.collider(this.monsterTwo, this.player, (a, b) => {
-            console.log('you have been hit');
-        }, null, this);
+       // this.physics.add.collider(this.monsterOne, this.player, (a, b) => {
+           // console.log('you have been hit');
+        //}, null, this);
+        //this.physics.add.collider(this.monsterTwo, this.player, (a, b) => {
+            //console.log('you have been hit');
+        //}, null, this);
 
         this.physics.add.collider(this.levelTwoDetection, this.player, (a, b) => {
             this.scene.start('levelTwoCave');
@@ -459,13 +469,7 @@ class LevelOneCave extends Phaser.Scene {
         this.cameras.main.startFollow(this.player).setZoom(1.45);
 
 
-        this.physics.add.collider(this.monsterGroup, this.player, (a, b) => {
-            if(this.game.settings.canTakeDamage){
-                 this.takeDamage(); 
-            }
-           
-
-        }, null, this);
+        
 
         // music 
         caveMusic = this.sound.add('CaveMusic', { volume: 1, loop: true });
@@ -476,8 +480,114 @@ class LevelOneCave extends Phaser.Scene {
             volume: 0.1,
             loop: true
         });
+           // sounds 
+           this.hitByMonster = this.sound.add('hitByMonster', {
+            volume: 1,
+            loop: false
+        });
+        this.doorSound = this.sound.add('doorSound', {
+            volume: 1,
+            loop: false
+        });
 
-    
+        this.shieldSound = this.sound.add('shieldSound', {
+            volume: 1,
+            loop: false
+        });
+        this.spoonSound = this.sound.add('spoonSound', {
+            volume: 0.5,
+            loop: false
+        });
+       
+
+         //create the shield in the cave
+         this.shield = new Shield(this, centerX - 200, centerY + 100, 'shield').setScale(.5);
+         //create spoon in cave
+         this.spoonItem = new Spoon(this, centerX - 150, centerY + 200, 'spoonItem').setScale(.5);
+         //create Message Item 
+ 
+         this.messageItem = new MessageItem(this, centerX - 150, centerY + 400, 'hopeItem').setScale(.25);
+         //non movable shield and spoon
+ 
+         this.shield.setImmovable();
+         this.spoonItem.setImmovable();
+         this.messageItem.setImmovable();
+
+         //add a function call for the player when a shield is collected
+        this.physics.add.collider(this.shield, this.player, (a, b) => {
+
+            if (game.settings.shield) {
+
+
+            } else {
+
+                this.addShield();
+                this.shieldSound.play();
+                a.destroy();
+            }
+
+        }, null, this);
+
+        //collider for spoon item
+        this.physics.add.collider(this.spoonItem, this.player, (a, b) => {
+
+
+            if (game.settings.currentSpoons < 5) {
+
+                this.restoreDamage();
+                this.spoonSound.play();
+                a.destroy();
+
+            }
+
+        }, null, this);
+        //message item creation
+        var messageConfig = {
+            font: "16px Arial", fill: "#fff",
+            align: "center", // the alignment of the text is independent of the bounds, try changing to 'center' or 'right'
+            boundsAlignH: "left",
+            boundsAlignV: "top",
+            wordWrap: true, wordWrapWidth: 300
+        };
+        this.title = this.add.text(centerX, 500, '', messageConfig);
+        this.title.setScrollFactor(0, 0);
+
+
+
+        //create message item collider and grab one of the messages from the prefab
+
+        this.physics.add.collider(this.messageItem, this.player, (a, b) => {
+
+            this.title.setText(a.itemActivated());
+            this.changeMessageOpacity();
+            a.destroy();
+
+
+        }, null, this);
+
+       
+       
+        this.physics.add.collider(this.spoonItem, this.player, (a, b) => {
+
+
+            if (game.settings.currentSpoons < 5) {
+
+                this.restoreDamage();
+                this.spoonSound.play();
+                a.destroy();
+
+            }
+
+        }, null, this);
+
+        this.physics.add.collider(this.monsterGroup, this.player, (a, b) => {
+            if(this.game.settings.canTakeDamage){
+                 this.takeDamage(); 
+                 this.hitByMonster.play();
+            }
+           
+
+        }, null, this);
        
     }
 
@@ -561,22 +671,56 @@ class LevelOneCave extends Phaser.Scene {
 
 
 
-     
+            if(!this.game.settings.gameOver){
       
+              //console.log(this.player.body.x);
+              //console.log(this.player.body.y);
+              
+              this.player.update();
+              if (Phaser.Input.Keyboard.JustDown(keyD)) {
+                  this.scene.start('forestScene');
+              }
+      
+      
+      
+            } else {
+                if(!this.endingBool){
 
-       
-        this.player.update();
+                    var messageConfig = {
+                        font: "16px Arial", fill: "#fff",
+                       // align: "center", // the alignment of the text is independent of the bounds, try changing to 'center' or 'right'
+                       //boundsAlignH: "left",
+                        //boundsAlignV: "top",
+                        wordWrap: true, wordWrapWidth: 300
+                    };
+                    this.endMessage = this.add.text(this.player.x, this.player.y, 'You Died  Press R to start again', messageConfig);
+
+                        this.endingBool = true;
+                }
+              
+                
+              
+              
+              if(Phaser.Input.Keyboard.JustDown(keyR)){
+              this.game.settings.gameOver = false;
+              this.game.settings.currentSpoons = 5;
+              
+              
+              this.scene.start('worldScene');
+              
+      
+            }};
         // we attach the first overlay to the player's position
         // i had to find the right values according to the spawn
         // of the player on the map
-       //this.smallCaveCircle.x = this.player.body.x - 1885;
-        //this.smallCaveCircle.y = this.player.body.y - 610;
+       this.smallCaveCircle.x = this.player.body.x - 1885;
+        this.smallCaveCircle.y = this.player.body.y - 610;
 
         // we attach the second overlay to the player's position
         // i had to find the right values according to the spawn
         // of the player on the map
-       // this.bigCaveCircle.x = this.player.body.x - 1885;
-        //this.bigCaveCircle.y = this.player.body.y - 610;
+       this.bigCaveCircle.x = this.player.body.x - 1885;
+        this.bigCaveCircle.y = this.player.body.y - 610;
 
       //  this.lampUI.x = this.player.body.x - 260;
         //this.lampUI.y = this.player.body.y - 145;
@@ -632,6 +776,30 @@ class LevelOneCave extends Phaser.Scene {
         this.temp = this.game.settings.currentSpoons; //no minus one, i dont understand math
         this.spoonArray[this.temp].alpha = 1; //alpha set to 1 is visible
         game.settings.currentSpoons += 1;
+
+    }
+
+    changeMessageOpacity(){
+        if(this.title.alpha >= .1){
+
+            this.title.alpha = this.title.alpha - .1;
+            this.lampClock = this.time.delayedCall(1000, () => { 
+                this.changeMessageOpacity();
+             }, null, this);
+        }
+
+    }
+
+    addShield() {
+
+        this.game.settings.canTakeDamage = false;
+        
+
+        this.shieldClock = this.time.delayedCall(50000, () => { 
+            this.game.settings.canTakeDamage = true;
+         }, null, this);
+
+
 
     }
 
