@@ -47,12 +47,12 @@ class World extends Phaser.Scene {
         //treeLayer.setCollisionBetween(0, 244);
 
 
-        const debugGraphics = this.add.graphics().setAlpha(0.75);
-        treeLayer.renderDebug(debugGraphics, {
-        tileColor: null, // Color of non-colliding tiles
-         collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-        faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-         });
+        // const debugGraphics = this.add.graphics().setAlpha(0.75);
+        // treeLayer.renderDebug(debugGraphics, {
+        // tileColor: null, // Color of non-colliding tiles
+        //  collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+        // faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+        //  });
 
 
 

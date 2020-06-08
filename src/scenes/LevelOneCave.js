@@ -81,7 +81,7 @@ class LevelOneCave extends Phaser.Scene {
         // player spawning close to exit for debugging
 
        // this.player = new Player(this, 3603, 300, 'characterWalk',0).setScale(0.4);
-        this.lampOne = new Lamp(this, centerX - 100, centerY + 550, 'lamp').setScale(0.35);
+       
 
        // this.player = new Player(this, 260, 1100, 'characterWalk',0).setScale(0.4);
         this.add.image(0,0,'spikyOverlayOne').setOrigin(0);
