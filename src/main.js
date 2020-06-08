@@ -23,7 +23,7 @@ let config = {
             }
         }
     },
-    scene: [Menu, World, LevelOneCave, CaveBattleScene, LevelTwoCave, Forest, Meditation, EndingScene]
+    scene: [Menu, World, LevelOneCave, CaveBattleScene, LevelTwoCave, Forest, Meditation, EndingScene, CreditScene]
 }
 
 let player;

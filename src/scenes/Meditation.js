@@ -39,8 +39,9 @@ class Meditation extends Phaser.Scene {
  
          //this.cameras.main.setZoom(.6)
  
+       
          //camera follows player & zooms in on the surrounding area. 
-         this.cameras.main.startFollow(this.player);
+         this.cameras.main.startFollow(this.player).setZoom(1.45);
          // this.cameras.main.setZoom(0.25);
          // testing
  
