@@ -21,6 +21,7 @@ class LevelOneCave extends Phaser.Scene {
         this.load.image('bigCameraCircle', './assets/BigCameraCircle.png');
         this.load.image('lamp', './assets/Lamp.png');
         this.load.audio('CaveMusic', './assets/CaveMusic.wav');
+        this.load.audio('LampSound', './assets/LampSound.wav');
         // name of the tiled project
         this.load.tilemapTiledJSON('caveMap','./assets/TiledCaveMap.json');
         //this.load.plugin('rexmovetoplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexmovetoplugin.min.js', true);
@@ -80,6 +81,7 @@ class LevelOneCave extends Phaser.Scene {
             this.smallCaveCircle.alpha = 0.5
             this.bigCaveCircle.alpha = 0.7
             this.lampOne.alpha = 0;
+            this.lampSound.play();
           //  this.lampUI.alpha = 1;
             lampOn = true;
             console.log('you have been hit');
@@ -90,6 +92,7 @@ class LevelOneCave extends Phaser.Scene {
             this.lampClock = this.time.delayedCall(10000, () => { 
                 this.smallCaveCircle.alpha = 0.9
                 this.bigCaveCircle.alpha = 1
+                this.lampSound.stop();
              //   this.lampUI.alpha = 0;
                 lampOn = false;
              }, null, this);
@@ -412,8 +415,7 @@ class LevelOneCave extends Phaser.Scene {
       
    
         cursors = this.input.keyboard.createCursorKeys();
-        // we can change the player speed in this scene here
-        playerSpeed = 2;
+       
 
         this.spoonCount = this.game.settings.currentSpoons;//counter for array
         this.starter = 1;//counter for array
@@ -459,15 +461,21 @@ class LevelOneCave extends Phaser.Scene {
 
         this.physics.add.collider(this.monsterGroup, this.player, (a, b) => {
             if(this.game.settings.canTakeDamage){
-                 this.takeDamage();
+                 this.takeDamage(); 
             }
            
 
         }, null, this);
 
-
+        // music 
         caveMusic = this.sound.add('CaveMusic', { volume: 1, loop: true });
         caveMusic.play();
+
+        // sounds
+        this.lampSound = this.sound.add('LampSound', {
+            volume: 0.1,
+            loop: true
+        });
 
     
        

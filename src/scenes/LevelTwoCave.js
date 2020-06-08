@@ -23,6 +23,9 @@ class LevelTwoCave extends Phaser.Scene {
         this.load.image('shield', './assets/Shield.png');
         this.load.image('spoonItem', './assets/Spoon.png');
         this.load.audio('hitByMonster', './assets/MonsterHitSound.wav');
+        this.load.audio('doorSound', './assets/DoorSound.wav');
+        this.load.audio('shieldSound', './assets/ShieldSound.wav');
+        this.load.audio('spoonSound', './assets/SpoonSound.wav');
 
 
         this.load.image('hopeItem', './assets/Hope.png')
@@ -68,8 +71,9 @@ class LevelTwoCave extends Phaser.Scene {
         // instance of player in battle scene
         // player located at the end
 
-         //this.player = new Player(this, 3281, 60, 'characterWalk').setScale(0.5);
-        this.player = new Player(this, 3000, 300, 'characterWalk', 0).setScale(0.4);
+        this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk',0).setScale(0.4);
+
+        //this.player = new Player(this, 3000, 300, 'characterWalk', 0).setScale(0.4);
 
 
         //create the shield in the cave
@@ -425,6 +429,7 @@ class LevelTwoCave extends Phaser.Scene {
             } else {
 
                 this.addShield();
+                this.shieldSound.play();
                 a.destroy();
             }
 
@@ -437,6 +442,7 @@ class LevelTwoCave extends Phaser.Scene {
             if (game.settings.currentSpoons < 5) {
 
                 this.restoreDamage();
+                this.spoonSound.play();
                 a.destroy();
 
             }
@@ -568,8 +574,25 @@ class LevelTwoCave extends Phaser.Scene {
             volume: 1,
             loop: false
         });
+        this.doorSound = this.sound.add('doorSound', {
+            volume: 1,
+            loop: false
+        });
+
+        this.shieldSound = this.sound.add('shieldSound', {
+            volume: 1,
+            loop: false
+        });
+        this.spoonSound = this.sound.add('spoonSound', {
+            volume: 0.5,
+            loop: false
+        });
 
     }
+
+    
+
+    
 
     
 
@@ -714,7 +737,7 @@ class LevelTwoCave extends Phaser.Scene {
         this.game.settings.canTakeDamage = false;
         
 
-        this.shieldClock = this.time.delayedCall(5000, () => { 
+        this.shieldClock = this.time.delayedCall(50000, () => { 
             this.game.settings.canTakeDamage = true;
          }, null, this);
 
@@ -774,6 +797,7 @@ class LevelTwoCave extends Phaser.Scene {
 
         if(this.pinkDoor.alpha >= .1){
         this.pinkDoor.alpha = this.pinkDoor.alpha - .1;
+        this.doorSound.play();
         this.pinkClock = this.time.delayedCall(500, () => { 
             this.triggerPinkDoor();
          }, null, this);
@@ -785,6 +809,7 @@ class LevelTwoCave extends Phaser.Scene {
 
         if(this.blueDoor.alpha >= .1){
         this.blueDoor.alpha = this.blueDoor.alpha - .1;
+        this.doorSound.play();
         this.blueClock = this.time.delayedCall(500, () => { 
             this.triggerBlueDoor();
          }, null, this);
@@ -795,6 +820,7 @@ class LevelTwoCave extends Phaser.Scene {
 
         if(this.greenDoor.alpha >= .1){
         this.greenDoor.alpha = this.greenDoor.alpha - .1;
+        this.doorSound.play();
         this.blueClock = this.time.delayedCall(500, () => { 
             this.triggerGreenDoor();
          }, null, this);
