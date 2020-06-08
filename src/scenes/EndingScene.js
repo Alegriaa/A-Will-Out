@@ -69,8 +69,8 @@ Important notes:
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.background = this.add.tileSprite(960, 640, 1930, 1300, 'Meditation');
 
-        this.shadowSelf = this.physics.add.sprite(centerX+320, centerY-50 , 'shadow').setScale(2);
-        this.shadowSelf = this.physics.add.sprite(centerX-320, centerY-50 , 'self').setScale(2);
+        this.shadowSelf = this.physics.add.sprite(centerX+250, centerY-50 , 'shadow').setScale(2);
+        this.shadowSelf = this.physics.add.sprite(centerX-250, centerY-50 , 'self').setScale(2);
         this.dialog = this.cache.json.get('dialogue');
         console.log(this.dialog);
         
@@ -81,11 +81,11 @@ Important notes:
             //console.log(this.dialog);
     
             // add dialog box sprite
-            this.dialogbox = this.add.sprite(this.DBOX_X, this.DBOX_Y, 'dialogbox').setOrigin(0);
+            this.dialogbox = this.add.sprite(this.DBOX_X+75, this.DBOX_Y, 'dialogbox').setOrigin(0);
     
             // initialize dialog text objects (with no text)
-            this.dialogText = this.add.bitmapText(this.TEXT_X, this.TEXT_Y, this.DBOX_FONT, '', this.TEXT_SIZE);
-            this.nextText = this.add.bitmapText(this.NEXT_X, this.NEXT_Y, this.DBOX_FONT, '', this.TEXT_SIZE);
+            this.dialogText = this.add.bitmapText(this.TEXT_X+75, this.TEXT_Y, this.DBOX_FONT, '', this.TEXT_SIZE);
+            this.nextText = this.add.bitmapText(this.NEXT_X+75, this.NEXT_Y, this.DBOX_FONT, '', this.TEXT_SIZE);
     
             // ready the character dialog images offscreen
             this.you = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'player').setOrigin(0, 1);
@@ -116,13 +116,7 @@ Important notes:
                 this.scene.start('menuScene');
             }
 
-            if(this.currentDialogSpeaker = 'you'){
-                this.dialogbox.x = this.DBOX_X;
-                this.dialogbox.y = this.DBOX_Y;
-            } else{
-                this.dialogbox.x = this.DBOX_X + 200;
-                this.dialogbox.y = this.DBOX_Y;
-            }
+            
         }
     
         typeText() {
