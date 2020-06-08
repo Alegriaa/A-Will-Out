@@ -32,7 +32,7 @@ class Meditation extends Phaser.Scene {
         this.physics.add.collider(this.player, backgroundLayer);
 
         this.physics.add.collider(this.detectionArea, this.player, (a, b) => {
-            this.scene.start('endingSce');
+            this.scene.start('endingScene');
         }, null, this);
 
 
