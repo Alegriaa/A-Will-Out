@@ -26,6 +26,7 @@ class Meditation extends Phaser.Scene {
 
         this.player = new Player(this, centerX - 450, centerY - 40, 'characterWalk',0).setScale(0.4);
         this.shadowSelf = this.add.sprite(centerX + 100, centerY + 50, 'ShadowSelf').setScale(0.4);
+        // area that to trigger that start of dialogue
         this.detectionArea = this.physics.add.sprite(centerX + 100, centerY + 50, 'TempSpoon');
         this.detectionArea.alpha = 0;
         this.tree = this.add.tileSprite(0, 0, 960, 640, 'MeditationTree').setOrigin(0,0);
@@ -69,7 +70,7 @@ class Meditation extends Phaser.Scene {
         if(Phaser.Input.Keyboard.JustDown(keyD)){
             this.scene.start('endingScene');
         }
-
+        // walking sounds play only when player is walking
         if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
             this.walkingInFlowers.play();
 
