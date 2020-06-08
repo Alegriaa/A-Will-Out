@@ -5,6 +5,7 @@ class Forest extends Phaser.Scene {
     }
     preload() {
         this.load.image('longOverworld', './assets/LongOverworld.png');
+        this.load.image('forestOverWorld', './assets/ForestOverWorld.png');
         this.load.audio('ForestMeditationMusic', './assets/ForestMeditationMusic.wav');
         this.load.spritesheet('characterWalk', './assets/characterWalking.png', { frameWidth: 50, frameHeight: 150, startFrame: 0, endFrame: 31 })
         this.load.tilemapTiledJSON('longWorldMap', './assets/TiledLongOverWorld.json');
@@ -21,6 +22,8 @@ class Forest extends Phaser.Scene {
         //this.background = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0,0);
         backgroundLayer1.setCollisionByProperty({ collide: true });
 
+        this.overlay = this.add.tileSprite(0, 0, 1200, 640, 'forestOverWorld').setOrigin(0,0);
+
 
         this.player = new Player(this, 80, 210, 'characterWalk').setScale(0.4);
         this.physics.add.collider(this.player, backgroundLayer1);
@@ -34,12 +37,12 @@ class Forest extends Phaser.Scene {
         //camera's boundaries matching the pixels for the background
         this.cameras.main.setBounds(0, 0, 1200, 800);
         //viewport of matching our canvas side.. (we can change this)
-        this.cameras.main.setViewport(0, 0, 960, 540);
+        this.cameras.main.setViewport(0, 0, 960, 640);
         //this.cameras.main.setZoom(.6)
         //camera follows player & zooms in on the surrounding area. 
         this.cameras.main.startFollow(this.player).setZoom(1.45);
 
-
+     
         this.meditationSceneDetection = this.physics.add.sprite(1195, 200, 'TempSpoon').setDisplaySize(30, 100);
 
         this.meditationSceneDetection.alpha = 0;
@@ -94,8 +97,8 @@ class Forest extends Phaser.Scene {
         }
         this.player.update();
 
-        console.log(this.player.body.x);
-        console.log(this.player.body.y);
+      //  console.log(this.player.body.x);
+     //   console.log(this.player.body.y);
 
     }
 }

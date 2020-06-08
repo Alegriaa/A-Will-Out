@@ -9,7 +9,7 @@ class LevelTwoCave extends Phaser.Scene {
         // importing the plugin used for the monster behavior. 
         url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexpathfollowerplugin.min.js';
         // loading it into this scene
-    1.45
+        1.45
         this.load.plugin('rexpathfollowerplugin', url, true);
 
         this.load.image('forestBackground', './assets/Level2Sketch.png');
@@ -21,14 +21,17 @@ class LevelTwoCave extends Phaser.Scene {
         this.load.spritesheet('characterWalk', './assets/characterWalking.png', { frameWidth: 50, frameHeight: 150, startFrame: 0, endFrame: 31 });
         this.load.image('cave2SpikyOverlay', './assets/psCaveTwoOverlay.png');
         this.load.image('shield', './assets/Shield.png');
+        this.load.image('lamp', './assets/Lamp.png');
         this.load.image('spoonItem', './assets/Spoon.png');
-
+        this.load.image('smallCameraCircle', './assets/SmallCameraCircle.png');
+        this.load.image('bigCameraCircle', './assets/BigCameraCircle.png');
         this.load.image('exit', './assets/YellowLight.png');
 
         this.load.audio('hitByMonster', './assets/MonsterHitSound.wav');
         this.load.audio('doorSound', './assets/DoorSound.wav');
         this.load.audio('shieldSound', './assets/ShieldSound.wav');
         this.load.audio('spoonSound', './assets/SpoonSound.wav');
+        this.load.audio('lampSound', './assets/LampSound.wav');
 
 
 
@@ -38,8 +41,8 @@ class LevelTwoCave extends Phaser.Scene {
         this.load.image('flyingMonster', './assets/FlyingMonster.png');
         this.load.tilemapTiledJSON('caveTwoMap', './assets/TiledCaveTwo.json');
 
-        this.load.spritesheet('monster1Walk','./assets/enemy1WalkFull.png',{frameWidth:150, frameHeight: 200, startFrame: 0, endFrame: 7});
-        this.load.spritesheet('monster2Fly','./assets/enemy2WalkFull.png',{frameWidth:150,frameHeight: 200, startFrame: 0, endFrame: 7});
+        this.load.spritesheet('monster1Walk', './assets/enemy1WalkFull.png', { frameWidth: 150, frameHeight: 200, startFrame: 0, endFrame: 7 });
+        this.load.spritesheet('monster2Fly', './assets/enemy2WalkFull.png', { frameWidth: 150, frameHeight: 200, startFrame: 0, endFrame: 7 });
 
     }
 
@@ -63,19 +66,19 @@ class LevelTwoCave extends Phaser.Scene {
         const debugGraphics = this.add.graphics().setAlpha(0.75);
 
 
-        backgroundLayer1.renderDebug(debugGraphics, {
-            tileColor: null, // Color of non-colliding tiles
-            collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-            faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-        });
+        // backgroundLayer1.renderDebug(debugGraphics, {
+        //     tileColor: null, // Color of non-colliding tiles
+        //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+        //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+        // });
 
-         
+
 
 
         // instance of player in battle scene
         // player located at the end
 
-        this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk',0).setScale(0.4);
+        this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk', 0).setScale(0.4);
 
         //this.player = new Player(this, 3000, 300, 'characterWalk', 0).setScale(0.4);
 
@@ -87,22 +90,24 @@ class LevelTwoCave extends Phaser.Scene {
         //create Message Item 
 
         this.messageItem = new MessageItem(this, centerX - 150, centerY + 400, 'hopeItem').setScale(.25);
+
+        this.lampOne = new Lamp(this, centerX - 100, centerY + 500, 'lamp').setScale(0.35);
         //non movable shield and spoon
 
         this.shield.setImmovable();
         this.spoonItem.setImmovable();
         this.messageItem.setImmovable();
 
-        playerSpeed = 2;
+
         this.topLayer = this.add.tileSprite(0, 0, 3760, 1280, 'topLayer').setOrigin(0, 0);
         this.blueDoor = this.physics.add.sprite(1575, 975, 'blueDoor');
         this.caveExit = this.physics.add.sprite(2600, 5, 'exit').setScale(8, .5);
         //this.caveExit.alpha = .8;
-        
+
         this.spikes = this.add.tileSprite(0, 0, 3750, 1280, 'cave2SpikyOverlay').setOrigin(0, 0);
         this.physics.add.collider(this.player, this.caveExit, (a, b) => {
             this.scene.start('forestScene');
-            
+
 
         }, null, this);
 
@@ -120,16 +125,16 @@ class LevelTwoCave extends Phaser.Scene {
 
         this.physics.add.collider(this.player, backgroundLayer1);
 
-        
+
         this.physics.add.collider(this.player, holeLayer, (a, b) => {
             this.scene.start('worldScene');
-            
+
 
         }, null, this);
         //collision between shield and the player
         //this.physics.add.collider(this.player, this.shield);
         //this.physics.add.collider(this.player, this.spoonItem);
-       //this.physics.add.collider(this.player, this.mess);
+        //this.physics.add.collider(this.player, this.mess);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
@@ -138,35 +143,35 @@ class LevelTwoCave extends Phaser.Scene {
         });
 
 
-         //ANIMATION FOR MONSTER 1
-         this.anims.create({
-            key:'monsterWalkRight',
-            repeat:-1,
-            frames: this.anims.generateFrameNumbers('monster1Walk',{start:5,end:7,first:4}),
+        //ANIMATION FOR MONSTER 1
+        this.anims.create({
+            key: 'monsterWalkRight',
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('monster1Walk', { start: 5, end: 7, first: 4 }),
             frameRate: 2.5,
         });
 
         this.anims.create({
-            key:'monsterWalkLeft',
+            key: 'monsterWalkLeft',
             repeat: -1,
-            frames: this.anims.generateFrameNumbers('monster1Walk',{start:0,end:3,first:0}),
+            frames: this.anims.generateFrameNumbers('monster1Walk', { start: 0, end: 3, first: 0 }),
             frameRate: 2.5,
 
         })
 
         //ANIMATIONS FOR MONSTER 2
         this.anims.create({
-            key:'monsterFlyRight',
-            repeat:-1,
-            frames:this.anims.generateFrameNumbers('monster2Fly',{start:4,end:7,first:4}),
-            frameRate:6,
+            key: 'monsterFlyRight',
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('monster2Fly', { start: 4, end: 7, first: 4 }),
+            frameRate: 6,
         })
 
         this.anims.create({
-            key:'monsterFlyLeft',
-            repeat:-1,
-            frames:this.anims.generateFrameNumbers('monster2Fly',{start:0,end:3,first:0}),
-            frameRate:6,
+            key: 'monsterFlyLeft',
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('monster2Fly', { start: 0, end: 3, first: 0 }),
+            frameRate: 6,
         })
 
         this.monsterOne = new CaveMonster(this, 927, 345, 'monster2Fly').setScale(0.7);
@@ -372,7 +377,7 @@ class LevelTwoCave extends Phaser.Scene {
         this.monsterNine = new CaveMonster(this, 2664, 462, 'monster2Fly').setScale(0.6);
 
         this.tempM9x = this.monsterNine.x;
-        
+
         this.monsterGroup.add(this.monsterNine);
         var pathNine = this.add.path(2664, 462)
             .lineTo(3252, 462)
@@ -421,7 +426,27 @@ class LevelTwoCave extends Phaser.Scene {
             yoyo: true
         });
 
-
+        // collider for lamp, & functionality
+        this.physics.add.collider(this.lampOne, this.player, (a, b) => {
+            this.smallCaveCircle.alpha = 0.5
+            this.bigCaveCircle.alpha = 0.7
+            this.lampOne.alpha = 0;
+            this.lampSound.play();
+            this.lampUI.alpha = 1;
+            lampOn = true;
+            console.log('you have been hit');
+            this.lampClock;
+        }, null, this);
+        // lamp timer to return to original settings
+        if (lampOn = true) {
+            this.lampClock = this.time.delayedCall(10000, () => {
+                this.smallCaveCircle.alpha = 0.9
+                this.bigCaveCircle.alpha = 1
+                this.lampSound.stop();
+                this.lampUI.alpha = 0;
+                lampOn = false;
+            }, null, this);
+        }
 
 
         //add a function call for the player when a shield is collected
@@ -441,8 +466,6 @@ class LevelTwoCave extends Phaser.Scene {
 
         //function call for the player when a spoon is collected
         this.physics.add.collider(this.spoonItem, this.player, (a, b) => {
-
-
             if (game.settings.currentSpoons < 5) {
 
                 this.restoreDamage();
@@ -450,12 +473,116 @@ class LevelTwoCave extends Phaser.Scene {
                 a.destroy();
 
             }
+        }, null, this);
+
+
+        this.pinkSwitch = this.physics.add.sprite(centerX + 100, centerY + 500, 'pinkSwitch');
+        this.pinkDoor = this.physics.add.sprite(centerX - 100, centerY + 340, 'pinkDoor');
+
+        this.pinkSwitch.setImmovable();
 
 
 
+        this.physics.add.collider(this.pinkSwitch, this.player, (a, b) => {
+            a.alpha = .5;
+            this.triggerPinkDoor();
+            this.pinkDoorClock = this.time.delayedCall(1500, () => {
+                this.pinkDoor.destroy();
+            }, null, this);
 
 
         }, null, this);
+
+
+        this.physics.add.collider(this.player, this.pinkDoor);
+        this.pinkDoor.setImmovable();
+
+
+
+        this.blueDoor.setImmovable(); //blue door is declared near spiky overlay because of overlap reasons
+        this.blueSwitch = this.physics.add.sprite(2060, 470, 'blueSwitch');
+
+        this.blueSwitch.setImmovable();
+        this.physics.add.collider(this.player, this.blueDoor);
+
+        this.physics.add.collider(this.blueSwitch, this.player, (a, b) => {
+            a.alpha = .5;
+            this.triggerBlueDoor();
+            this.blueClock = this.time.delayedCall(1500, () => {
+                this.blueDoor.destroy();
+            }, null, this);
+
+
+        }, null, this);
+
+        this.greenSwitch = this.physics.add.sprite(100, 100, 'greenSwitch');
+        this.greenDoor = this.physics.add.sprite(3660, 660, 'greenDoor');
+
+        this.physics.add.collider(this.player, this.greenDoor);
+        this.greenDoor.setImmovable();
+        this.greenSwitch.setImmovable();
+
+        this.physics.add.collider(this.greenSwitch, this.player, (a, b) => {
+            a.alpha = .5;
+            this.triggerGreenDoor();
+            this.blueClock = this.time.delayedCall(1500, () => {
+                this.greenDoor.destroy();
+            }, null, this);
+
+
+        }, null, this);
+
+
+
+
+        this.physics.add.collider(this.monsterGroup, this.player, (a, b) => {
+            if (this.game.settings.canTakeDamage) {
+                this.takeDamage();
+            }
+
+
+        }, null, this);
+
+
+
+
+        this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
+
+        // the first circle overlay
+        this.smallCaveCircle = this.add.tileSprite(0, 0, 3760, 1280, 'smallCameraCircle').setOrigin(0, 0);
+        this.smallCaveCircle.alpha = 0.9
+        // second circle overlay
+        this.bigCaveCircle = this.add.tileSprite(0, 0, 3760, 1280, 'bigCameraCircle').setOrigin(0, 0);
+
+
+        //create spoon UI
+        this.spoonCount = this.game.settings.currentSpoons;//counter for array
+        this.starter = 1;//counter for array
+        this.spoonArray = ([]); // create spoon array
+        this.xValue = centerX - 280; //x value for all of the spoon location spawns
+        this.yValue = centerY - 190;
+
+
+        //a while loop to create the necessary amount of spoons according to the current spoons game settings number
+        while (this.starter <= this.spoonCount) {
+            this.spoon1 = new Spoon(this, this.xValue, this.yValue, 'spoonItem').setScale(.7);
+            this.spoon1.setScrollFactor(0, 0);
+            this.spoonArray.push(this.spoon1);
+            this.xValue += 45;
+            this.starter++;
+        }
+        // message item icon UI
+        this.messageItemUI = new MessageItem(this, centerX, centerY - 190, 'hopeItem')
+        this.messageItemUI.setScrollFactor(0, 0);
+        // shield icon UI
+        this.shieldUI = new Shield(this, centerX + 280, centerY - 190, 'shield').setScale(.7);
+        this.shieldUI.setScrollFactor(0, 0);
+        this.shieldUI.alpha = 0;
+        // lamp icon UI
+        this.lampUI = new Lamp(this, centerX + 230, centerY - 190, 'lamp').setScale(0.7);
+        this.lampUI.setScrollFactor(0, 0);
+        this.lampUI.alpha = 0;
+
 
 
         var messageConfig = {
@@ -482,97 +609,6 @@ class LevelTwoCave extends Phaser.Scene {
         }, null, this);
 
 
-        //create spoon UI
-        this.spoonCount = this.game.settings.currentSpoons;//counter for array
-        this.starter = 1;//counter for array
-        this.spoonArray = ([]); // create spoon array
-        this.xValue = centerX - 280; //x value for all of the spoon location spawns
-        this.yValue = centerY - 200;
-
-
-        //a while loop to create the necessary amount of spoons according to the current spoons game settings number
-        while (this.starter <= this.spoonCount) {
-            this.spoon1 = new Spoon(this, this.xValue, this.yValue, 'TempSpoon').setScale(.2);
-            this.spoon1.setScrollFactor(0, 0);
-            this.spoonArray.push(this.spoon1);
-            this.xValue += 40;
-            this.starter++;
-        }
-
-
-        this.pinkSwitch = this.physics.add.sprite(centerX +100, centerY +500, 'pinkSwitch');
-        this.pinkDoor = this.physics.add.sprite(centerX-100, centerY +340, 'pinkDoor');
-       
-        this.pinkSwitch.setImmovable();
-
-        
-
-        this.physics.add.collider(this.pinkSwitch, this.player, (a, b) => {
-            a.alpha = .5;
-            this.triggerPinkDoor();
-            this.pinkDoorClock = this.time.delayedCall(1500, () => { 
-                this.pinkDoor.destroy();
-             }, null, this);
-         
-
-        }, null, this);
-        
-        
-        this.physics.add.collider(this.player, this.pinkDoor);
-        this.pinkDoor.setImmovable();
-
-
-       
-        this.blueDoor.setImmovable(); //blue door is declared near spiky overlay because of overlap reasons
-       this.blueSwitch = this.physics.add.sprite(2060, 470, 'blueSwitch');
-        
-        this.blueSwitch.setImmovable();
-        this.physics.add.collider(this.player, this.blueDoor);
-
-        this.physics.add.collider(this.blueSwitch, this.player, (a, b) => {
-            a.alpha = .5;
-            this.triggerBlueDoor();
-            this.blueClock = this.time.delayedCall(1500, () => { 
-                this.blueDoor.destroy();
-             }, null, this);
-         
-
-        }, null, this);
-
-        this.greenSwitch = this.physics.add.sprite(100, 100, 'greenSwitch');
-        this.greenDoor = this.physics.add.sprite(3660, 660, 'greenDoor');
-
-        this.physics.add.collider(this.player, this.greenDoor);
-        this.greenDoor.setImmovable();
-        this.greenSwitch.setImmovable();
-
-        this.physics.add.collider(this.greenSwitch, this.player, (a, b) => {
-            a.alpha = .5;
-            this.triggerGreenDoor();
-            this.blueClock = this.time.delayedCall(1500, () => { 
-                this.greenDoor.destroy();
-             }, null, this);
-         
-
-        }, null, this);
-
-
-
-
-        this.physics.add.collider(this.monsterGroup, this.player, (a, b) => {
-            if(this.game.settings.canTakeDamage){
-                 this.takeDamage();
-            }
-           
-
-        }, null, this);
-
-       
-
-       
-        this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
-
-
         // sounds 
         this.hitByMonster = this.sound.add('hitByMonster', {
             volume: 1,
@@ -582,7 +618,6 @@ class LevelTwoCave extends Phaser.Scene {
             volume: 1,
             loop: false
         });
-
         this.shieldSound = this.sound.add('shieldSound', {
             volume: 1,
             loop: false
@@ -591,145 +626,164 @@ class LevelTwoCave extends Phaser.Scene {
             volume: 0.5,
             loop: false
         });
+        this.lampSound = this.sound.add('lampSound', {
+            volume: 0.05,
+            loop: true
+        });
 
     }
 
-    
 
-    
 
-    
+
+
+
 
     update() {
-       
-      if(!this.game.settings.gameOver){
 
-        //console.log(this.player.body.x);
-        //console.log(this.player.body.y);
-        
-        this.player.update();
-        if (Phaser.Input.Keyboard.JustDown(keyD)) {
-            this.scene.start('forestScene');
+        if (!this.game.settings.gameOver) {
+
+            //console.log(this.player.body.x);
+            //console.log(this.player.body.y);
+
+            this.player.update();
+            // we attach the first overlay to the player's position
+            // i had to find the right values according to the spawn
+            // of the player on the map
+            this.smallCaveCircle.x = this.player.body.x - 1885;
+            this.smallCaveCircle.y = this.player.body.y - 610;
+
+            // we attach the second overlay to the player's position
+            // i had to find the right values according to the spawn
+            // of the player on the map
+            this.bigCaveCircle.x = this.player.body.x - 1885;
+            this.bigCaveCircle.y = this.player.body.y - 610;
+
+
+
+            if (Phaser.Input.Keyboard.JustDown(keyD)) {
+                this.scene.start('forestScene');
+            }
+
+
+
+        } else {
+            var messageConfig = {
+                font: "16px Arial", fill: "#fff",
+                align: "center", // the alignment of the text is independent of the bounds, try changing to 'center' or 'right'
+                boundsAlignH: "left",
+                boundsAlignV: "top",
+                wordWrap: true, wordWrapWidth: 300
+            };
+            this.endMessage = this.add.text(centerX, centerY, 'You Died  Press R to start again', messageConfig);
+
+
+
+            if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                this.game.settings.gameOver = false;
+                this.game.settings.currentSpoons = 5;
+
+
+                this.scene.start('worldScene');
+
+
+            }
         }
 
 
 
-      } else {
-        var messageConfig = {
-            font: "16px Arial", fill: "#fff",
-            align: "center", // the alignment of the text is independent of the bounds, try changing to 'center' or 'right'
-            boundsAlignH: "left",
-            boundsAlignV: "top",
-            wordWrap: true, wordWrapWidth: 300
-        };
-        this.endMessage = this.add.text(centerX, centerY, 'You Died  Press R to start again', messageConfig);
-          
-        
-        
-        if(Phaser.Input.Keyboard.JustDown(keyR)){
-        this.game.settings.gameOver = false;
-        this.game.settings.currentSpoons = 5;
-        
-        
-        this.scene.start('worldScene');
-        
 
-      }}
+        //Monster 1 Animation Pathing
+        if (this.tempM1x < this.monsterOne.x) {
+            this.monsterOne.animate('monsterFlyRight');
+            this.tempM1x = this.monsterOne.x;
+        } else if (this.tempM1x > this.monsterOne.x) {
+            this.monsterOne.animate('monsterFlyLeft');
+            this.tempM1x = this.monsterOne.x;
+        }
 
-      
-      
-      
-      //Monster 1 Animation Pathing
-      if(this.tempM1x < this.monsterOne.x){
-        this.monsterOne.animate('monsterFlyRight');
-        this.tempM1x = this.monsterOne.x;
-    }else if(this.tempM1x > this.monsterOne.x){
-        this.monsterOne.animate('monsterFlyLeft');
-        this.tempM1x = this.monsterOne.x;
-    }
+        //Monster 2 Animation Pathing
+        if (this.tempM2x < this.monsterTwo.x) {
+            this.monsterTwo.animate('monsterFlyRight');
+            this.tempM2x = this.monsterTwo.x;
+        } else if (this.tempM2x > this.monsterTwo.x) {
+            this.monsterTwo.animate('monsterFlyLeft');
+            this.tempM2x = this.monsterTwo.x;
+        }
 
-    //Monster 2 Animation Pathing
-    if(this.tempM2x < this.monsterTwo.x){
-        this.monsterTwo.animate('monsterFlyRight');
-        this.tempM2x = this.monsterTwo.x;
-    }else if(this.tempM2x > this.monsterTwo.x){
-        this.monsterTwo.animate('monsterFlyLeft');
-        this.tempM2x = this.monsterTwo.x;
-    }
+        //Monster 3 Animation Pathing
 
-     //Monster 3 Animation Pathing
-       
-     if(this.tempM3x < this.monsterThree.x){
-        this.monsterThree.animate('monsterFlyRight');
-        this.tempM3x = this.monsterThree.x;
-    }else if(this.tempM3x > this.monsterThree.x){
-        this.monsterThree.animate('monsterFlyLeft');
-        this.tempM3x = this.monsterThree.x;
-    }
+        if (this.tempM3x < this.monsterThree.x) {
+            this.monsterThree.animate('monsterFlyRight');
+            this.tempM3x = this.monsterThree.x;
+        } else if (this.tempM3x > this.monsterThree.x) {
+            this.monsterThree.animate('monsterFlyLeft');
+            this.tempM3x = this.monsterThree.x;
+        }
 
-    //Monster 4 Animation Pathing
-    if(this.tempM4x < this.monsterFour.x){
-        this.monsterFour.animate('monsterFlyRight');
-        this.tempM4x = this.monsterFour.x;
-    }else if(this.tempM4x > this.monsterFour.x){
-        this.monsterFour.animate('monsterFlyLeft');
-        this.tempM4x = this.monsterFour.x;
-    }
+        //Monster 4 Animation Pathing
+        if (this.tempM4x < this.monsterFour.x) {
+            this.monsterFour.animate('monsterFlyRight');
+            this.tempM4x = this.monsterFour.x;
+        } else if (this.tempM4x > this.monsterFour.x) {
+            this.monsterFour.animate('monsterFlyLeft');
+            this.tempM4x = this.monsterFour.x;
+        }
 
-    //Monster 5 Animation Pathing
-    if(this.tempM5x < this.monsterFive.x){
-        this.monsterFive.animate('monsterFlyRight');
-        this.tempM5x = this.monsterFive.x;
-    }else if(this.tempM5x > this.monsterFive.x){
-        this.monsterFive.animate('monsterFlyLeft');
-        this.tempM5x = this.monsterFive.x;
-    }
+        //Monster 5 Animation Pathing
+        if (this.tempM5x < this.monsterFive.x) {
+            this.monsterFive.animate('monsterFlyRight');
+            this.tempM5x = this.monsterFive.x;
+        } else if (this.tempM5x > this.monsterFive.x) {
+            this.monsterFive.animate('monsterFlyLeft');
+            this.tempM5x = this.monsterFive.x;
+        }
 
-     //Monster 6 Animation Pathing
-     if(this.tempM6x < this.monsterSix.x){
-        this.monsterSix.animate('monsterWalkRight');
-        this.tempM6x = this.monsterSix.x;
-    }else if(this.tempM6x > this.monsterSix.x){
-        this.monsterSix.animate('monsterWalkLeft');
-        this.tempM6x = this.monsterSix.x;
-    }
+        //Monster 6 Animation Pathing
+        if (this.tempM6x < this.monsterSix.x) {
+            this.monsterSix.animate('monsterWalkRight');
+            this.tempM6x = this.monsterSix.x;
+        } else if (this.tempM6x > this.monsterSix.x) {
+            this.monsterSix.animate('monsterWalkLeft');
+            this.tempM6x = this.monsterSix.x;
+        }
 
-     //Monster 7 Animation Pathing
-     if(this.tempM7x < this.monsterSeven.x){
-        this.monsterSeven.animate('monsterFlyRight');
-        this.tempM7x = this.monsterSeven.x;
-    }else if(this.tempM7x > this.monsterSeven.x){
-        this.monsterSeven.animate('monsterFlyLeft');
-        this.tempM7x = this.monsterSeven.x;
-    }
+        //Monster 7 Animation Pathing
+        if (this.tempM7x < this.monsterSeven.x) {
+            this.monsterSeven.animate('monsterFlyRight');
+            this.tempM7x = this.monsterSeven.x;
+        } else if (this.tempM7x > this.monsterSeven.x) {
+            this.monsterSeven.animate('monsterFlyLeft');
+            this.tempM7x = this.monsterSeven.x;
+        }
 
-     //Monster 8 Animation Pathing
-     if(this.tempM8x < this.monsterEight.x){
-        this.monsterEight.animate('monsterFlyRight');
-        this.tempM8x = this.monsterEight.x;
-    }else if(this.tempM8x > this.monsterEight.x){
-        this.monsterEight.animate('monsterFlyLeft');
-        this.tempM8x = this.monsterEight.x;
-    }
+        //Monster 8 Animation Pathing
+        if (this.tempM8x < this.monsterEight.x) {
+            this.monsterEight.animate('monsterFlyRight');
+            this.tempM8x = this.monsterEight.x;
+        } else if (this.tempM8x > this.monsterEight.x) {
+            this.monsterEight.animate('monsterFlyLeft');
+            this.tempM8x = this.monsterEight.x;
+        }
 
-    // Monster 9 Animation Pathing
-    if(this.tempM9x < this.monsterNine.x){
-        this.monsterNine.animate('monsterFlyRight');
-        this.tempM9x = this.monsterNine.x;
-    }else if(this.tempM9x > this.monsterNine.x){
-        this.monsterNine.animate('monsterFlyLeft');
-        this.tempM9x = this.monsterNine.x;
-    }
+        // Monster 9 Animation Pathing
+        if (this.tempM9x < this.monsterNine.x) {
+            this.monsterNine.animate('monsterFlyRight');
+            this.tempM9x = this.monsterNine.x;
+        } else if (this.tempM9x > this.monsterNine.x) {
+            this.monsterNine.animate('monsterFlyLeft');
+            this.tempM9x = this.monsterNine.x;
+        }
 
 
-    // Monster 10 Animation Pathing
-    if(this.tempM10x < this.monsterTen.x){
-        this.monsterTen.animate('monsterFlyRight');
-        this.tempM10x = this.monsterTen.x;
-    }else if(this.tempM10x > this.monsterTen.x){
-        this.monsterTen.animate('monsterFlyLeft');
-        this.tempM10x = this.monsterTen.x;
-    }
+        // Monster 10 Animation Pathing
+        if (this.tempM10x < this.monsterTen.x) {
+            this.monsterTen.animate('monsterFlyRight');
+            this.tempM10x = this.monsterTen.x;
+        } else if (this.tempM10x > this.monsterTen.x) {
+            this.monsterTen.animate('monsterFlyLeft');
+            this.tempM10x = this.monsterTen.x;
+        }
 
 
 
@@ -739,11 +793,13 @@ class LevelTwoCave extends Phaser.Scene {
     addShield() {
 
         this.game.settings.canTakeDamage = false;
-        
+        this.shieldUI.alpha = 1;
 
-        this.shieldClock = this.time.delayedCall(50000, () => { 
+
+        this.shieldClock = this.time.delayedCall(25000, () => {
             this.game.settings.canTakeDamage = true;
-         }, null, this);
+            this.shieldUI.alpha = 0;
+        }, null, this);
 
 
 
@@ -751,30 +807,30 @@ class LevelTwoCave extends Phaser.Scene {
 
     takeDamage() {
 
-        if(this.game.settings.currentSpoons == 0){
+        if (this.game.settings.currentSpoons == 0) {
 
             this.player.setVelocity(0);
             this.game.settings.gameOver = true;
         } else {
-        this.temp = this.game.settings.currentSpoons - 1; //minus one bc stupid off by one error ew
-        this.spoonArray[this.temp].alpha = 0; //alpha set to 0 is invis
-        game.settings.currentSpoons -= 1;
-        this.game.settings.canTakeDamage = false;
-        this.damageClock = this.time.delayedCall(2000, () => { 
-            this.game.settings.canTakeDamage = true;
-         }, null, this);
-
-        
-       
+            this.temp = this.game.settings.currentSpoons - 1; //minus one bc stupid off by one error ew
+            this.spoonArray[this.temp].alpha = 0; //alpha set to 0 is invis
+            game.settings.currentSpoons -= 1;
+            this.game.settings.canTakeDamage = false;
+            this.damageClock = this.time.delayedCall(2000, () => {
+                this.game.settings.canTakeDamage = true;
+            }, null, this);
 
 
 
-         this.cameras.main.flash();
-         this.cameras.main.shake(500);
-         this.hitByMonster.play();
 
-       
-    }
+
+
+            this.cameras.main.flash();
+            this.cameras.main.shake(500);
+            this.hitByMonster.play();
+
+
+        }
 
     }
 
@@ -786,52 +842,52 @@ class LevelTwoCave extends Phaser.Scene {
 
     }
 
-    changeMessageOpacity(){
-        if(this.title.alpha >= .1){
+    changeMessageOpacity() {
+        if (this.title.alpha >= .1) {
 
             this.title.alpha = this.title.alpha - .1;
-            this.lampClock = this.time.delayedCall(1000, () => { 
+            this.lampClock = this.time.delayedCall(1000, () => {
                 this.changeMessageOpacity();
-             }, null, this);
+            }, null, this);
         }
 
     }
 
-    triggerPinkDoor(){
+    triggerPinkDoor() {
 
-        if(this.pinkDoor.alpha >= .1){
-        this.pinkDoor.alpha = this.pinkDoor.alpha - .1;
-        this.doorSound.play();
-        this.pinkClock = this.time.delayedCall(500, () => { 
-            this.triggerPinkDoor();
-         }, null, this);
+        if (this.pinkDoor.alpha >= .1) {
+            this.pinkDoor.alpha = this.pinkDoor.alpha - .1;
+            this.doorSound.play();
+            this.pinkClock = this.time.delayedCall(500, () => {
+                this.triggerPinkDoor();
+            }, null, this);
         }
 
     }
 
-    triggerBlueDoor(){
+    triggerBlueDoor() {
 
-        if(this.blueDoor.alpha >= .1){
-        this.blueDoor.alpha = this.blueDoor.alpha - .1;
-        this.doorSound.play();
-        this.blueClock = this.time.delayedCall(500, () => { 
-            this.triggerBlueDoor();
-         }, null, this);
+        if (this.blueDoor.alpha >= .1) {
+            this.blueDoor.alpha = this.blueDoor.alpha - .1;
+            this.doorSound.play();
+            this.blueClock = this.time.delayedCall(500, () => {
+                this.triggerBlueDoor();
+            }, null, this);
         }
 
     }
-    triggerGreenDoor(){
+    triggerGreenDoor() {
 
-        if(this.greenDoor.alpha >= .1){
-        this.greenDoor.alpha = this.greenDoor.alpha - .1;
-        this.doorSound.play();
-        this.blueClock = this.time.delayedCall(500, () => { 
-            this.triggerGreenDoor();
-         }, null, this);
+        if (this.greenDoor.alpha >= .1) {
+            this.greenDoor.alpha = this.greenDoor.alpha - .1;
+            this.doorSound.play();
+            this.blueClock = this.time.delayedCall(500, () => {
+                this.triggerGreenDoor();
+            }, null, this);
         }
 
     }
 
-    
+
 
 }
