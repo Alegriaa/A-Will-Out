@@ -76,9 +76,9 @@ class LevelOneCave extends Phaser.Scene {
         // this is the instance we will use for the game
         // feel free to make more for testing
         // but these coordinates must remain the same for gameplay
-        //this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk',0).setScale(0.4);
+        this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk',0).setScale(0.4);
         // player spawning close to exit for debugging
-        this.player = new Player(this, 3603, 300, 'characterWalk',0).setScale(0.4);
+       // this.player = new Player(this, 3603, 300, 'characterWalk',0).setScale(0.4);
         this.lampOne = new Lamp(this, centerX - 100, centerY + 550, 'lamp').setScale(0.35);
         this.monsterGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
@@ -430,7 +430,7 @@ class LevelOneCave extends Phaser.Scene {
             this.scene.start('levelTwoCave');
         }, null, this);
 
-        this.physics.add.collider(this.secondLevelTwoDetection, this.player, (a, b) => {
+        this.physics.add.collider(this.levelTwoDetection, this.player, (a, b) => {
             this.scene.start('levelTwoCave');
         }, null, this);
 
