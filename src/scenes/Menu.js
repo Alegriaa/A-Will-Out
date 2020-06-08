@@ -110,10 +110,10 @@ class Menu extends Phaser.Scene {
                 this.secondFlag = true;
             } else if ((this.secondFlag && !this.thirdFlag)) {
 
-                this.intro2();
+                this.intro3();
         
         } else if(this.thirdFlag){
-            this.intro3();
+            this.intro2();
         }
     
     }
@@ -222,14 +222,7 @@ class Menu extends Phaser.Scene {
         this.add.text(centerX +325,centerY + 200, 'colored doors.').setOrigin(0.5);
 
         this.add.text(centerX, centerY  +250,'Use ↑   ↓   ←   →  to move.',instructionConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY + 280, 'Press (R) to Start',instructionConfig).setOrigin(0.5);
-
-
-
-
         
-
-        this.thirdFlag = true;
 
     }
 
@@ -247,7 +240,17 @@ class Menu extends Phaser.Scene {
             fixedWidth: 0
             
         }
-        this.add.text(centerX, centerY  +250,'Use ↑   ↓   ←   →  to move.',menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - 250,'These are painful times',menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - 200,'and it is okay to feel lost from time to time',menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - 200,'and it is okay to feel lost from time to time',menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - 200,'and it is okay to feel lost from time to time',menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - 150,'in pain, we can grow and find the strength',menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - 100,'we always had within, sometimes we require',menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - 50,'love',menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY, 'as the gateway to ourselves',menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY + 50,'go and find yourself',menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY  +250,'Press (R) to Start',menuConfig).setOrigin(0.5);
+        this.thirdFlag = true;
 
 
         this.endMenuFlag = true;
