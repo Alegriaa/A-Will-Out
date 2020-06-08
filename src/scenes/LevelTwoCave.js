@@ -24,6 +24,7 @@ class LevelTwoCave extends Phaser.Scene {
         this.load.image('cave2SpikyOverlay', './assets/psCaveTwoOverlay.png');
         this.load.image('shield', './assets/Shield.png');
         this.load.image('spoonItem', './assets/Spoon.png');
+        this.load.image('exit', './assets/YellowLight.png');
 
 
         this.load.image('hopeItem', './assets/Hope.png')
@@ -89,8 +90,8 @@ class LevelTwoCave extends Phaser.Scene {
         playerSpeed = 2;
         this.topLayer = this.add.tileSprite(0, 0, 3760, 1280, 'topLayer').setOrigin(0, 0);
         this.blueDoor = this.physics.add.sprite(1575, 975, 'blueDoor');
-        this.caveExit = this.physics.add.sprite(2600, 5, 'TempSpoon').setScale(8, .5);
-        this.caveExit.alpha = .5;
+        this.caveExit = this.physics.add.sprite(2600, 5, 'exit').setScale(8, .5);
+        //this.caveExit.alpha = .8;
         
         this.spikes = this.add.tileSprite(0, 0, 3750, 1280, 'cave2SpikyOverlay').setOrigin(0, 0);
         this.physics.add.collider(this.player, this.caveExit, (a, b) => {
@@ -104,7 +105,7 @@ class LevelTwoCave extends Phaser.Scene {
         // bounds of the canvas 
         this.cameras.main.setViewport(0, 0, 960, 640);
         // this follows the player & zoomed in 
-        this.cameras.main.startFollow(this.player).setZoom(.3);
+        this.cameras.main.startFollow(this.player).setZoom(1.45);
 
 
         // this allows us to quickly use up, left, down, right arroy keys
