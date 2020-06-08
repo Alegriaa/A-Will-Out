@@ -78,9 +78,9 @@ class LevelTwoCave extends Phaser.Scene {
         // instance of player in battle scene
         // player located at the end
 
-       //this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk', 0).setScale(0.4);
+       this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk', 0).setScale(0.4);
 
-        this.player = new Player(this,3646, 300, 'characterWalk', 0).setScale(0.4);
+        //this.player = new Player(this,3646, 300, 'characterWalk', 0).setScale(0.4);
         // player close to exit
         //this.player = new Player(this, 2600, 50, 'characterWalk', 0).setScale(0.4);
 
@@ -99,12 +99,12 @@ class LevelTwoCave extends Phaser.Scene {
         this.shieldGroup.add(this.shieldThree);
         this.shieldGroup.add(this.shieldFour);
          //create spoon in cave
-         this.spoonItem = new Spoon(this, centerX - 150, centerY + 200, 'spoonItem').setScale(.5);
+         //this.spoonItem = new Spoon(this, centerX - 150, centerY + 200, 'spoonItem').setScale(.5);
          this.spoonItemTwo = new Spoon(this, 2429, 289, 'spoonItem').setScale(.5);
          this.spoonItemThree = new Spoon(this, 1092, 1002, 'spoonItem').setScale(.5);
          //create Message Item 
  
-         this.messageItem = new MessageItem(this, centerX - 150, centerY + 400, 'hopeItem').setScale(.5);
+         this.messageItem = new MessageItem(this, centerX - 100, centerY + 380, 'hopeItem').setScale(.5);
          this.messageItemTwo = new MessageItem(this, 885, 265, 'hopeItem').setScale(.5);
          this.messageItemThree = new MessageItem(this, 1413, 750, 'hopeItem').setScale(.5);
          this.messageItemFour = new MessageItem(this, 1101, 979, 'hopeItem').setScale(.5);
@@ -112,7 +112,7 @@ class LevelTwoCave extends Phaser.Scene {
          this.messageItemFive = new MessageItem(this, 3190, 463, 'hopeItem').setScale(.5);
          
  
-         this.lampOne = new Lamp(this, centerX - 100, centerY + 500, 'lamp').setScale(0.35);
+        
          this.lampTwo = new Lamp(this, 1448, 540, 'lamp').setScale(.4);
          this.lampThree = new Lamp(this, 1096, 750, 'lamp').setScale(.4);
          this.lampFour = new Lamp(this, 1195, 880, 'lamp').setScale(.4);
@@ -120,7 +120,7 @@ class LevelTwoCave extends Phaser.Scene {
 
        
          this.shield.setImmovable();
-         this.spoonItem.setImmovable();
+        // this.spoonItem.setImmovable();
          this.spoonItemTwo.setImmovable();
          this.spoonItemThree.setImmovable();
          this.messageItem.setImmovable();
@@ -456,19 +456,7 @@ class LevelTwoCave extends Phaser.Scene {
             yoyo: true
         });
 
-        this.physics.add.collider(this.lampOne, this.player, (a, b) => {
-            this.smallCaveCircle.alpha = 0.5
-            this.bigCaveCircle.alpha = 0.7
-            this.lampOne.alpha = 0;
-            this.lampSound.play();
-            this.lampUI.alpha = 1;
-            this.lampClock = this.time.delayedCall(10000, () => { 
-                this.smallCaveCircle.alpha = 0.9
-                this.bigCaveCircle.alpha = 1
-                this.lampSound.stop();
-                this.lampUI.alpha = 0;
-             }, null, this);
-            }, null, this);
+       
 
         this.physics.add.collider(this.lampTwo, this.player, (a, b) => {
             this.smallCaveCircle.alpha = 0.5
@@ -548,15 +536,15 @@ class LevelTwoCave extends Phaser.Scene {
     
 
         //function call for the player when a spoon is collected
-        this.physics.add.collider(this.spoonItem, this.player, (a, b) => {
-            if (game.settings.currentSpoons < 5) {
+        // this.physics.add.collider(this.spoonItem, this.player, (a, b) => {
+        //     if (game.settings.currentSpoons < 5) {
 
-                this.restoreDamage();
-                this.spoonSound.play();
-                a.destroy();
+        //         this.restoreDamage();
+        //         this.spoonSound.play();
+        //         a.destroy();
 
-            }
-        }, null, this);
+        //     }
+        // }, null, this);
 
         this.physics.add.collider(this.spoonItemTwo, this.player, (a, b) => {
             if (game.settings.currentSpoons < 5) {
