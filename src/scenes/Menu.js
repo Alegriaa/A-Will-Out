@@ -184,35 +184,37 @@ class Menu extends Phaser.Scene {
 
 
         this.add.image(0,0,'directionsScreen').setOrigin(0);
-        this.add.text(centerX, centerY-300,'Tutorial',directionConfig).setOrigin(0.5);
 
         //Monster Tutorial
         this.monsterOne = new CaveMonster(this, centerX - 410 , centerY-180, 'monster1Walk').setScale(1);
         this.monsterOne.anims.play('monsterWalkRight');
         this.monsterTwo = new CaveMonster(this, centerX - 280, centerY -180,'monster2Fly').setScale(1);
         this.monsterTwo.anims.play('monsterFlyRight');
-        this.add.text(centerX + 100, centerY-200,'These monsters will hurt you, avoid them at all costs',directionConfig).setOrigin(0.5);
-        
+        this.add.text(centerX + 100, centerY-200,'You may feel lost, and you may feel chained,',directionConfig).setOrigin(0.5);
+        this.add.text(centerX + 100, centerY-150,'do not allow these feelings to hurt you.',directionConfig).setOrigin(0.5);
 
         this.add.image(centerX -450, centerY-10,'hopeIcon');
-        this.add.text(centerX - 180, centerY-10,'This is the hope powerup, idk what this one does').setOrigin(0.5);
+        this.add.text(centerX - 210, centerY-10,'When you collect this item,').setOrigin(0.5);
+        this.add.text(centerX - 210, centerY+10,'your shadow self will speak to you.').setOrigin(0.5);
 
-        this.add.image(centerX - 450, centerY+40,'lampIcon');
-        this.add.text(centerX -180, centerY+40, 'These lamps help light up your surroundings').setOrigin(0.5);
+        this.add.image(centerX - 450, centerY+50,'lampIcon');
+        this.add.text(centerX -200, centerY+50, 'Lamps help light up your surroundings.').setOrigin(0.5);
 
-        this.add.image(centerX -450, centerY + 100,'shieldIcon');
-        this.add.text(centerX - 220, centerY + 100,'Shields prevent damage being taken').setOrigin(0.5);
+        this.add.image(centerX -450, centerY + 120,'shieldIcon');
+        this.add.text(centerX - 220, centerY + 120,'Shields prevent damage being taken.').setOrigin(0.5);
 
-        this.add.image(centerX - 450, centerY + 150,'spoonIcon');
-        this.add.text(centerX -240, centerY + 150, 'Spoons will heal damage taken.').setOrigin(0.5);
+        this.add.image(centerX - 450, centerY + 190,'spoonIcon');
+        this.add.text(centerX -250, centerY + 190, 'Spoons will heal damage taken.').setOrigin(0.5);
 
         this.add.image(centerX + 300,centerY - 60,'blackout').setScale(0.1);
-        this.add.text(centerX+300,centerY -20,'Pits will send you back a scene').setOrigin(0.5);
+        this.add.text(centerX+300,centerY -5 ,'Watch out for pits or').setOrigin(0.5);
+        this.add.text(centerX+300,centerY +15,' you will have to retrace your steps.').setOrigin(0.5);
+        
 
         this.add.image(centerX + 250,centerY + 100,'pinkDoor').setScale(1)
         this.add.image(centerX + 400, centerY+100,'pinkSwitch').setScale(1)
         this.add.text(centerX+325,centerY + 180,'Switches will open similarly').setOrigin(0.5);
-        this.add.text(centerX +325,centerY + 200, 'colored doors').setOrigin(0.5);
+        this.add.text(centerX +325,centerY + 200, 'colored doors.').setOrigin(0.5);
 
         this.add.text(centerX, centerY  +250,'Use ↑   ↓   ←   →  to move.',instructionConfig).setOrigin(0.5);
         this.add.text(centerX, centerY + 280, 'Press (R) to Start',instructionConfig).setOrigin(0.5);
