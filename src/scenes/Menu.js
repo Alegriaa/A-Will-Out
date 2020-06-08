@@ -81,6 +81,7 @@ class Menu extends Phaser.Scene {
 
         this.firstFlag = true;
         this.secondFlag = false;
+        this.thirdFlag = false;
         this.endMenuFlag = false;
 
         // reserving these keys for future interactions we implement
@@ -107,11 +108,15 @@ class Menu extends Phaser.Scene {
                 this.intro1();
                 this.firstFlag = false;
                 this.secondFlag = true;
-            } else if ((this.secondFlag)) {
+            } else if ((this.secondFlag && !this.thirdFlag)) {
 
                 this.intro2();
         
-        }}
+        } else if(this.thirdFlag){
+            this.intro3();
+        }
+    
+    }
 
         if (cursors.left.isDown) // if the left arrow key is cave scene
         {
@@ -125,7 +130,7 @@ class Menu extends Phaser.Scene {
 
         if (cursors.up.isDown) // up arrow key takes you to meditation scene
         {
-            this.scene.start('creditScene');
+            this.scene.start('meditationScene');
         }
         
 
@@ -224,8 +229,28 @@ class Menu extends Phaser.Scene {
 
         
 
-        this.endMenuFlag = true;
+        this.thirdFlag = true;
 
+    }
+
+    intro3(){
+        this.add.image(0,0,'directionsScreen').setOrigin(0);
+        let menuConfig = {
+            fontFamily: 'Lucida Console',
+            fontSize: '28px',
+            color: '#000000',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 0
+            
+        }
+        this.add.text(centerX, centerY  +250,'Use ↑   ↓   ←   →  to move.',menuConfig).setOrigin(0.5);
+
+
+        this.endMenuFlag = true;
     }
 }
 
