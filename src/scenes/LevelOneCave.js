@@ -82,18 +82,37 @@ class LevelOneCave extends Phaser.Scene {
         // this.player = new Player(this, 3603, 300, 'characterWalk',0).setScale(0.4);
 
         this.add.image(0, 0, 'spikyOverlayOne').setOrigin(0);
+
+        // create lamps in cave one
         this.lampTwo = new Lamp(this, 1190, 1000, 'lamp').setScale(0.4);
         this.lampThree = new Lamp(this, 2530, 290, 'lamp').setScale(0.4);
         this.lampFour = new Lamp(this, 1350, 230, 'lamp').setScale(0.4);
+
+        // create shield items in cave one
+        this.shield1 = new Shield(this, 2630, 1000, 'shield').setScale(.5);
+        this.shield2 = new Shield(this, 1960, 320, 'shield').setScale(.5);
+        //create spoon in cave
+
+        //create Message Items in cave one
+        this.messageItem = new MessageItem(this, centerX - 180, centerY + 400, 'hopeItem').setScale(.5);
+        this.messageItem1 = new MessageItem(this, 3670, 663, 'hopeItem').setScale(.5);
+        this.messageItem2 = new MessageItem(this, 2970, 1150, 'hopeItem').setScale(.5);
+        this.messageItem3 = new MessageItem(this, 2075, 180, 'hopeItem').setScale(.5);
+        //non movable shield and spoon
+
+
+        //this.shield1.setImmovable();
+
+        this.messageItem.setImmovable();
+        this.messageItem1.setImmovable();
+        //  this.lampOne.setImmovable();
+
+
+
         this.monsterGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
         });
 
-
-        // this.lampClock = this.time.delayedCall(10000, () => { 
-        //     this.smallCaveCircle.alpha = 0.9
-        //     this.bigCaveCircle.alpha = 1
-        //  }, null, this);
 
         // detects the collision between the player and a lamp object
         this.physics.add.collider(this.lampTwo, this.player, (a, b) => {
@@ -157,10 +176,7 @@ class LevelOneCave extends Phaser.Scene {
                 lampOn = false;
             }, null, this);
         }
-
-        // this.player = new Player(this, centerX - 250, centerY + 50, 'player').setScale(0.4);
-        // this.player = new Player(this, 3672, 1039, 'player').setScale(0.4);
-
+        // triggers to move to the next cave
         this.levelTwoDetection = this.physics.add.sprite(3613, 1275, 'exitDown').setDisplaySize(230, 30);
         this.secondLevelTwoDetection = this.physics.add.sprite(3370, 5, 'exit').setDisplaySize(720, 30);
 
@@ -452,20 +468,12 @@ class LevelOneCave extends Phaser.Scene {
             yoyo: true
         });
 
-
-
-
         // here we have collisions detection between the player & the later from tiled
         this.physics.add.collider(this.player, backgroundLayer);
 
 
-
+        // cursors to use for cave one
         cursors = this.input.keyboard.createCursorKeys();
-
-
-
-
-
 
         this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
 
@@ -492,7 +500,7 @@ class LevelOneCave extends Phaser.Scene {
 
 
 
-        // music 
+        // music starts playign within cave one and ends in cave two
         caveMusic = this.sound.add('CaveMusic', { volume: 1, loop: true });
         caveMusic.play();
 
@@ -521,26 +529,8 @@ class LevelOneCave extends Phaser.Scene {
         });
 
 
-        //create the shield in the cave
+       
 
-        this.shield1 = new Shield(this, 2630, 1000, 'shield').setScale(.5);
-        this.shield2 = new Shield(this, 1960, 320, 'shield').setScale(.5);
-        //create spoon in cave
-
-        //create Message Item 
-
-        this.messageItem = new MessageItem(this, centerX - 180, centerY + 400, 'hopeItem').setScale(.5);
-        this.messageItem1 = new MessageItem(this, 3670, 663, 'hopeItem').setScale(.5);
-        this.messageItem2 = new MessageItem(this, 2970, 1150, 'hopeItem').setScale(.5);
-        this.messageItem3 = new MessageItem(this, 2075, 180, 'hopeItem').setScale(.5);
-        //non movable shield and spoon
-
-
-        //this.shield1.setImmovable();
-
-        this.messageItem.setImmovable();
-        this.messageItem1.setImmovable();
-        //  this.lampOne.setImmovable();
 
         //add a function call for the player when a shield is collected
 
@@ -574,10 +564,6 @@ class LevelOneCave extends Phaser.Scene {
         }, null, this);
 
         //collider for spoon item
-
-
-
-
 
 
         // the first circle overlay
@@ -664,9 +650,6 @@ class LevelOneCave extends Phaser.Scene {
             a.destroy();
 
         }, null, this);
-
-
-
 
 
         this.physics.add.collider(this.monsterGroup, this.player, (a, b) => {
