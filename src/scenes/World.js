@@ -72,10 +72,12 @@ class World extends Phaser.Scene {
         // i'm going to change the location of this to match the location of the cave in the background
         this.cave = this.physics.add.sprite(centerX + 620, centerY + 340, 'TempSpoon').setScale(0.3);
 
+        this.treeOverlay = this.add.tileSprite(0,0,3750,1280,'treeOver').setOrigin(0,0);
         this.statue = this.physics.add.sprite(centerX - 300, centerY - 250, 'TempSpoon').setScale(0.3);
+        this.statue.alpha = 0;
         this.statueText = this.add.tileSprite(175, 200, 0, 0, 'statueText').setScale(.3, .3);//set scale for testing scaled background
         this.statueText.alpha = 0;
-        this.statue.alpha = 0;
+        
 
         this.statue.setImmovable();
 
@@ -111,7 +113,7 @@ class World extends Phaser.Scene {
         // this.cameras.main.setZoom(0.25);
         // testing
 
-        this.treeOverlay = this.add.tileSprite(0,0,3750,1280,'treeOver').setOrigin(0,0);
+        
 
 
        
@@ -139,7 +141,7 @@ class World extends Phaser.Scene {
         // music 
         worldMusic = this.sound.add('WorldMusic', { volume: 0.1, loop: true });
         worldMusic.play();
-
+        
 
 
 
