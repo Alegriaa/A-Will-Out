@@ -92,7 +92,7 @@ class LevelOneCave extends Phaser.Scene {
             this.bigCaveCircle.alpha = 0.7
             this.lampOne.alpha = 0;
             this.lampSound.play();
-          //  this.lampUI.alpha = 1;
+            this.lampUI.alpha = 1;
             lampOn = true;
             console.log('you have been hit');
             this.lampClock;
@@ -103,7 +103,7 @@ class LevelOneCave extends Phaser.Scene {
                 this.smallCaveCircle.alpha = 0.9
                 this.bigCaveCircle.alpha = 1
                 this.lampSound.stop();
-             //   this.lampUI.alpha = 0;
+                this.lampUI.alpha = 0;
                 lampOn = false;
              }, null, this);
         }
@@ -405,19 +405,8 @@ class LevelOneCave extends Phaser.Scene {
             yoyo: true
         });
 
-        // *** there may be a need for more monsters ***
-
-        // the first circle overlay
-        this.smallCaveCircle = this.add.tileSprite(0, 0, 3760, 1280, 'smallCameraCircle').setOrigin(0,0)
-        this.smallCaveCircle.alpha = 0.9
-        // second circle overlay
-        this.bigCaveCircle = this.add.tileSprite(0, 0, 3760, 1280, 'bigCameraCircle').setOrigin(0,0);
-
-        // *********** UI ****************
-        //this.lampUI = new Lamp(this, centerX - 420, 760, 'lamp').setScale(0.8);
-        //this.lampUI.alpha = 0;
-        
-
+       
+    
     
         // here we have collisions detection between the player & the later from tiled
          this.physics.add.collider(this.player, backgroundLayer);
@@ -427,33 +416,14 @@ class LevelOneCave extends Phaser.Scene {
         cursors = this.input.keyboard.createCursorKeys();
        
 
-        this.spoonCount = this.game.settings.currentSpoons;//counter for array
-        this.starter = 1;//counter for array
-        this.spoonArray = ([]); // create spoon array
-        this.xValue = centerX - 100; //x value for all of the spoon location spawns
-        this.yValue = centerY - 200;
 
-
-        //a while loop to create the necessary amount of spoons according to the current spoons game settings number
-        while (this.starter <= this.spoonCount) {
-            this.spoon1 = new Spoon(this, this.xValue, this.yValue, 'TempSpoon').setScale(.1,.1);
-            this.spoon1.setScrollFactor(0, 0);
-            this.spoonArray.push(this.spoon1);
-            this.xValue += 40;
-            this.starter++;
-            
-        }
+      
         this.endingBool = false;
         this.boolVar2 = true;
 
         this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
 
-       // this.physics.add.collider(this.monsterOne, this.player, (a, b) => {
-           // console.log('you have been hit');
-        //}, null, this);
-        //this.physics.add.collider(this.monsterTwo, this.player, (a, b) => {
-            //console.log('you have been hit');
-        //}, null, this);
+    
 
         this.physics.add.collider(this.levelTwoDetection, this.player, (a, b) => {
             this.scene.start('levelTwoCave');
@@ -477,7 +447,7 @@ class LevelOneCave extends Phaser.Scene {
 
         // sounds
         this.lampSound = this.sound.add('LampSound', {
-            volume: 0.1,
+            volume: 0.05,
             loop: true
         });
            // sounds 
@@ -495,7 +465,7 @@ class LevelOneCave extends Phaser.Scene {
             loop: false
         });
         this.spoonSound = this.sound.add('spoonSound', {
-            volume: 0.5,
+            volume: 0.05,
             loop: false
         });
        
@@ -541,6 +511,46 @@ class LevelOneCave extends Phaser.Scene {
             }
 
         }, null, this);
+
+
+
+
+
+         // the first circle overlay
+         this.smallCaveCircle = this.add.tileSprite(0, 0, 3760, 1280, 'smallCameraCircle').setOrigin(0,0)
+         this.smallCaveCircle.alpha = 0.9
+         // second circle overlay
+         this.bigCaveCircle = this.add.tileSprite(0, 0, 3760, 1280, 'bigCameraCircle').setOrigin(0,0);
+ 
+           //create spoon UI
+           this.spoonCount = this.game.settings.currentSpoons;//counter for array
+           this.starter = 1;//counter for array
+           this.spoonArray = ([]); // create spoon array
+           this.xValue = centerX - 280; //x value for all of the spoon location spawns
+           this.yValue = centerY - 190;
+   
+   
+           //a while loop to create the necessary amount of spoons according to the current spoons game settings number
+           while (this.starter <= this.spoonCount) {
+               this.spoon1 = new Spoon(this, this.xValue, this.yValue, 'spoonItem').setScale(.7);
+               this.spoon1.setScrollFactor(0, 0);
+               this.spoonArray.push(this.spoon1);
+               this.xValue += 45;
+               this.starter++;
+           }
+           // message item icon UI
+           this.messageItemUI = new MessageItem(this, centerX, centerY - 190, 'hopeItem')
+           this.messageItemUI.setScrollFactor(0, 0);
+           // shield icon UI
+           this.shieldUI = new Shield(this, centerX + 280, centerY - 190, 'shield').setScale(.7);
+           this.shieldUI.setScrollFactor(0, 0);
+           this.shieldUI.alpha = 0;
+           // lamp icon UI
+           this.lampUI = new Lamp(this, centerX + 230, centerY - 190, 'lamp').setScale(0.7);
+           this.lampUI.setScrollFactor(0, 0);
+           this.lampUI.alpha = 0;
+ 
+
         //message item creation
         var messageConfig = {
             font: "16px Arial", fill: "#fff",
@@ -588,6 +598,7 @@ class LevelOneCave extends Phaser.Scene {
            
 
         }, null, this);
+
        
     }
 
@@ -754,7 +765,7 @@ class LevelOneCave extends Phaser.Scene {
         this.spoonArray[this.temp].alpha = 0; //alpha set to 0 is invis
         game.settings.currentSpoons -= 1;
         this.game.settings.canTakeDamage = false;
-        this.damageClock = this.time.delayedCall(2000, () => { 
+        this.damageClock = this.time.delayedCall(10000, () => { 
             this.game.settings.canTakeDamage = true;
          }, null, this);
 
@@ -793,10 +804,12 @@ class LevelOneCave extends Phaser.Scene {
     addShield() {
 
         this.game.settings.canTakeDamage = false;
+        this.shieldUI.alpha = 1;
         
 
-        this.shieldClock = this.time.delayedCall(50000, () => { 
+        this.shieldClock = this.time.delayedCall(20000, () => { 
             this.game.settings.canTakeDamage = true;
+            this.shieldUI.alpha = 0;
          }, null, this);
 
 
