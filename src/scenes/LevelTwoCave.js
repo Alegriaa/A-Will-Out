@@ -63,7 +63,7 @@ class LevelTwoCave extends Phaser.Scene {
         holeLayer.setCollisionByProperty({ hole: true });
 
         //debug for testing purposese
-        const debugGraphics = this.add.graphics().setAlpha(0.75);
+       // const debugGraphics = this.add.graphics().setAlpha(0.75);
 
 
         // backgroundLayer1.renderDebug(debugGraphics, {
@@ -78,7 +78,7 @@ class LevelTwoCave extends Phaser.Scene {
         // instance of player in battle scene
         // player located at the end
 
-       this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk', 0).setScale(0.4);
+       this.player = new Player(this, 371, 755, 'characterWalk', 0).setScale(0.4);
 
         //this.player = new Player(this,3646, 300, 'characterWalk', 0).setScale(0.4);
         // player close to exit
@@ -90,16 +90,16 @@ class LevelTwoCave extends Phaser.Scene {
          this.shieldThree = new Shield(this, 1590, 979, 'shield').setScale(.5);
          this.shieldFour = new Shield(this, 3636, 100, 'shield').setScale(.5);
 
-         this.shieldGroup = this.add.group({
-            runChildUpdate: true    // make sure update runs on group children
-        });
+        //  this.shieldGroup = this.add.group({
+        //     runChildUpdate: true    // make sure update runs on group children
+        // });
 
-        this.shieldGroup.add(this.shield);
-        this.shieldGroup.add(this.shieldTwo);
-        this.shieldGroup.add(this.shieldThree);
-        this.shieldGroup.add(this.shieldFour);
+        // this.shieldGroup.add(this.shield);
+        // this.shieldGroup.add(this.shieldTwo);
+        // this.shieldGroup.add(this.shieldThree);
+        // this.shieldGroup.add(this.shieldFour);
          //create spoon in cave
-         //this.spoonItem = new Spoon(this, centerX - 150, centerY + 200, 'spoonItem').setScale(.5);
+         this.spoonItem = new Spoon(this, 877, 477, 'spoonItem').setScale(.5);
          this.spoonItemTwo = new Spoon(this, 2429, 289, 'spoonItem').setScale(.5);
          this.spoonItemThree = new Spoon(this, 1092, 1002, 'spoonItem').setScale(.5);
          //create Message Item 
@@ -109,21 +109,21 @@ class LevelTwoCave extends Phaser.Scene {
          this.messageItemThree = new MessageItem(this, 1413, 750, 'hopeItem').setScale(.5);
          this.messageItemFour = new MessageItem(this, 1101, 979, 'hopeItem').setScale(.5);
          this.messageItemFive = new MessageItem(this, 2588, 982, 'hopeItem').setScale(.5);
-         this.messageItemFive = new MessageItem(this, 3190, 463, 'hopeItem').setScale(.5);
+         this.messageItemSix = new MessageItem(this, 3190, 463, 'hopeItem').setScale(.5);
          
  
         
-         this.lampTwo = new Lamp(this, 1448, 540, 'lamp').setScale(.4);
+        // this.lampTwo = new Lamp(this, 1448, 540, 'lamp').setScale(.4);
          this.lampThree = new Lamp(this, 1096, 750, 'lamp').setScale(.4);
          this.lampFour = new Lamp(this, 1195, 880, 'lamp').setScale(.4);
          this.lampFive = new Lamp(this, 3279, 760, 'lamp').setScale(.4);
 
        
-         this.shield.setImmovable();
-        // this.spoonItem.setImmovable();
-         this.spoonItemTwo.setImmovable();
-         this.spoonItemThree.setImmovable();
-         this.messageItem.setImmovable();
+        // this.shield.setImmovable();
+        //  this.spoonItem.setImmovable();
+        //  this.spoonItemTwo.setImmovable();
+        //  this.spoonItemThree.setImmovable();
+        // this.messageItem.setImmovable();
 
        
 
@@ -458,19 +458,19 @@ class LevelTwoCave extends Phaser.Scene {
 
        
 
-        this.physics.add.collider(this.lampTwo, this.player, (a, b) => {
-            this.smallCaveCircle.alpha = 0.5
-            this.bigCaveCircle.alpha = 0.7
-            this.lampTwo.alpha = 0;
-            this.lampSound.play();
-            this.lampUI.alpha = 1;
-            this.lampClock = this.time.delayedCall(10000, () => { 
-                this.smallCaveCircle.alpha = 0.9
-                this.bigCaveCircle.alpha = 1
-                this.lampSound.stop();
-                this.lampUI.alpha = 0;
-             }, null, this);
-            }, null, this);
+        // this.physics.add.collider(this.lampTwo, this.player, (a, b) => {
+        //     this.smallCaveCircle.alpha = 0.5
+        //     this.bigCaveCircle.alpha = 0.7
+        //     this.lampTwo.alpha = 0;
+        //     this.lampSound.play();
+        //     this.lampUI.alpha = 1;
+        //     this.lampClock = this.time.delayedCall(10000, () => { 
+        //         this.smallCaveCircle.alpha = 0.9
+        //         this.bigCaveCircle.alpha = 1
+        //         this.lampSound.stop();
+        //         this.lampUI.alpha = 0;
+        //      }, null, this);
+            // }, null, this);
         this.physics.add.collider(this.lampThree, this.player, (a, b) => {
             this.smallCaveCircle.alpha = 0.5
             this.bigCaveCircle.alpha = 0.7
@@ -519,7 +519,7 @@ class LevelTwoCave extends Phaser.Scene {
           
 
         //add a function call for the player when a shield is collected
-        this.physics.add.collider(this.shieldGroup, this.player, (a, b) => {
+        this.physics.add.collider(this.shield, this.player, (a, b) => {
 
             if (game.settings.shield) {
 
@@ -528,40 +528,88 @@ class LevelTwoCave extends Phaser.Scene {
 
                 this.addShield();
                 this.shieldSound.play();
-                a.destroy();
+                this.shield.alpha = 0;
+            }
+
+        }, null, this);
+
+         //add a function call for the player when a shield is collected
+         this.physics.add.collider(this.shieldTwo, this.player, (a, b) => {
+
+            if (game.settings.shield) {
+
+
+            } else {
+
+                this.addShield();
+                this.shieldSound.play();
+                this.shieldTwo.alpha = 0;
+            }
+
+        }, null, this);
+
+         //add a function call for the player when a shield is collected
+         this.physics.add.collider(this.shieldThree, this.player, (a, b) => {
+
+            if (game.settings.shield) {
+
+
+            } else {
+
+                this.addShield();
+                this.shieldSound.play();
+                this.shieldThree.alpha = 0;
+            }
+
+        }, null, this);
+
+         //add a function call for the player when a shield is collected
+         this.physics.add.collider(this.shieldFour, this.player, (a, b) => {
+
+            if (game.settings.shield) {
+
+
+            } else {
+
+                this.addShield();
+                this.shieldSound.play();
+                this.shieldFour.alpha = 0;
             }
 
         }, null, this);
 
     
 
-        //function call for the player when a spoon is collected
-        // this.physics.add.collider(this.spoonItem, this.player, (a, b) => {
-        //     if (game.settings.currentSpoons < 5) {
-
-        //         this.restoreDamage();
-        //         this.spoonSound.play();
-        //         a.destroy();
-
-        //     }
-        // }, null, this);
-
-        this.physics.add.collider(this.spoonItemTwo, this.player, (a, b) => {
+      //  function call for the player when a spoon is collected
+        this.physics.add.collider(this.spoonItem, this.player, (a, b) => {
+            this.spoonItem.alpha = 0;
             if (game.settings.currentSpoons < 5) {
 
                 this.restoreDamage();
                 this.spoonSound.play();
-                a.destroy();
+                this.spoonItem.alpha = 0;
+
+            }
+        }, null, this);
+
+        this.physics.add.collider(this.spoonItemTwo, this.player, (a, b) => {
+            this.spoonItemTwo.alpha = 0;
+            if (game.settings.currentSpoons < 5) {
+
+                this.restoreDamage();
+                this.spoonSound.play();
+                this.spoonItemTwo.alpha = 0;
 
             }
         }, null, this);
 
         this.physics.add.collider(this.spoonItemThree, this.player, (a, b) => {
+            this.spoonItemThree.alpha = 0;
             if (game.settings.currentSpoons < 5) {
 
                 this.restoreDamage();
                 this.spoonSound.play();
-                a.destroy();
+                this.spoonItemThree.alpha = 0;
 
             }
         }, null, this);
@@ -731,7 +779,17 @@ class LevelTwoCave extends Phaser.Scene {
 
 
         }, null, this);
+
         this.physics.add.collider(this.messageItemFive, this.player, (a, b) => {
+            this.title.alpha = 1;
+            this.title.setText(a.itemActivated());
+            this.changeMessageOpacity();
+            a.destroy();
+
+
+        }, null, this);
+
+        this.physics.add.collider(this.messageItemSix, this.player, (a, b) => {
             this.title.alpha = 1;
             this.title.setText(a.itemActivated());
             this.changeMessageOpacity();
@@ -934,7 +992,7 @@ class LevelTwoCave extends Phaser.Scene {
         this.shieldUI.alpha = 1;
 
 
-        this.shieldClock = this.time.delayedCall(25000, () => {
+        this.shieldClock = this.time.delayedCall(20000, () => {
             this.game.settings.canTakeDamage = true;
             this.shieldUI.alpha = 0;
         }, null, this);
@@ -954,7 +1012,7 @@ class LevelTwoCave extends Phaser.Scene {
             this.spoonArray[this.temp].alpha = 0; //alpha set to 0 is invis
             game.settings.currentSpoons -= 1;
             this.game.settings.canTakeDamage = false;
-            this.damageClock = this.time.delayedCall(2000, () => {
+            this.damageClock = this.time.delayedCall(20000, () => {
                 this.game.settings.canTakeDamage = true;
             }, null, this);
 

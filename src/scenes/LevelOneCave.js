@@ -165,7 +165,6 @@ class LevelOneCave extends Phaser.Scene {
         // this.player = new Player(this, 3672, 1039, 'player').setScale(0.4);
         
         this.levelTwoDetection = this.physics.add.sprite(3613, 1275, 'exitDown').setDisplaySize(230, 30);
-        this.levelTwoDetection.alpha = 1;
         this.secondLevelTwoDetection = this.physics.add.sprite(3370, 5, 'exit').setDisplaySize(720, 30);
 
 
@@ -479,7 +478,7 @@ class LevelOneCave extends Phaser.Scene {
             this.scene.start('levelTwoCave');
         }, null, this);
 
-        this.physics.add.collider(this.levelTwoDetection, this.player, (a, b) => {
+        this.physics.add.collider(this.secondLevelTwoDetection, this.player, (a, b) => {
             this.scene.start('levelTwoCave');
         }, null, this);
 
