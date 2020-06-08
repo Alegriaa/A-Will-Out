@@ -1,11 +1,40 @@
 /* 
 
-A Will Out
+A WILL OUT
 
-Maria Fuedo 
-Clem Briat 
-Nicole Figg
-Brian Alegria
+Maria Fuedo:
+
+One of the Main Programmers,
+Level Designer
+
+Clem Briat:
+
+Artist for gameplay backgrounds,
+Artist for all gameplay items
+Artist for Monster Animations
+Artist for Credits Scene
+Level Designer
+
+
+Nicole Figg:
+
+Artist for Menus
+Artist for Player & Player Animations
+Animations Programmer
+
+Brian Alegria:
+
+One of the Main Programmers
+Level Designer
+Sound Engineer
+
+*** All Assets Were Created By Our Team ***
+*** All Sounds & Music Created by Brian ***
+
+
+Note for Graders:
+
+
 
 */
 
