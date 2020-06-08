@@ -22,10 +22,14 @@ class LevelTwoCave extends Phaser.Scene {
         this.load.image('cave2SpikyOverlay', './assets/psCaveTwoOverlay.png');
         this.load.image('shield', './assets/Shield.png');
         this.load.image('spoonItem', './assets/Spoon.png');
+
+        this.load.image('exit', './assets/YellowLight.png');
+
         this.load.audio('hitByMonster', './assets/MonsterHitSound.wav');
         this.load.audio('doorSound', './assets/DoorSound.wav');
         this.load.audio('shieldSound', './assets/ShieldSound.wav');
         this.load.audio('spoonSound', './assets/SpoonSound.wav');
+
 
 
         this.load.image('hopeItem', './assets/Hope.png')
@@ -92,8 +96,8 @@ class LevelTwoCave extends Phaser.Scene {
         playerSpeed = 2;
         this.topLayer = this.add.tileSprite(0, 0, 3760, 1280, 'topLayer').setOrigin(0, 0);
         this.blueDoor = this.physics.add.sprite(1575, 975, 'blueDoor');
-        this.caveExit = this.physics.add.sprite(2600, 5, 'TempSpoon').setScale(8, .5);
-        this.caveExit.alpha = .5;
+        this.caveExit = this.physics.add.sprite(2600, 5, 'exit').setScale(8, .5);
+        //this.caveExit.alpha = .8;
         
         this.spikes = this.add.tileSprite(0, 0, 3750, 1280, 'cave2SpikyOverlay').setOrigin(0, 0);
         this.physics.add.collider(this.player, this.caveExit, (a, b) => {

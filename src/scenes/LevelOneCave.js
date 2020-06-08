@@ -398,10 +398,10 @@ class LevelOneCave extends Phaser.Scene {
         // *** there may be a need for more monsters ***
 
         // the first circle overlay
-        this.smallCaveCircle = this.add.tileSprite(0, 0, 3760, 1280, 'smallCameraCircle').setOrigin(0,0);
-        this.smallCaveCircle.alpha = 0.9
+     // this.smallCaveCircle = this.add.tileSprite(0, 0, 3760, 1280, 'smallCameraCircle').setOrigin(0,0);!!
+        //this.smallCaveCircle.alpha = 0.9!!
         // second circle overlay
-        this.bigCaveCircle = this.add.tileSprite(0, 0, 3760, 1280, 'bigCameraCircle').setOrigin(0,0);
+        //this.bigCaveCircle = this.add.tileSprite(0, 0, 3760, 1280, 'bigCameraCircle').setOrigin(0,0);!!
 
         // *********** UI ****************
         //this.lampUI = new Lamp(this, centerX - 420, 760, 'lamp').setScale(0.8);
@@ -420,13 +420,13 @@ class LevelOneCave extends Phaser.Scene {
         this.spoonCount = this.game.settings.currentSpoons;//counter for array
         this.starter = 1;//counter for array
         this.spoonArray = ([]); // create spoon array
-        this.xValue = this.player.x -100; //x value for all of the spoon location spawns
-        this.yValue = this.player.y +100;
+        this.xValue = centerX - 100; //x value for all of the spoon location spawns
+        this.yValue = centerY - 200;
 
 
         //a while loop to create the necessary amount of spoons according to the current spoons game settings number
         while (this.starter <= this.spoonCount) {
-            this.spoon1 = new Spoon(this, this.xValue, this.yValue, 'TempSpoon').setScale(1);
+            this.spoon1 = new Spoon(this, this.xValue, this.yValue, 'TempSpoon').setScale(.1,.1);
             this.spoon1.setScrollFactor(0, 0);
             this.spoonArray.push(this.spoon1);
             this.xValue += 40;
@@ -569,14 +569,14 @@ class LevelOneCave extends Phaser.Scene {
         // we attach the first overlay to the player's position
         // i had to find the right values according to the spawn
         // of the player on the map
-        this.smallCaveCircle.x = this.player.body.x - 1885;
-        this.smallCaveCircle.y = this.player.body.y - 610;
+       //this.smallCaveCircle.x = this.player.body.x - 1885;
+        //this.smallCaveCircle.y = this.player.body.y - 610;
 
         // we attach the second overlay to the player's position
         // i had to find the right values according to the spawn
         // of the player on the map
-        this.bigCaveCircle.x = this.player.body.x - 1885;
-        this.bigCaveCircle.y = this.player.body.y - 610;
+       // this.bigCaveCircle.x = this.player.body.x - 1885;
+        //this.bigCaveCircle.y = this.player.body.y - 610;
 
       //  this.lampUI.x = this.player.body.x - 260;
         //this.lampUI.y = this.player.body.y - 145;
