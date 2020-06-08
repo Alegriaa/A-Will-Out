@@ -42,9 +42,9 @@ class MessageItem extends Phaser.Physics.Arcade.Sprite {
        this.messageArray.push("You have what it takes to keep pushing forward.");
        this.messageArray.push("The light is near.");
        this.messageArray.push("You've come a long way, you have what it takes.");
-       this.messageArray.push("Your strong enough to get through this.");
+       this.messageArray.push("You're strong enough to get through this.");
        this.messageArray.push("Believe in yourself.");
-       this.messageArray.push("Your capable of more than you think.");
+       this.messageArray.push("You're capable of more than you think.");
        this.messageArray.push("The present situation is not your final destination.");
        this.messageArray.push("Happiness comes in waves, it'll find you again.");
       

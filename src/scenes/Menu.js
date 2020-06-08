@@ -119,6 +119,7 @@ class Menu extends Phaser.Scene {
                 this.intro3();
 
             } else if (this.thirdFlag) {
+
                 this.intro2();
             }
 
@@ -247,6 +248,7 @@ class Menu extends Phaser.Scene {
         this.add.text(centerX + 325, centerY + 200, 'colored doors.').setOrigin(0.5);
 
         this.add.text(centerX, centerY + 250, 'Use ↑   ↓   ←   →  to move.', instructionConfig).setOrigin(0.5);
+        this.add.text(centerX,centerY + 280, 'Press (R) to start',instructionConfig).setOrigin(0.5);
 
 
     }
@@ -274,6 +276,7 @@ class Menu extends Phaser.Scene {
         this.add.text(centerX, centerY - 50, 'love', menuConfig).setOrigin(0.5);
         this.add.text(centerX, centerY, 'as the gateway to ourselves', menuConfig).setOrigin(0.5);
         this.add.text(centerX, centerY + 50, 'go and find yourself', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY + 200, 'Press (D) for Instructions',menuConfig).setOrigin(0.5);
         this.add.text(centerX, centerY + 250, 'Press (R) to Start', menuConfig).setOrigin(0.5);
         this.thirdFlag = true;
 
