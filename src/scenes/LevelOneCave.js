@@ -77,7 +77,8 @@ class LevelOneCave extends Phaser.Scene {
         // this is the instance we will use for the game
         // feel free to make more for testing
         // but these coordinates must remain the same for gameplay
-        this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk', 0).setScale(0.4);
+       this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk', 0).setScale(0.4); 
+
         // player spawning close to exit for debugging
 
         // this.player = new Player(this, 3603, 300, 'characterWalk',0).setScale(0.4);
@@ -475,6 +476,7 @@ class LevelOneCave extends Phaser.Scene {
 
 
         this.physics.add.collider(this.levelTwoDetection, this.player, (a, b) => {
+            this.game.settings.canTakeDamage = true;
             this.scene.start('levelTwoCave');
         }, null, this);
 
@@ -889,7 +891,7 @@ class LevelOneCave extends Phaser.Scene {
         this.shieldUI.alpha = 1;
 
 
-        this.shieldClock = this.time.delayedCall(20000, () => {
+        this.shieldClock = this.time.delayedCall(10000, () => {
             this.game.settings.canTakeDamage = true;
             this.shieldUI.alpha = 0;
         }, null, this);

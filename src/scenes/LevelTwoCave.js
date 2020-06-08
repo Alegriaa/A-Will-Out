@@ -79,7 +79,7 @@ class LevelTwoCave extends Phaser.Scene {
         // player located at the end
 
         this.player = new Player(this, 371, 755, 'characterWalk', 0).setScale(0.4);
-
+        
         //this.player = new Player(this,3646, 300, 'characterWalk', 0).setScale(0.4);
         // player close to exit
         //this.player = new Player(this, 2600, 50, 'characterWalk', 0).setScale(0.4);
@@ -587,7 +587,9 @@ class LevelTwoCave extends Phaser.Scene {
 
                 this.restoreDamage();
                 this.spoonSound.play();
-                this.spoonItem.alpha = 0;
+                //this.spoonItem.alpha = 0;
+                a.x = -40000;
+                a.y = -40000;
 
             }
         }, null, this);
@@ -702,7 +704,8 @@ class LevelTwoCave extends Phaser.Scene {
 
 
         //create spoon UI
-        this.spoonCount = this.game.settings.currentSpoons;//counter for array
+        this.spoonCount = this.game.settings.startingSpoons;//counter for array
+        this.game.settings.currentSpoons  = 5;
         this.starter = 1;//counter for array
         this.spoonArray = ([]); // create spoon array
         this.xValue = centerX - 280; //x value for all of the spoon location spawns
@@ -1012,7 +1015,7 @@ class LevelTwoCave extends Phaser.Scene {
             this.spoonArray[this.temp].alpha = 0; //alpha set to 0 is invis
             game.settings.currentSpoons -= 1;
             this.game.settings.canTakeDamage = false;
-            this.damageClock = this.time.delayedCall(20000, () => {
+            this.damageClock = this.time.delayedCall(10000, () => {
                 this.game.settings.canTakeDamage = true;
             }, null, this);
 
