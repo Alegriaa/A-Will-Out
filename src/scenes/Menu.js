@@ -89,6 +89,12 @@ class Menu extends Phaser.Scene {
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        key1 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
+        key2 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+        key3 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
+        key4 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
+        key5 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FIVE);
+        key6 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SIX);
 
 
     }
@@ -118,19 +124,38 @@ class Menu extends Phaser.Scene {
 
         }
 
-        if (cursors.left.isDown) // if the left arrow key is cave scene
-        {
+        // if (cursors.left.isDown) // if the left arrow key is cave scene
+        // {
+        //     this.scene.start('levelOneCave');
+        // }
+
+        // if (cursors.right.isDown) // if the left arrow key is cave scene
+        // {
+        //     this.scene.start('levelTwoCave');
+        // }
+
+        // if (cursors.up.isDown) // up arrow key takes you to meditation scene
+        // {
+        //     this.scene.start('endingScene');
+        // }
+
+        if (Phaser.Input.Keyboard.JustDown(key1)) {
             this.scene.start('levelOneCave');
         }
-
-        if (cursors.right.isDown) // if the left arrow key is cave scene
-        {
+        if (Phaser.Input.Keyboard.JustDown(key2)) {
             this.scene.start('levelTwoCave');
         }
-
-        if (cursors.up.isDown) // up arrow key takes you to meditation scene
-        {
+        if (Phaser.Input.Keyboard.JustDown(key3)) {
+            this.scene.start('forestScene');
+        }
+        if (Phaser.Input.Keyboard.JustDown(key4)) {
+            this.scene.start('meditationScene');
+        }
+        if (Phaser.Input.Keyboard.JustDown(key5)) {
             this.scene.start('endingScene');
+        }
+        if (Phaser.Input.Keyboard.JustDown(key6)) {
+            this.scene.start('creditScene');
         }
 
 
