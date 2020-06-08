@@ -1,3 +1,15 @@
+/* 
+A Will Out
+
+Maria Fuedo 
+Clem Briat 
+Nicole Figg
+Brian Alegria
+
+*/
+
+
+
 'use strict'
 
 let config = {
