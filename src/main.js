@@ -2,12 +2,14 @@
 
 A WILL OUT
 
-Maria Fuedo:
+MARIA FEUDO:
 
 One of the Main Programmers,
-Level Designer
+Level Designer,
+Debugger,
 
-Clem Briat:
+
+CLEM BRIAT
 
 Artist for gameplay backgrounds,
 Artist for all gameplay items
@@ -15,14 +17,13 @@ Artist for Monster Animations
 Artist for Credits Scene
 Level Designer
 
-
-Nicole Figg:
+NICOLE FIGG:
 
 Artist for Menus
 Artist for Player & Player Animations
 Animations Programmer
 
-Brian Alegria:
+BRIAN Alegria
 
 One of the Main Programmers
 Level Designer

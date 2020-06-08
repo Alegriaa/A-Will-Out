@@ -1,14 +1,14 @@
 class EndingScene extends Phaser.Scene {
 
     /*
-
+Important notes:
+    -For this scene specifically, it is vital that every dialogue option has a choice parameter which is set to true
+    or false depending on the individual option
 
 
 
     Credits:
-    logic used was created in/this scene was heavily inspired by: https://github.com/nathanaltice/Dialogging
-    Bitmap Font from Phaser Totiruals
-    
+    Nathan Altice Github Dialog project ***insert
 
     */
     constructor() {
@@ -109,8 +109,10 @@ class EndingScene extends Phaser.Scene {
             this.nextText = this.add.bitmapText(this.NEXT_X+75, this.NEXT_Y, this.DBOX_FONT, '', this.TEXT_SIZE);
     
             // ready the character dialog images offscreen
-          
-          
+            this.you = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'player').setOrigin(0, 1);
+            this.monster = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'monsterSketch').setOrigin(0, 1);
+            this.neptune = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'neptune').setOrigin(0, 1);
+           // this.jove = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'jove').setOrigin(0, 1);
     
             // input
             cursors = this.input.keyboard.createCursorKeys();
@@ -125,16 +127,11 @@ class EndingScene extends Phaser.Scene {
                 // trigger dialog
                 this.typeText();
             } 
-            if(this.dialogChoice){
-                this.NEXT_TEXT = '';
-            }
 
             if(this.dialogChoice && Phaser.Input.Keyboard.JustDown(keyD)) {
                
                 this.scene.start('creditScene');
             } 
-
-
             
             
 
