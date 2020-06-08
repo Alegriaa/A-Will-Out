@@ -125,7 +125,7 @@ class Menu extends Phaser.Scene {
 
         if (cursors.up.isDown) // up arrow key takes you to meditation scene
         {
-            this.scene.start('forestScene');
+            this.scene.start('endingScene');
         }
         
 

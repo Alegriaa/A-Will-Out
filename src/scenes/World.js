@@ -114,21 +114,7 @@ class World extends Phaser.Scene {
         this.treeOverlay = this.add.tileSprite(0,0,3750,1280,'treeOver').setOrigin(0,0);
 
 
-        this.spoonCount = this.game.settings.currentSpoons;//counter for array
-        this.starter = 1;//counter for array
-        this.spoonArray = ([]); // create spoon array
-        this.xValue = centerX - 280; //x value for all of the spoon location spawns
-        this.yValue = centerY - 200;
-
-
-        //a while loop to create the necessary amount of spoons according to the current spoons game settings number
-        while (this.starter <= this.spoonCount) {
-            this.spoon1 = new Spoon(this, this.xValue, this.yValue, 'TempSpoon').setScale(.2);
-            this.spoon1.setScrollFactor(0, 0);
-            this.spoonArray.push(this.spoon1);
-            this.xValue += 40;
-            this.starter++;
-        }
+       
         this.boolVar = true;
         this.boolVar2 = true;
 
