@@ -80,7 +80,7 @@ class LevelTwoCave extends Phaser.Scene {
 
         this.player = new Player(this, 371, 755, 'characterWalk', 0).setScale(0.4);
         
-        //this.player = new Player(this,3646, 300, 'characterWalk', 0).setScale(0.4);
+    
         // player close to exit
         //this.player = new Player(this, 2600, 50, 'characterWalk', 0).setScale(0.4);
 
@@ -90,20 +90,12 @@ class LevelTwoCave extends Phaser.Scene {
         this.shieldThree = new Shield(this, 1590, 979, 'shield').setScale(.5);
         this.shieldFour = new Shield(this, 3636, 100, 'shield').setScale(.5);
 
-        //  this.shieldGroup = this.add.group({
-        //     runChildUpdate: true    // make sure update runs on group children
-        // });
-
-        // this.shieldGroup.add(this.shield);
-        // this.shieldGroup.add(this.shieldTwo);
-        // this.shieldGroup.add(this.shieldThree);
-        // this.shieldGroup.add(this.shieldFour);
-        //create spoon in cave
+        //creating spoons for cave two
         this.spoonItem = new Spoon(this, 877, 477, 'spoonItem').setScale(.5);
         this.spoonItemTwo = new Spoon(this, 2429, 289, 'spoonItem').setScale(.5);
         this.spoonItemThree = new Spoon(this, 1092, 1002, 'spoonItem').setScale(.5);
-        //create Message Item 
 
+        //create message items within cave two
         this.messageItem = new MessageItem(this, centerX - 100, centerY + 380, 'hopeItem').setScale(.5);
         this.messageItemTwo = new MessageItem(this, 885, 265, 'hopeItem').setScale(.5);
         this.messageItemThree = new MessageItem(this, 1413, 750, 'hopeItem').setScale(.5);
@@ -118,18 +110,10 @@ class LevelTwoCave extends Phaser.Scene {
         this.lampFour = new Lamp(this, 1195, 880, 'lamp').setScale(.4);
         this.lampFive = new Lamp(this, 3279, 760, 'lamp').setScale(.4);
 
-
-        // this.shield.setImmovable();
-        //  this.spoonItem.setImmovable();
-        //  this.spoonItemTwo.setImmovable();
-        //  this.spoonItemThree.setImmovable();
-        // this.messageItem.setImmovable();
-
-
-
-
+        // top layer of spikes the player can go under for a more immersive effect
         this.topLayer = this.add.tileSprite(0, 0, 3760, 1280, 'topLayer').setOrigin(0, 0);
         this.blueDoor = this.physics.add.sprite(1575, 975, 'blueDoor');
+
         this.caveExit = this.physics.add.sprite(2600, 5, 'exit').setScale(8, .5);
         //this.caveExit.alpha = .8;
 
@@ -456,21 +440,6 @@ class LevelTwoCave extends Phaser.Scene {
             yoyo: true
         });
 
-
-
-        // this.physics.add.collider(this.lampTwo, this.player, (a, b) => {
-        //     this.smallCaveCircle.alpha = 0.5
-        //     this.bigCaveCircle.alpha = 0.7
-        //     this.lampTwo.alpha = 0;
-        //     this.lampSound.play();
-        //     this.lampUI.alpha = 1;
-        //     this.lampClock = this.time.delayedCall(10000, () => { 
-        //         this.smallCaveCircle.alpha = 0.9
-        //         this.bigCaveCircle.alpha = 1
-        //         this.lampSound.stop();
-        //         this.lampUI.alpha = 0;
-        //      }, null, this);
-        // }, null, this);
         this.physics.add.collider(this.lampThree, this.player, (a, b) => {
             this.smallCaveCircle.alpha = 0.5
             this.bigCaveCircle.alpha = 0.7
@@ -616,7 +585,7 @@ class LevelTwoCave extends Phaser.Scene {
             }
         }, null, this);
 
-
+        // functionality for doors
         this.pinkSwitch = this.physics.add.sprite(centerX + 100, centerY + 450, 'pinkSwitch').setScale(0.6);
         this.pinkDoor = this.physics.add.sprite(centerX - 100, centerY + 340, 'pinkDoor');
 

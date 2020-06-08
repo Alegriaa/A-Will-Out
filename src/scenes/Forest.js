@@ -42,11 +42,11 @@ class Forest extends Phaser.Scene {
         //camera follows player & zooms in on the surrounding area. 
         this.cameras.main.startFollow(this.player).setZoom(1.45);
 
-     
+    
         this.meditationSceneDetection = this.physics.add.sprite(1195, 300, 'TempSpoon').setDisplaySize(30, 100);
 
         this.meditationSceneDetection.alpha = 0;
-
+        // trigger to start meditation scene
         this.physics.add.collider(this.meditationSceneDetection, this.player, (a, b) => {
             this.scene.start('meditationScene');
             this.walkingInFlowers.stop();
@@ -77,9 +77,7 @@ class Forest extends Phaser.Scene {
             this.walkingInFlowers.stop();
         }
 
-
-
-
+        // plays walking sound only when the player moves
         if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
             this.walkingInFlowers.play();
 
@@ -96,9 +94,6 @@ class Forest extends Phaser.Scene {
             this.walkingInFlowers.stop();
         }
         this.player.update();
-
-      //  console.log(this.player.body.x);
-     //   console.log(this.player.body.y);
 
     }
 }
