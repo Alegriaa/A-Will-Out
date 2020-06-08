@@ -89,6 +89,7 @@ class LevelTwoCave extends Phaser.Scene {
         this.shieldTwo = new Shield(this, 2066, 70, 'shield').setScale(.5);
         this.shieldThree = new Shield(this, 1590, 979, 'shield').setScale(.5);
         this.shieldFour = new Shield(this, 3636, 100, 'shield').setScale(.5);
+        
 
         //  this.shieldGroup = this.add.group({
         //     runChildUpdate: true    // make sure update runs on group children
