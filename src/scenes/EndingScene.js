@@ -59,38 +59,20 @@ Important notes:
         this.load.json('dialog', './assets/JSON/dialogue.json');
         this.load.bitmapFont('gem_font', './assets/gem.png', './assets/gem.xml');
         this.load.image('dialogbox', './assets/dialogbox.png');
-        this.load.spritesheet('shadow','./assets/shadowPlayerIdle.png',{ frameWidth: 50, frameHeight: 150, startFrame: 0, endFrame: 7 });
-        this.load.spritesheet('self','./assets/playerSpriteIdle.png',{ frameWidth: 50, frameHeight: 150, startFrame: 0, endFrame: 7 });
+        this.load.image('shadow','./assets/shadowLeftSmallSprite.png');
+        this.load.image('self','./assets/playerCharacterRight.png');
         this.load.image('Meditation', './assets/Meditation.png');
     }
 
     create() {
 
-        //These create the animations
-        this.anims.create({
-            key: 'shadowIdle',
-            repeat: -1,
-            frames: this.anims.generateFrameNumbers('shadow', { start: 0, end: 7, first: 0 }),
-            frameRate: 10,
-        })
-
-        this.anims.create({
-            key: 'playerIdle',
-            repeat: -1,
-            frames: this.anims.generateFrameNumbers('self', { start: 0, end: 7, first: 0 }),
-            frameRate: 10,
-        });
-
-
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.background = this.add.tileSprite(960, 640, 1930, 1300, 'Meditation');
 
-        this.shadowSelf = this.physics.add.sprite(centerX+250, centerY-50 , 'shadow').setScale(1.5);
-        this.shadowSelf2 = this.physics.add.sprite(centerX-250, centerY-50 , 'self').setScale(1.5);
+        this.shadowSelf = this.physics.add.sprite(centerX+250, centerY-50 , 'shadow').setScale(2);
+        this.shadowSelf = this.physics.add.sprite(centerX-250, centerY-50 , 'self').setScale(2);
 
-        this.shadowSelf.anims.play('shadowIdle');
-        this.shadowSelf2.anims.play('playerIdle');
 
         this.dialog = this.cache.json.get('dialogue');
         console.log(this.dialog);
