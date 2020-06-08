@@ -5,7 +5,9 @@ A WILL OUT
 MARIA FEUDO:
 
 One of the Main Programmers,
-Level Designer
+Level Designer,
+Debugger,
+
 
 CLEM BRIAT
 
