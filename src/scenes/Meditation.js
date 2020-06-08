@@ -46,12 +46,38 @@ class Meditation extends Phaser.Scene {
  
 
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
+        this.walkingInFlowers = this.sound.add('WalkingInFlowers', {
+            volume: 1.9,
+            loop: true
+        });
+
     }
+
+        
+    
 
     update(){
         if(Phaser.Input.Keyboard.JustDown(keyD)){
             this.scene.start('endingScene');
         }
+
+        if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
+            this.walkingInFlowers.play();
+
+        } else if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
+            this.walkingInFlowers.play();
+        } else if (Phaser.Input.Keyboard.JustDown(cursors.up)) {
+            this.walkingInFlowers.play();
+        } else if (Phaser.Input.Keyboard.JustDown(cursors.down)) {
+            this.walkingInFlowers.play();
+        }
+
+        if (!(cursors.up.isDown) && !(cursors.down.isDown) &&
+            !(cursors.left.isDown) && !(cursors.right.isDown)) {
+            this.walkingInFlowers.stop();
+        }
+
         this.player.update();
         }
     }
