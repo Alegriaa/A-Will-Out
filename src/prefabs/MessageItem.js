@@ -6,6 +6,12 @@ class MessageItem extends Phaser.Physics.Arcade.Sprite {
         this.textArray = ([]); 
 
     }
+
+/*
+'Your present situation is not your final destination' - Zig Ziegler
+"Happiness comes in waves, it'll find you again." - Unknown
+*/
+
     create() {
         var txt = this.scene.make.text({
             x: 500,
@@ -33,15 +39,15 @@ class MessageItem extends Phaser.Physics.Arcade.Sprite {
        
        this.messageArray = ([]);
        this.messageArray.push("Keep going, you can do this.");
-       this.messageArray.push("you have what it takes to keep pushing forward");
-       this.messageArray.push("2");
-       this.messageArray.push("3");
-       this.messageArray.push("4");
-       this.messageArray.push("5");
-       this.messageArray.push("6");
-       this.messageArray.push("7");
-       this.messageArray.push("8");
-       this.messageArray.push("9");
+       this.messageArray.push("You have what it takes to keep pushing forward.");
+       this.messageArray.push("The light is near.");
+       this.messageArray.push("You've come a long way, you have what it takes.");
+       this.messageArray.push("Your strong enough to get through this.");
+       this.messageArray.push("Believe in yourself.");
+       this.messageArray.push("Your capable of more than you think.");
+       this.messageArray.push("The present situation is not your final destination.");
+       this.messageArray.push("Happiness comes in waves, it'll find you again.");
+      
        
 
        this.randomNumber = Math.floor((Math.random() * 10) + 0);
