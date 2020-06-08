@@ -1,32 +1,56 @@
 [
 	[
 		{
-			"speaker" : "you",
-			"dialog" : "Tell me, O muse, of that ingenious hero who travelled far and wide after he had sacked the famous town of Troy.",
+			"speaker" : "Shadow",
+			"dialog" : "Thank You for making it out.",
             "newSpeaker" : "true",
             "choice" : "false"
             
 		},
 		{
 			"speaker" : "you",
-			"dialog" : "Many cities did he visit, and many were the nations with whose manners and customs he was acquainted.",
+			"dialog" : "Who are you?",
+            "choice" : "false"
+		},
+		{	
+			"speaker" : "Shadow",
+			"dialog" : "I am You",
             "choice" : "false"
 		},
 		{	
 			"speaker" : "you",
-			"dialog" : "Moreover he suffered much by sea while trying to save his own life and bring his men safely home.",
+			"dialog" : "... You are? ",
             "choice" : "false"
 		},
 		{	
-			"speaker" : "you",
-			"dialog" : "But do what he might he could not save his men, for they perished through their own sheer folly in eating the cattle of the Sun-god Hyperion.",
+			"speaker" : "Shadow",
+			"dialog" : "Yes, I am always with you.",
             "choice" : "false"
 		},
 		{	
-			"speaker" : "you",
-			"dialog" : "So the gods prevented them from ever reaching home.",
+			"speaker" : "Shadow",
+			"dialog" : "I have seen and felt the monsters that haunt you..",
             "choice" : "false"
 		},
+		{	
+			"speaker" : "Shadow",
+			"dialog" : "Thank you for never giving up, thank you for always pushing forward even when it seems you are lost and only surrounded by pain",
+            "choice" : "false"
+		},
+		{	
+			"speaker" : "Shadow",
+			"dialog" : "I, like many others, love you.",
+            "choice" : "false"
+		},
+		{	
+			"speaker" : "Shadow",
+			"dialog" : "I will always be here for you.",
+            "choice" : "false"
+		},
+
+
+
+
 		{	
 			"speaker" : "you",
             "dialog" : "Press A to talk                                 press D to stay silent",
