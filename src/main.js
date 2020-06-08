@@ -5,7 +5,9 @@ A WILL OUT
 Maria Fuedo:
 
 One of the Main Programmers,
-Level Designer
+Level Designer,
+Debugger,
+
 
 Clem Briat:
 
