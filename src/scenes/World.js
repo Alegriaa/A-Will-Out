@@ -96,7 +96,7 @@ class World extends Phaser.Scene {
         // this allows us to quickly use up, left, down, right arroy keys
         cursors = this.input.keyboard.createCursorKeys();
         // variable for player speed
-        playerSpeed = 2;
+   
 
 
         //camera's boundaries matching the pixels for the background
