@@ -3,197 +3,95 @@ class World extends Phaser.Scene {
         super('worldScene');
 
     }
-    // thought of naming this world scene since it will be the scene
-    // where the player walks around in the 'birds eye' view
+
+    // resource for creating modular worlds with tilemaps in phaser 3 
     // https://medium.com/@michaelwesthadley/modular-game-worlds-in-phaser-3-tilemaps-1-958fc7e6bbd6
 
 
-
-
-
+    // loading assets used in the world scene
     preload() {
         this.load.image('statueText', './assets/StatueText.png');
         this.load.image('worldBackground', './assets/OverWorld.png');
         this.load.tilemapTiledJSON('map', './assets/TiledWorldMap.json');
         this.load.spritesheet('characterWalk','./assets/characterWalking.png',{frameWidth:50,frameHeight:150,startFrame:0,endFrame:31});
         this.load.image('treeOver', './assets/Canopy.png'); 
-        
     }
 
-
     create() {
-        let messageConfig = {
-            fontSize: '18px',
-            align: 'right',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            fixedWidth: 0
-            
-        }
-
-
-        
-
-
-
+        // setting up the file map to overlay the world scene space
         const map = this.make.tilemap({ key: "map" });
         const tileset = map.addTilesetImage("OverWorld", "worldBackground");
-       // const backgroundLayer = map.createStaticLayer("Background", tileset, 0, 0);
         const treeLayer = map.createStaticLayer("Tree", tileset, 0, 0);
-        //const colliderLayer = map.createStaticLayer("Collide", tileset, 0, 0);
+        // ensures the player can collide with the tiles we 
+        // designated collidable propety in Tiled
         treeLayer.setCollisionByProperty({ collide: true });
-        //treeLayer.setCollisionBetween(0, 244);
-
-
-        // const debugGraphics = this.add.graphics().setAlpha(0.75);
-        // treeLayer.renderDebug(debugGraphics, {
-        // tileColor: null, // Color of non-colliding tiles
-        //  collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-        // faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-        //  });
-
-
-
-
-
-
-        // temporary background to test player movement
-        // this.tempBackground = this.add.tileSprite(0, 0, 1200, 800, 'worldBackground').setOrigin(0, 0);//set scale for testing scaled background
+       
+        
         // instance of player within world scene
         this.player = new Player (this, centerX - 350, centerY - 170, 'characterWalk',0).setScale(0.3);
-        
-
-        
+        // providing collision detection
         this.physics.add.collider(this.player, treeLayer);
 
-        // temp collision detection square
-        // i'm going to change the location of this to match the location of the cave in the background
+        this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
         this.cave = this.physics.add.sprite(centerX + 620, centerY + 340, 'TempSpoon').setScale(0.3);
+        this.cave.alpha = 0;
 
         this.statue = this.physics.add.sprite(centerX - 300, centerY - 250, 'TempSpoon').setScale(0.3);
-        this.treeOverlay = this.add.tileSprite(0,0,3750,1280,'treeOver').setOrigin(0,0);
+        this.statue.setImmovable();
 
-        this.statueText = this.add.tileSprite(175, 200, 0, 0, 'statueText').setScale(.3, .3);//set scale for testing scaled background
+
+        this.statueText = this.add.tileSprite(175, 200, 0, 0, 'statueText').setScale(.3, .3);
         this.statueText.alpha = 0;
         this.statue.alpha = 0;
 
-        this.statue.setImmovable();
-
-        this.cave.alpha = 0;
-
-
-        // this starts the battle scene once the player touches the cave
-        this.physics.add.collider(this.cave, this.player, (a, b) => {
-            this.scene.start('levelOneCave');
-            this.walkingInFlowers.stop();
-            worldMusic.stop();
-
-        }, null, this);
-
-
-
+        this.treeOverlay = this.add.tileSprite(0,0,3750,1280,'treeOver').setOrigin(0,0);
 
         // this allows us to quickly use up, left, down, right arroy keys
         cursors = this.input.keyboard.createCursorKeys();
-        // variable for player speed
-   
-
-
-        //camera's boundaries matching the pixels for the background
-        this.cameras.main.setBounds(0, 0, 1200, 800);
-        //viewport of matching our canvas side.. (we can change this)
-        this.cameras.main.setViewport(0, 0, 960, 640);
-
-        //this.cameras.main.setZoom(.6)
-
-        //camera follows player & zooms in on the surrounding area. 
-        this.cameras.main.startFollow(this.player).setZoom(1.45);
-        // this.cameras.main.setZoom(0.25);
-        // testing
-
-        
-
        
         this.boolVar = true;
         this.boolVar2 = true;
 
-
         this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
 
-        // adding walking in flowers sound to scene
+        // music and sound integration
+        // adding walking in flowers sound to scene here
         this.walkingInFlowers = this.sound.add('WalkingInFlowers', {
             volume: 1.5,
             loop: true
         });
-        // adding crying sound to scene
+        // adding crying sound to scene here
         this.cryingNearCave = this.sound.add('Crying', {
             volume: 1,
             loop: false
         });
 
-        this.sea = this.add.image(960, 640, 'blackout').setScale(2, 2).setAlpha(0);
-
-
-
-        // music 
         worldMusic = this.sound.add('WorldMusic', { volume: 0.1, loop: true });
-        worldMusic.play();
+       // worldMusic.play();
+
+        // camera work
+        // camera's boundaries matching the pixels for the background
+        this.cameras.main.setBounds(0, 0, 1200, 800);
+        // camera's viewport matching our canvas side.. (we can change this)
+        this.cameras.main.setViewport(0, 0, 960, 640);
+        // camera follows player & zooms in on the surrounding area. 
+        this.cameras.main.startFollow(this.player).setZoom(1.45);
 
 
+        // transitions to the first cave level after collision
+        this.physics.add.collider(this.cave, this.player, (a, b) => {
+        this.scene.start('levelOneCave');
+        this.walkingInFlowers.stop();
+        worldMusic.stop();
 
-
+    }, null, this);
     }
-
-
-    update() {
-
-       this.player.update();
-        // player moves down
-
-        // plays walking through flowers sounds if player is moving.
-        if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
-            this.walkingInFlowers.play();
-
-        } else if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
-            this.walkingInFlowers.play();
-        } else if (Phaser.Input.Keyboard.JustDown(cursors.up)) {
-            this.walkingInFlowers.play();
-        } else if (Phaser.Input.Keyboard.JustDown(cursors.down)) {
-            this.walkingInFlowers.play();
-        }
-
-
-        if (this.checkOverlap(this.player, this.statue)) {
-            this.statueText.alpha = 1;
-
-        } else {
-            this.statueText.alpha = 0;
-        }
-
-
-
-
-        // stops sounds if player is no longer moving
-        if (!(cursors.up.isDown) && !(cursors.down.isDown) &&
-            !(cursors.left.isDown) && !(cursors.right.isDown)) {
-            this.walkingInFlowers.stop();
-        }
-        // centerX + 620, centerY + 340
-
-        if (this.player.body.y > centerX + 100 && this.player.body.x < centerY + 270) {
-            this.cryingNearCave.play();
-        }
-    }
-
 
     takeDamage() {
+
         this.temp = this.game.settings.currentSpoons - 1; //minus one bc stupid off by one error ew
         this.spoonArray[this.temp].alpha = 0; //alpha set to 0 is invis
         game.settings.currentSpoons -= 1;
-
-
 
         this.tweens.add({ //!!!!!!!! -------> this will eventually need to be changed into a switch statement
             targets: this.sea,
@@ -203,10 +101,7 @@ class World extends Phaser.Scene {
             alphaBottomLeft: { value: .5, duration: 500, ease: 'Power1' },//,delay: 5000 },
 
             yoyo: true,
-            //loop: -1   
         });
-
-
     }
 
     restoreDamage() {
@@ -217,7 +112,6 @@ class World extends Phaser.Scene {
 
     }
 
-
     checkOverlap(spriteA, spriteB) {
 
         var boundsA = spriteA.getBounds();
@@ -226,5 +120,45 @@ class World extends Phaser.Scene {
         return Phaser.Geom.Intersects.RectangleToRectangle(boundsA, boundsB);
 
 
+    }
+
+    update() {
+
+        this.player.update();
+
+        // activating the walking in flowers sound when the player
+        // moves within this scene
+        if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
+            this.walkingInFlowers.play();
+        } 
+        if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
+            this.walkingInFlowers.play();
+        } 
+        if (Phaser.Input.Keyboard.JustDown(cursors.up)) {
+            this.walkingInFlowers.play();
+        } 
+        if (Phaser.Input.Keyboard.JustDown(cursors.down)) {
+            this.walkingInFlowers.play();
+        }
+
+        // activates text near statue
+        if (this.checkOverlap(this.player, this.statue)) {
+            this.statueText.alpha = 1;
+        } else {
+            this.statueText.alpha = 0;
+        }
+
+        // deactivates walking in flowers sound when the player
+        // is not moving
+        if (!(cursors.up.isDown) && !(cursors.down.isDown) &&
+            !(cursors.left.isDown) && !(cursors.right.isDown)) {
+            this.walkingInFlowers.stop();
+        }
+
+        // activates crying sound effect only if 
+        // the player is near the cave 
+        if (this.player.body.y > centerX + 100 && this.player.body.x < centerY + 270) {
+            this.cryingNearCave.play();
+        }
     }
 }
