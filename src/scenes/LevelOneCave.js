@@ -5,10 +5,11 @@ class LevelOneCave extends Phaser.Scene {
 
     }
 
-
+    // loading assets used in the first cave scene after the initial 
+    // world scene
     preload() {
         var url;
-        // importing the plugin used for the monster behavior. 
+        // importing the plugin used for the monster movement behavior. 
         url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexpathfollowerplugin.min.js';
         // loading it into this scene
         // plugin used is from:
@@ -24,12 +25,7 @@ class LevelOneCave extends Phaser.Scene {
         this.load.image('exitDown', './assets/YellowLightReversed.png');
         this.load.audio('CaveMusic', './assets/CaveMusic.wav');
         this.load.audio('LampSound', './assets/LampSound.wav');
-        // name of the tiled project
-        this.load.tilemapTiledJSON('caveMap', './assets/TiledCaveMap.json');
-        //this.load.plugin('rexmovetoplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexmovetoplugin.min.js', true);
-        this.load.spritesheet('characterWalk', './assets/characterWalking.png', { frameWidth: 50, frameHeight: 150, startFrame: 0, endFrame: 31 });
-        this.load.spritesheet('monster1Walk', './assets/enemy1WalkFull.png', { frameWidth: 150, frameHeight: 200, startFrame: 0, endFrame: 7 });
-        this.load.spritesheet('monster2Fly', './assets/enemy2WalkFull.png', { frameWidth: 150, frameHeight: 200, startFrame: 0, endFrame: 7 });
+        // name of the tiled environment map
         this.load.image('shield', './assets/Shield.png');
         this.load.image('spoonItem', './assets/Spoon.png');
         this.load.image('exit', './assets/YellowLight.png');
@@ -39,11 +35,14 @@ class LevelOneCave extends Phaser.Scene {
         this.load.audio('spoonSound', './assets/SpoonSound.wav');
         this.load.image('hopeItem', './assets/Hope.png')
         this.load.image('spikyOverlayOne', './assets/LevelOneSpikes.png')
+
+        this.load.tilemapTiledJSON('caveMap', './assets/TiledCaveMap.json');
+        this.load.spritesheet('characterWalk', './assets/characterWalking.png', { frameWidth: 50, frameHeight: 150, startFrame: 0, endFrame: 31 });
+        this.load.spritesheet('monster1Walk', './assets/enemy1WalkFull.png', { frameWidth: 150, frameHeight: 200, startFrame: 0, endFrame: 7 });
+        this.load.spritesheet('monster2Fly', './assets/enemy2WalkFull.png', { frameWidth: 150, frameHeight: 200, startFrame: 0, endFrame: 7 });
     }
 
     create() {
-
-
 
         // we need to make a unique key for this scene to access
         const caveMap = this.make.tilemap({ key: "caveMap" });
@@ -55,9 +54,8 @@ class LevelOneCave extends Phaser.Scene {
         // this is required, to have the player collide with pixel tiles
         // that have the collides property attached to them
         backgroundLayer.setCollisionByProperty({ collides: true });
-        //treeLayer.setCollisionBetween(0, 244);
 
-
+        // this is used for debugging:
         //     const debugGraphics = this.add.graphics().setAlpha(0.75);
         //    backgroundLayer.renderDebug(debugGraphics, {
         //      tileColor: null, // Color of non-colliding tiles
@@ -65,56 +63,38 @@ class LevelOneCave extends Phaser.Scene {
         //      faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
         //    });
 
-        // this.caveBackground = this.add.tileSprite(0, 0, 3760, 1280, 'caveBackground').setOrigin(0,0);
-
-
-        // instance of player in cave scene 1
-        // this.player = new Player(this, centerX - 250, centerY + 50, 'characterWalk',0).setScale(0.4);
-
-
-        // this is the instance we will use for the game
-        // feel free to make more for testing
-        // but these coordinates must remain the same for gameplay
-       this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk', 0).setScale(0.4); 
-
-        // player spawning close to exit for debugging
-
-        // this.player = new Player(this, 3603, 300, 'characterWalk',0).setScale(0.4);
+   
+        this.player = new Player(this, centerX - 150, centerY + 600, 'characterWalk', 0).setScale(0.4); 
 
         this.add.image(0, 0, 'spikyOverlayOne').setOrigin(0);
 
-        // create lamps in cave one
+        // creating lamp objects in this cave scene
         this.lampTwo = new Lamp(this, 1190, 1000, 'lamp').setScale(0.4);
         this.lampThree = new Lamp(this, 2530, 290, 'lamp').setScale(0.4);
         this.lampFour = new Lamp(this, 1350, 230, 'lamp').setScale(0.4);
 
-        // create shield items in cave one
+        // creating shield objects in this cave scene
         this.shield1 = new Shield(this, 2630, 1000, 'shield').setScale(.5);
         this.shield2 = new Shield(this, 1960, 320, 'shield').setScale(.5);
-        //create spoon in cave
 
-        //create Message Items in cave one
+        // creating the message items in this cave scene
         this.messageItem = new MessageItem(this, centerX - 180, centerY + 400, 'hopeItem').setScale(.5);
         this.messageItem1 = new MessageItem(this, 3670, 663, 'hopeItem').setScale(.5);
         this.messageItem2 = new MessageItem(this, 2970, 1150, 'hopeItem').setScale(.5);
         this.messageItem3 = new MessageItem(this, 2075, 180, 'hopeItem').setScale(.5);
-        //non movable shield and spoon
-
-
-        //this.shield1.setImmovable();
 
         this.messageItem.setImmovable();
         this.messageItem1.setImmovable();
-        //  this.lampOne.setImmovable();
 
 
-
+        // creating a group of objects for the monsters in 
+        // this cave scene
         this.monsterGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
         });
 
 
-        // detects the collision between the player and a lamp object
+        // detects the collision between the player and a lamp objects
         this.physics.add.collider(this.lampTwo, this.player, (a, b) => {
             this.smallCaveCircle.alpha = 0.5
             this.bigCaveCircle.alpha = 0.7
@@ -504,12 +484,12 @@ class LevelOneCave extends Phaser.Scene {
         caveMusic = this.sound.add('CaveMusic', { volume: 1, loop: true });
         caveMusic.play();
 
-        // sounds
+        // implementing sound effects in this cave level
         this.lampSound = this.sound.add('LampSound', {
             volume: 0.05,
             loop: true
         });
-        // sounds 
+        
         this.hitByMonster = this.sound.add('hitByMonster', {
             volume: 1,
             loop: false
@@ -532,9 +512,7 @@ class LevelOneCave extends Phaser.Scene {
        
 
 
-        //add a function call for the player when a shield is collected
-
-
+        //a dd a function call for the player when a shield is collected
         this.physics.add.collider(this.shield1, this.player, (a, b) => {
 
             if (game.settings.shield) {
@@ -580,7 +558,8 @@ class LevelOneCave extends Phaser.Scene {
         this.yValue = centerY - 190;
 
 
-        //a while loop to create the necessary amount of spoons according to the current spoons game settings number
+        // a while loop to create the necessary amount of spoons according 
+        // to the current spoons game settings number
         while (this.starter <= this.spoonCount) {
             this.spoon1 = new Spoon(this, this.xValue, this.yValue, 'spoonItem').setScale(.7);
             this.spoon1.setScrollFactor(0, 0);
@@ -617,8 +596,7 @@ class LevelOneCave extends Phaser.Scene {
 
 
 
-        //create message item collider and grab one of the messages from the prefab
-
+        // create message item collider and grab one of the messages from the prefab
         this.physics.add.collider(this.messageItem, this.player, (a, b) => {
             this.title.alpha = 1;
             this.title.setText(a.itemActivated());
@@ -657,19 +635,14 @@ class LevelOneCave extends Phaser.Scene {
                 this.takeDamage();
                 this.hitByMonster.play();
             }
-
-
         }, null, this);
-
-
     }
 
     update() {
 
+        // Animations for monsters
 
-        //LARGE CHUNK OF CODE TO GET ALL THE ANIMATIONS WORKING FOR EACH DIFFERENT PATH AHHHHHHH
-
-        //Monster 1 Animation Pathing
+        // Monster 1 Animation Pathing
         if (this.tempM1x < this.monsterOne.x) {
             this.monsterOne.animate('monsterWalkRight');
             this.tempM1x = this.monsterOne.x;
@@ -678,7 +651,7 @@ class LevelOneCave extends Phaser.Scene {
             this.tempM1x = this.monsterOne.x;
         }
 
-        //Monster 2 Animation Pathing
+        // Monster 2 Animation Pathing
         if (this.tempM2x < this.monsterTwo.x) {
             this.monsterTwo.animate('monsterWalkRight');
             this.tempM2x = this.monsterTwo.x;
@@ -687,7 +660,7 @@ class LevelOneCave extends Phaser.Scene {
             this.tempM2x = this.monsterTwo.x;
         }
 
-        //Monster 3 Animation Pathing
+        // Monster 3 Animation Pathing
 
         if (this.tempM3x < this.monsterThree.x) {
             this.monsterThree.animate('monsterWalkRight');
@@ -697,7 +670,7 @@ class LevelOneCave extends Phaser.Scene {
             this.tempM3x = this.monsterThree.x;
         }
 
-        //Monster 4 Animation Pathing
+        // Monster 4 Animation Pathing
         if (this.tempM4x < this.monsterFour.x) {
             this.monsterFour.animate('monsterWalkRight');
             this.tempM4x = this.monsterFour.x;
@@ -706,7 +679,7 @@ class LevelOneCave extends Phaser.Scene {
             this.tempM4x = this.monsterFour.x;
         }
 
-        //Monster 5 Animation Pathing
+        // Monster 5 Animation Pathing
         if (this.tempM5x < this.monsterFive.x) {
             this.monsterFive.animate('monsterFlyRight');
             this.tempM5x = this.monsterFive.x;
@@ -715,7 +688,7 @@ class LevelOneCave extends Phaser.Scene {
             this.tempM5x = this.monsterFive.x;
         }
 
-        //Monster 6 Animation Pathing
+        // Monster 6 Animation Pathing
         if (this.tempM6x < this.monsterSix.x) {
             this.monsterSix.animate('monsterWalkRight');
             this.tempM6x = this.monsterSix.x;
@@ -724,7 +697,7 @@ class LevelOneCave extends Phaser.Scene {
             this.tempM6x = this.monsterSix.x;
         }
 
-        //Monster 8 Animation Pathing
+        // Monster 8 Animation Pathing
         if (this.tempM8x < this.monsterEightFast.x) {
             this.monsterEightFast.animate('monsterFlyRight');
             this.tempM8x = this.monsterEightFast.x;
@@ -743,22 +716,13 @@ class LevelOneCave extends Phaser.Scene {
         }
 
 
-
         if (!this.game.settings.gameOver) {
-
-            //console.log(this.player.body.x);
-            //console.log(this.player.body.y);
-
             this.player.update();
             if (Phaser.Input.Keyboard.JustDown(keyD)) {
                 this.scene.start('forestScene');
             }
-
-
-
         } else {
             if (!this.endingBool) {
-
                 var messageConfig = {
                     font: "16px Arial", fill: "#fff",
                     // align: "center", // the alignment of the text is independent of the bounds, try changing to 'center' or 'right'
@@ -770,20 +734,13 @@ class LevelOneCave extends Phaser.Scene {
 
                 this.endingBool = true;
             }
-
-
-
-
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
                 this.game.settings.gameOver = false;
                 this.game.settings.currentSpoons = 5;
-
-
                 this.scene.start('worldScene');
-
-
             }
         };
+
         // we attach the first overlay to the player's position
         // i had to find the right values according to the spawn
         // of the player on the map
@@ -796,29 +753,13 @@ class LevelOneCave extends Phaser.Scene {
         this.bigCaveCircle.x = this.player.body.x - 1885;
         this.bigCaveCircle.y = this.player.body.y - 610;
 
-        //  this.lampUI.x = this.player.body.x - 260;
-        //this.lampUI.y = this.player.body.y - 145;
-
-
-        // console.log(this.player.body.x);
-        // console.log(this.player.body.y);
-
-        console.log(this.player.body.x);
-
-        console.log(this.player.body.y);
-
-
-
-
         if (Phaser.Input.Keyboard.JustDown(keyD)) {
             this.scene.start('levelTwoCave');
         }
-
     }
 
 
     takeDamage() {
-
         if (this.game.settings.currentSpoons == 0) {
 
             this.player.setVelocity(0);
@@ -832,51 +773,32 @@ class LevelOneCave extends Phaser.Scene {
                 this.game.settings.canTakeDamage = true;
             }, null, this);
 
-
-
-
-
-
             this.cameras.main.flash();
             this.cameras.main.shake(500);
-
-
         }
-
     }
 
     restoreDamage() {
-
         this.temp = this.game.settings.currentSpoons; //no minus one, i dont understand math
         this.spoonArray[this.temp].alpha = 1; //alpha set to 1 is visible
         game.settings.currentSpoons += 1;
-
     }
 
     changeMessageOpacity() {
         if (this.title.alpha >= .1) {
-
             this.title.alpha = this.title.alpha - .1;
             this.lampClock = this.time.delayedCall(1000, () => {
                 this.changeMessageOpacity();
             }, null, this);
         }
-
     }
 
     addShield() {
-
         this.game.settings.canTakeDamage = false;
         this.shieldUI.alpha = 1;
-
-
         this.shieldClock = this.time.delayedCall(10000, () => {
             this.game.settings.canTakeDamage = true;
             this.shieldUI.alpha = 0;
         }, null, this);
-
-
-
     }
-
 }
