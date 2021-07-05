@@ -758,14 +758,16 @@ class LevelOneCave extends Phaser.Scene {
         }
     }
 
-
+    //this method is called whenever the player overlaps with a monster
     takeDamage() {
+        //check if the player has any more spoons left, if so end the game
         if (this.game.settings.currentSpoons == 0) {
-
             this.player.setVelocity(0);
             this.game.settings.gameOver = true;
         } else {
-            this.temp = this.game.settings.currentSpoons - 1; //minus one bc stupid off by one error ew
+        
+        //if the player does have spoons left  then decrease the count and UI
+            this.temp = this.game.settings.currentSpoons - 1; 
             this.spoonArray[this.temp].alpha = 0; //alpha set to 0 is invis
             game.settings.currentSpoons -= 1;
             this.game.settings.canTakeDamage = false;
@@ -773,18 +775,28 @@ class LevelOneCave extends Phaser.Scene {
                 this.game.settings.canTakeDamage = true;
             }, null, this);
 
+        //UI flash and camera shake to indicate damage taken
             this.cameras.main.flash();
             this.cameras.main.shake(500);
         }
     }
 
+    //this method is called whenever the player gains a new spoon
     restoreDamage() {
-        this.temp = this.game.settings.currentSpoons; //no minus one, i dont understand math
-        this.spoonArray[this.temp].alpha = 1; //alpha set to 1 is visible
+        //update the player health 
+        this.temp = this.game.settings.currentSpoons;
+
+        //add a spoon to the UI
+        this.spoonArray[this.temp].alpha = 1; 
+
+        //update the current amount of spoons in the game settings
         game.settings.currentSpoons += 1;
     }
 
+        //recursive call
+        //slowly fade out the message opacity once the players triggers a message
     changeMessageOpacity() {
+       
         if (this.title.alpha >= .1) {
             this.title.alpha = this.title.alpha - .1;
             this.lampClock = this.time.delayedCall(1000, () => {
@@ -793,9 +805,15 @@ class LevelOneCave extends Phaser.Scene {
         }
     }
 
+    //this method is called whenever the player interacts with a shield item and gains immunity 
     addShield() {
+        //update the players ability to take damage
         this.game.settings.canTakeDamage = false;
+
+        //add shield to players UI
         this.shieldUI.alpha = 1;
+
+        //add a timer for the shield
         this.shieldClock = this.time.delayedCall(10000, () => {
             this.game.settings.canTakeDamage = true;
             this.shieldUI.alpha = 0;
